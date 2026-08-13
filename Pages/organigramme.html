@@ -2,18 +2,541 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Génération Dorée</title>
+    <title>Organigramme - Génération Dorée</title>
 
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        /* ================================
+           ORGANIGRAMME
+        ================================= */
+
+        .organigramme-page {
+            min-height: calc(100vh - 80px);
+            padding: 60px 30px;
+            background: #080808;
+        }
+
+        .organigramme-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .organigramme-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .organigramme-header h1 {
+            margin: 0 0 15px;
+            font-size: 42px;
+            color: #ffffff;
+        }
+
+        .organigramme-header p {
+            margin: 0;
+            color: #999;
+            font-size: 16px;
+        }
+
+        /* ================================
+           BOUTON ACTUALISER
+        ================================= */
+
+        .refresh-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 25px;
+        }
+
+        .refresh-button {
+            border: 1px solid #333;
+            background: #111;
+            color: #fff;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.2s ease;
+        }
+
+        .refresh-button:hover {
+            background: #1c1c1c;
+            border-color: #555;
+        }
+
+        /* ================================
+           CADRE OWNER
+        ================================= */
+
+        .rank-title {
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .owner-card {
+            position: relative;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 14px;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .owner-image {
+            width: 90px;
+            height: 90px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid #d4af37;
+            background: #1a1a1a;
+        }
+
+        .owner-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .owner-info {
+            flex: 1;
+        }
+
+        .owner-info h2 {
+            margin: 0 0 7px;
+            color: #ffffff;
+            font-size: 24px;
+        }
+
+        .owner-role {
+            margin-bottom: 8px;
+            color: #4da6ff;
+            font-weight: bold;
+        }
+
+        .owner-description {
+            margin: 0;
+            color: #d4af37;
+            font-size: 15px;
+        }
+
+        .owner-management {
+            margin-top: 8px;
+            color: #ff3b3b;
+            font-weight: bold;
+        }
+
+        /* ================================
+           BOUTON PROFILS
+        ================================= */
+
+        .profile-button {
+            background: #d4af37;
+            color: #080808;
+            border: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s ease;
+        }
+
+        .profile-button:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.1);
+        }
+
+        /* ================================
+           FENÊTRE PROFIL
+        ================================= */
+
+        .profile-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        .profile-overlay.active {
+            display: flex;
+        }
+
+        .profile-modal {
+            width: 100%;
+            max-width: 450px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .profile-modal-title {
+            color: #ffffff;
+            font-size: 23px;
+            margin: 0 0 25px;
+        }
+
+        .profile-modal h3 {
+            margin: 0 0 8px;
+            color: #ffffff;
+            font-size: 25px;
+        }
+
+        .modal-role {
+            color: #4da6ff;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .modal-description {
+            color: #d4af37;
+            margin-bottom: 8px;
+        }
+
+        .modal-management {
+            color: #ff3b3b;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .profile-line {
+            border-top: 1px solid #292929;
+            padding: 15px 0;
+        }
+
+        .profile-label {
+            display: block;
+            color: #888;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .profile-value {
+            color: #ffffff;
+            font-size: 15px;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #e53935;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        /* ================================
+           FERMER
+        ================================= */
+
+        .close-button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: #1a1a1a;
+            color: #ffffff;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .close-button:hover {
+            background: #252525;
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            .organigramme-page {
+                padding: 40px 15px;
+            }
+
+            .organigramme-header h1 {
+                font-size: 32px;
+            }
+
+            .owner-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .profile-button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>Page en construction</h1>
+    <!-- ================================
+         NAVIGATION
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <a href="../index.html" class="logo">
+                Génération Dorée
+            </a>
+
+            <nav class="navigation">
+
+                <a href="../index.html">
+                    Accueil
+                </a>
+
+                <a href="lore.html">
+                    Lore
+                </a>
+
+                <a href="guide.html">
+                    Guide
+                </a>
+
+                <a href="tickets.html">
+                    Tickets
+                </a>
+
+                <a href="organigramme.html" class="active">
+                    Organigramme
+                </a>
+
+                <a href="discord.html">
+                    Discord
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         ORGANIGRAMME
+    ================================= -->
+
+    <main class="organigramme-page">
+
+        <div class="organigramme-container">
+
+            <div class="organigramme-header">
+
+                <h1>
+                    Organigramme
+                </h1>
+
+                <p>
+                    Structure hierarchique du server Génération Dorée.
+                </p>
+
+            </div>
+
+
+            <!-- ACTUALISER -->
+
+            <div class="refresh-container">
+
+                <button class="refresh-button" onclick="location.reload()">
+                    Actualiser
+                </button>
+
+            </div>
+
+
+            <!-- OWNER -->
+
+            <div class="rank-title">
+                Owner
+            </div>
+
+            <div class="owner-card">
+
+                <!-- IMAGE -->
+                <div class="owner-image">
+
+                    <img
+                        src="../assets/images/image-generation-doree.png"
+                        alt="PIRATE.Z4"
+                    >
+
+                </div>
+
+
+                <!-- INFORMATIONS -->
+
+                <div class="owner-info">
+
+                    <h2>
+                        PIRATE.Z4
+                    </h2>
+
+                    <div class="owner-role">
+                        Owner
+                    </div>
+
+                    <p class="owner-description">
+                        Owner du serveur Génération dorée
+                    </p>
+
+                    <div class="owner-management">
+                        Gestion complète
+                    </div>
+
+                </div>
+
+
+                <!-- PROFILS -->
+
+                <button class="profile-button" onclick="openProfile()">
+                    Profils
+                </button>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================================
+         PROFIL DETAILLE
+    ================================= -->
+
+    <div class="profile-overlay" id="profileOverlay">
+
+        <div class="profile-modal">
+
+            <h2 class="profile-modal-title">
+                Profil détaillé®
+            </h2>
+
+            <h3>
+                PIRATE.Z4
+            </h3>
+
+            <div class="modal-role">
+                Owner
+            </div>
+
+            <div class="modal-description">
+                Owner du serveur Génération dorée
+            </div>
+
+            <div class="modal-management">
+                Gestion complète
+            </div>
+
+
+            <!-- DISCORD -->
+
+            <div class="profile-line">
+
+                <span class="profile-label">
+                    Discord
+                </span>
+
+                <span class="profile-value">
+                    989585726662398032
+                </span>
+
+            </div>
+
+
+            <!-- STATUT -->
+
+            <div class="profile-line">
+
+                <span class="profile-label">
+                    Statut
+                </span>
+
+                <span class="profile-value status">
+
+                    <span class="status-dot"></span>
+
+                    Ne pas déranger
+
+                </span>
+
+            </div>
+
+
+            <!-- FERMER -->
+
+            <button class="close-button" onclick="closeProfile()">
+                Fermer
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function openProfile() {
+
+            document
+                .getElementById("profileOverlay")
+                .classList.add("active");
+
+        }
+
+        function closeProfile() {
+
+            document
+                .getElementById("profileOverlay")
+                .classList.remove("active");
+
+        }
+
+        document
+            .getElementById("profileOverlay")
+            .addEventListener("click", function(event) {
+
+                if (event.target === this) {
+                    closeProfile();
+                }
+
+            });
+
+    </script>
 
 </body>
 
