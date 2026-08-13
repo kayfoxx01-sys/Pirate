@@ -1,65 +1,60 @@
 // ============================================================
 // GÉNÉRATION DORÉE
-// AUTHENTIFICATION DISCORD
+// AUTH STAFF LOCAL
 // ============================================================
 
-const API_URL = "http://147.135.213.131:20166";
+const STAFF_STORAGE_KEY = "generation_doree_staff_session";
+
+const STAFF_USERS = [
+    {
+        username: "Priate",
+        password: "Karma359@",
+        role: "Fondateur"
+    }
+
+    // Ajoute d'autres personnes ici :
+    //
+    // {
+    //     username: "username",
+    //     password: "Change_Moi",
+    //     role: "Staff"
+    // }
+];
 
 
 // ============================================================
-// OUTILS
+// SESSION
 // ============================================================
 
-function escapeAuthHTML(text) {
-
-    const div = document.createElement("div");
-
-    div.textContent = text ?? "";
-
-    return div.innerHTML;
-
-}
-
-
-// ============================================================
-// RÉCUPÉRER L'UTILISATEUR CONNECTÉ
-// ============================================================
-
-async function getCurrentUser() {
+function getCurrentUser() {
 
     try {
 
-        const response =
-            await fetch(
-                `${API_URL}/api/auth/me`,
-                {
-                    method: "GET",
-                    credentials: "include"
-                }
+        const session =
+            localStorage.getItem(
+                STAFF_STORAGE_KEY
             );
 
-        if (!response.ok) {
-
+        if (!session) {
             return null;
-
         }
 
-        const data =
-            await response.json();
+        const user =
+            JSON.parse(session);
 
-        if (!data.success) {
-
+        if (
+            !user ||
+            !user.username
+        ) {
             return null;
-
         }
 
-        return data.user || null;
+        return user;
 
-    } catch (error) {
+    } catch {
 
-        console.error(
-            "❌ Impossible de récupérer la session Discord :",
-            error
+        localStorage.removeItem(
+            STAFF_STORAGE_KEY
         );
 
         return null;
@@ -70,13 +65,49 @@ async function getCurrentUser() {
 
 
 // ============================================================
-// CONNEXION DISCORD
+// CONNEXION
 // ============================================================
 
-function loginDiscord() {
+function loginStaff(username, password) {
 
-    window.location.href =
-        `${API_URL}/auth/discord`;
+    const user =
+        STAFF_USERS.find(
+            staff =>
+                staff.username.toLowerCase() ===
+                username.trim().toLowerCase() &&
+                staff.password ===
+                password
+        );
+
+    if (!user) {
+
+        return {
+            success: false,
+            message:
+                "Identifiant ou mot de passe incorrect."
+        };
+
+    }
+
+    const session = {
+
+        username:
+            user.username,
+
+        role:
+            user.role
+
+    };
+
+    localStorage.setItem(
+        STAFF_STORAGE_KEY,
+        JSON.stringify(session)
+    );
+
+    return {
+        success: true,
+        user: session
+    };
 
 }
 
@@ -85,26 +116,11 @@ function loginDiscord() {
 // DÉCONNEXION
 // ============================================================
 
-async function logoutDiscord() {
+function logoutStaff() {
 
-    try {
-
-        await fetch(
-            `${API_URL}/api/auth/logout`,
-            {
-                method: "POST",
-                credentials: "include"
-            }
-        );
-
-    } catch (error) {
-
-        console.error(
-            "❌ Erreur déconnexion :",
-            error
-        );
-
-    }
+    localStorage.removeItem(
+        STAFF_STORAGE_KEY
+    );
 
     window.location.reload();
 
@@ -112,7 +128,7 @@ async function logoutDiscord() {
 
 
 // ============================================================
-// AFFICHAGE DU PROFIL STAFF
+// INTERFACE
 // ============================================================
 
 async function updateAuthInterface() {
@@ -132,37 +148,19 @@ async function updateAuthInterface() {
             "staffLogout"
         );
 
-    const staffName =
-        document.getElementById(
-            "staffName"
-        );
-
-    const staffRole =
-        document.getElementById(
-            "staffRole"
-        );
-
     const currentUser =
-        await getCurrentUser();
+        getCurrentUser();
 
-    // --------------------------------------------------------
-    // PAS CONNECTÉ
-    // --------------------------------------------------------
 
     if (!currentUser) {
 
         if (status) {
 
             status.innerHTML = `
-
-                <strong>
-                    Non connecté
-                </strong>
-
+                <strong>Non connecté</strong>
                 <span>
-                    Connecte-toi avec ton compte Discord.
+                    Connecte-toi avec ton compte Staff.
                 </span>
-
             `;
 
         }
@@ -181,52 +179,31 @@ async function updateAuthInterface() {
 
         }
 
-        if (staffName) {
-
-            staffName.textContent =
-                "";
-
-        }
-
-        if (staffRole) {
-
-            staffRole.textContent =
-                "";
-
-        }
-
         return null;
 
     }
 
-
-    // --------------------------------------------------------
-    // CONNECTÉ
-    // --------------------------------------------------------
 
     if (status) {
 
         status.innerHTML = `
 
             <strong>
-
-                ${escapeAuthHTML(
+                🟢 ${escapeAuthHTML(
                     currentUser.username
                 )}
-
             </strong>
 
             <span>
-
                 ${escapeAuthHTML(
-                    currentUser.roleName
+                    currentUser.role
                 )}
-
             </span>
 
         `;
 
     }
+
 
     if (loginButton) {
 
@@ -235,6 +212,7 @@ async function updateAuthInterface() {
 
     }
 
+
     if (logoutButton) {
 
         logoutButton.style.display =
@@ -242,21 +220,27 @@ async function updateAuthInterface() {
 
     }
 
-    if (staffName) {
-
-        staffName.textContent =
-            currentUser.username;
-
-    }
-
-    if (staffRole) {
-
-        staffRole.textContent =
-            currentUser.roleName;
-
-    }
 
     return currentUser;
+
+}
+
+
+// ============================================================
+// PROTECTION HTML
+// ============================================================
+
+function escapeAuthHTML(text) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
 
 }
 
@@ -267,13 +251,9 @@ async function updateAuthInterface() {
 
 document.addEventListener(
     "DOMContentLoaded",
-    async () => {
+    () => {
 
-        console.log(
-            "🔐 Génération Dorée - Authentification Discord chargée."
-        );
-
-        await updateAuthInterface();
+        updateAuthInterface();
 
     }
 );
@@ -286,11 +266,11 @@ document.addEventListener(
 window.getCurrentUser =
     getCurrentUser;
 
-window.loginDiscord =
-    loginDiscord;
+window.loginStaff =
+    loginStaff;
 
-window.logoutDiscord =
-    logoutDiscord;
+window.logoutStaff =
+    logoutStaff;
 
 window.updateAuthInterface =
     updateAuthInterface;

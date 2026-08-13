@@ -1,396 +1,1052 @@
-<!DOCTYPE html>
-<html lang="fr">
+```js
+// ============================================================
+// GÉNÉRATION DORÉE
+// SYSTÈME DE TICKETS
+// ============================================================
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Génération Dorée</title>
-
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
-
-</head>
+const TICKETS_API =
+    "http://147.135.213.131:20166";
 
 
-<body>
+// ============================================================
+// OUTILS
+// ============================================================
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text ?? "";
+
+    return div.innerHTML;
+
+}
 
 
-    <!-- ==========================================
-         NAVIGATION
-    =========================================== -->
+function formatDate(date) {
 
-    <header class="navbar">
+    try {
 
-        <div class="navbar-container">
+        return new Date(
+            date
+        ).toLocaleString(
+            "fr-FR"
+        );
 
+    } catch {
 
-            <!-- ======================================
-                 LOGO
-            ======================================= -->
+        return "Date inconnue";
 
-            <a
-                href="index.html"
-                class="logo"
-            >
-                Génération Dorée
-            </a>
+    }
+
+}
 
 
+// ============================================================
+// MESSAGE
+// ============================================================
 
-            <!-- ======================================
-                 NAVIGATION CENTRÉE
-            ======================================= -->
+function showTicketMessage(
+    message,
+    type
+) {
 
-            <nav class="navigation">
-
-                <a
-                    href="index.html"
-                    class="active"
-                >
-                    Accueil
-                </a>
-
-
-                <a
-                    href="Pages/lore.html"
-                >
-                    Lore
-                </a>
+    const element =
+        document.getElementById(
+            "ticketMessageStatus"
+        );
 
 
-                <a
-                    href="Pages/guide.html"
-                >
-                    Guide
-                </a>
+    if (!element) {
+
+        return;
+
+    }
 
 
-                <a
-                    href="Pages/tickets.html"
-                >
-                    Tickets
-                </a>
+    element.textContent =
+        message;
+
+    element.className =
+        `ticket-message ${type}`;
+
+}
 
 
-                <a
-                    href="Pages/organigramme.html"
-                >
-                    Organigramme
-                </a>
+// ============================================================
+// CRÉER UN TICKET
+// ============================================================
+
+function initializeTicketForm() {
+
+    const form =
+        document.getElementById(
+            "ticketForm"
+        );
 
 
-                <a
-                    href="Pages/discord.html"
-                >
-                    Discord
-                </a>
+    if (!form) {
 
-            </nav>
+        return;
+
+    }
 
 
+    if (
+        form.dataset.ticketInitialized ===
+        "true"
+    ) {
 
-            <!-- ======================================
-                 COMPTE DISCORD
-            ======================================= -->
+        return;
 
-            <div
-                id="discordAccount"
-                class="discord-account"
-            >
-
-
-                <!-- ==================================
-                     NON CONNECTÉ
-                =================================== -->
-
-                <button
-                    id="discordLogin"
-                    class="discord-login-button"
-                    type="button"
-                >
-                    Connexion
-                </button>
+    }
 
 
-
-                <!-- ==================================
-                     CONNECTÉ
-                =================================== -->
-
-                <div
-                    id="discordProfile"
-                    class="discord-profile"
-                    style="display: none;"
-                >
+    form.dataset.ticketInitialized =
+        "true";
 
 
-                    <!-- AVATAR DISCORD -->
+    form.addEventListener(
+        "submit",
+        async function(event) {
 
-                    <img
-                        id="discordAvatar"
-                        class="discord-avatar"
-                        src=""
-                        alt="Avatar Discord"
-                    >
+            event.preventDefault();
 
 
+            const nameInput =
+                document.getElementById(
+                    "ticketName"
+                );
 
-                    <!-- INFORMATIONS UTILISATEUR -->
 
-                    <div
-                        class="discord-user-info"
-                    >
+            const subjectInput =
+                document.getElementById(
+                    "ticketSubject"
+                );
 
-                        <strong
-                            id="discordUsername"
-                        >
-                            Utilisateur
-                        </strong>
 
-                        <span>
-                            Connecté
-                        </span>
+            const messageInput =
+                document.getElementById(
+                    "ticketMessageInput"
+                );
+
+
+            if (
+                !nameInput ||
+                !subjectInput ||
+                !messageInput
+            ) {
+
+                return;
+
+            }
+
+
+            const name =
+                nameInput.value.trim();
+
+
+            const subject =
+                subjectInput.value.trim();
+
+
+            const message =
+                messageInput.value.trim();
+
+
+            if (!name) {
+
+                showTicketMessage(
+                    "❌ Entre ton nom Discord.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!subject) {
+
+                showTicketMessage(
+                    "❌ Entre le sujet du ticket.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            if (!message) {
+
+                showTicketMessage(
+                    "❌ Explique ton problème.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${TICKETS_API}/api/tickets`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    name:
+                                        name,
+
+                                    subject:
+                                        subject,
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    showTicketMessage(
+                        `❌ ${data.message || "Impossible de créer le ticket."}`,
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                form.reset();
+
+
+                showTicketMessage(
+                    `✅ Ticket créé ! Numéro : ${data.ticket.id}`,
+                    "success"
+                );
+
+
+                console.log(
+                    "🎫 Ticket créé :",
+                    data.ticket
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "❌ Création ticket :",
+                    error
+                );
+
+
+                showTicketMessage(
+                    "❌ Impossible de contacter le serveur.",
+                    "error"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// RÉCUPÉRER LES TICKETS
+// ============================================================
+
+async function getStaffTickets() {
+
+    try {
+
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets`,
+                {
+                    method:
+                        "GET"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            return null;
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            return null;
+
+        }
+
+
+        return data.tickets || [];
+
+    } catch (error) {
+
+        console.error(
+            "❌ Récupération tickets :",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+// ============================================================
+// AFFICHER LES TICKETS
+// ============================================================
+
+async function renderTicketsList() {
+
+    const container =
+        document.getElementById(
+            "ticketsList"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (!currentUser) {
+
+        container.innerHTML = `
+
+            <div class="empty-tickets">
+
+                🔒 Connecte-toi avec ton compte
+                Staff pour voir les tickets.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const tickets =
+        await getStaffTickets();
+
+
+    if (tickets === null) {
+
+        container.innerHTML = `
+
+            <div class="empty-tickets">
+
+                ❌ Impossible de récupérer les tickets.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const openTickets =
+        tickets.filter(
+            ticket =>
+                ticket.status === "open"
+        );
+
+
+    if (!openTickets.length) {
+
+        container.innerHTML = `
+
+            <div class="empty-tickets">
+
+                📭 Aucun ticket ouvert actuellement.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    openTickets.forEach(
+        ticket => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "ticket-item";
+
+
+            item.innerHTML = `
+
+                <div class="ticket-item-top">
+
+                    <div class="ticket-item-title">
+
+                        🎫
+                        ${escapeHTML(
+                            ticket.subject
+                        )}
 
                     </div>
 
 
+                    <span class="ticket-status">
 
-                    <!-- DÉCONNEXION -->
+                        🟢 Ouvert
+
+                    </span>
+
+                </div>
+
+
+                <div class="ticket-item-info">
+
+                    👤
+                    ${escapeHTML(
+                        ticket.userName ||
+                        ticket.name ||
+                        "Inconnu"
+                    )}
+
+                    <br>
+
+                    🆔
+                    ${escapeHTML(
+                        ticket.id
+                    )}
+
+                    <br>
+
+                    💬
+                    ${ticket.messageCount || 0}
+                    message(s)
+
+                    <br>
+
+                    📅
+                    ${formatDate(
+                        ticket.createdAt
+                    )}
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="staff-button"
+                    style="margin-top:12px;"
+                >
+
+                    👀 Voir le ticket
+
+                </button>
+
+            `;
+
+
+            const button =
+                item.querySelector(
+                    "button"
+                );
+
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    viewTicket(
+                        ticket.id
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// VOIR UN TICKET
+// ============================================================
+
+async function viewTicket(id) {
+
+    closeTicketModal();
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/tickets/${encodeURIComponent(id)}`,
+                {
+                    method:
+                        "GET"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            alert(
+                `❌ ${data.message || "Accès refusé."}`
+            );
+
+            return;
+
+        }
+
+
+        const ticket =
+            data.ticket;
+
+
+        let messages =
+            "";
+
+
+        if (
+            Array.isArray(
+                ticket.messages
+            )
+        ) {
+
+            ticket.messages.forEach(
+                message => {
+
+                    const label =
+                        message.staff
+                            ? "🛡️ Staff"
+                            : "👤 Membre";
+
+
+                    messages += `
+
+                        <div
+                            class="ticket-chat-message"
+                        >
+
+                            <strong>
+
+                                ${label}
+                                —
+                                ${escapeHTML(
+                                    message.author
+                                )}
+
+                            </strong>
+
+
+                            <p>
+
+                                ${escapeHTML(
+                                    message.message
+                                )}
+
+                            </p>
+
+
+                            <small>
+
+                                ${formatDate(
+                                    message.date
+                                )}
+
+                            </small>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+
+        let actions =
+            "";
+
+
+        if (
+            ticket.status ===
+            "open"
+        ) {
+
+            actions = `
+
+                <textarea
+                    id="ticketReply"
+                    class="ticket-reply"
+                    placeholder="Écrire une réponse..."
+                    maxlength="3000"
+                ></textarea>
+
+
+                <div
+                    class="ticket-modal-actions"
+                >
 
                     <button
-                        id="discordLogout"
-                        class="discord-logout"
                         type="button"
+                        class="staff-button primary"
+                        onclick="replyToTicket('${ticket.id}')"
                     >
-                        Déconnexion
+
+                        💬 Répondre
+
                     </button>
 
 
+                    <button
+                        type="button"
+                        class="staff-button"
+                        onclick="closeTicket('${ticket.id}')"
+                    >
+
+                        🔒 Fermer le ticket
+
+                    </button>
+
                 </div>
 
+            `;
+
+        } else {
+
+            actions = `
+
+                <div class="empty-tickets">
+
+                    🔴 Ce ticket est fermé.
+
+                </div>
+
+            `;
+
+        }
+
+
+        const modal =
+            document.createElement(
+                "div"
+            );
+
+
+        modal.id =
+            "ticketModal";
+
+
+        modal.className =
+            "ticket-modal";
+
+
+        modal.innerHTML = `
+
+            <div
+                class="ticket-modal-content"
+            >
+
+                <div
+                    class="ticket-modal-header"
+                >
+
+                    <div>
+
+                        <h2>
+
+                            🎫
+                            ${escapeHTML(
+                                ticket.subject
+                            )}
+
+                        </h2>
+
+
+                        <p
+                            class="ticket-modal-info"
+                        >
+
+                            👤
+                            ${escapeHTML(
+                                ticket.userName ||
+                                ticket.name ||
+                                "Inconnu"
+                            )}
+
+                            <br>
+
+                            🆔
+                            ${escapeHTML(
+                                ticket.id
+                            )}
+
+                        </p>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="staff-button"
+                        onclick="closeTicketModal()"
+                    >
+
+                        ✕
+
+                    </button>
+
+                </div>
+
+
+                <div>
+
+                    ${
+                        messages ||
+                        `<div class="empty-tickets">Aucun message.</div>`
+                    }
+
+                </div>
+
+
+                ${actions}
 
             </div>
 
+        `;
 
-        </div>
 
-    </header>
+        modal.addEventListener(
+            "click",
+            function(event) {
 
+                if (
+                    event.target ===
+                    modal
+                ) {
 
+                    closeTicketModal();
 
-    <!-- ==========================================
-         CONTENU PRINCIPAL
-    =========================================== -->
+                }
 
-    <main>
+            }
+        );
 
 
-        <!-- ======================================
-             ACCUEIL
-        ======================================= -->
+        document.body.appendChild(
+            modal
+        );
 
-        <section class="hero">
 
+    } catch (error) {
 
-            <!-- ==================================
-                 IMAGE DE FOND
-            =================================== -->
+        console.error(
+            "❌ Affichage ticket :",
+            error
+        );
 
-            <div
-                class="hero-background"
-            ></div>
 
+        alert(
+            "❌ Impossible de récupérer le ticket."
+        );
 
+    }
 
-            <!-- ==================================
-                 OVERLAY
-            =================================== -->
+}
 
-            <div
-                class="hero-overlay"
-            ></div>
 
+// ============================================================
+// RÉPONDRE
+// ============================================================
 
+async function replyToTicket(id) {
 
-            <!-- ==================================
-                 CONTENU HERO
-            =================================== -->
+    const input =
+        document.getElementById(
+            "ticketReply"
+        );
 
-            <div class="hero-content">
 
+    if (!input) {
 
-                <!-- PETIT TITRE -->
+        return;
 
-                <div class="category">
+    }
 
-                    SITE DE LA GÉNÉRATION DORÉE
 
-                </div>
+    const message =
+        input.value.trim();
 
 
+    if (!message) {
 
-                <!-- TITRE PRINCIPAL -->
+        alert(
+            "❌ Le message est vide."
+        );
 
-                <h1>
+        return;
 
-                    Génération Dorée
+    }
 
-                </h1>
 
+    try {
 
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets/${encodeURIComponent(id)}/messages`,
+                {
 
-                <!-- SOUS-TITRE -->
+                    method:
+                        "POST",
 
-                <p class="location">
+                    headers: {
 
-                    Implantée dans le KB MHA
+                        "Content-Type":
+                            "application/json"
 
-                </p>
+                    },
 
+                    body:
+                        JSON.stringify({
+                            message
+                        })
 
+                }
+            );
 
-                <!-- DESCRIPTION -->
 
-                <p class="description">
+        const data =
+            await response.json();
 
-                    Bienvenue au sein de la Génération Dorée.
-                    Une organisation fondée sur la loyauté,
-                    la puissance et l'ambition, réunissant une
-                    communauté soudée au cœur du RP.
 
-                </p>
+        if (!response.ok) {
 
+            alert(
+                `❌ ${data.message || "Impossible de répondre."}`
+            );
 
+            return;
 
-                <!-- ==================================
-                     STATISTIQUES
-                =================================== -->
+        }
 
-                <div class="statistics">
 
+        closeTicketModal();
 
-                    <div class="stat">
+        await viewTicket(id);
 
-                        <strong>
-                            3400+
-                        </strong>
+        await renderTicketsList();
 
-                        <span>
-                            Membres actifs
-                        </span>
 
-                    </div>
+    } catch (error) {
 
+        console.error(
+            "❌ Réponse ticket :",
+            error
+        );
 
 
-                    <div class="stat">
+        alert(
+            "❌ Erreur de connexion au serveur."
+        );
 
-                        <strong>
-                            24/7
-                        </strong>
+    }
 
-                        <span>
-                            Support
-                        </span>
+}
 
-                    </div>
 
+// ============================================================
+// FERMER UN TICKET
+// ============================================================
 
+async function closeTicket(id) {
 
-                    <div class="stat">
+    if (
+        !confirm(
+            "Voulez-vous vraiment fermer ce ticket ?"
+        )
+    ) {
 
-                        <strong>
-                            100%
-                        </strong>
+        return;
 
-                        <span>
-                            Satisfaction
-                        </span>
+    }
 
-                    </div>
 
+    try {
 
-                </div>
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets/${encodeURIComponent(id)}/close`,
+                {
+                    method:
+                        "POST"
+                }
+            );
 
 
+        const data =
+            await response.json();
 
-                <!-- ==================================
-                     BOUTONS
-                =================================== -->
 
-                <div class="hero-buttons">
+        if (!response.ok) {
 
+            alert(
+                `❌ ${data.message || "Impossible de fermer le ticket."}`
+            );
 
-                    <a
-                        href="Pages/discord.html"
-                        class="button primary"
-                    >
-                        Commencer
-                    </a>
+            return;
 
+        }
 
-                    <a
-                        href="Pages/guide.html"
-                        class="button secondary"
-                    >
-                        Guide du serveur
-                    </a>
 
+        closeTicketModal();
 
-                </div>
+        await renderTicketsList();
 
 
-            </div>
+    } catch (error) {
 
+        console.error(
+            "❌ Fermeture ticket :",
+            error
+        );
 
-        </section>
 
+        alert(
+            "❌ Erreur de connexion au serveur."
+        );
 
-    </main>
+    }
 
+}
 
 
-    <!-- ==========================================
-         FOOTER
-    =========================================== -->
+// ============================================================
+// FERMER MODALE
+// ============================================================
 
-    <footer>
+function closeTicketModal() {
 
-        <p>
-            © 2026 Génération Dorée
-        </p>
+    const modal =
+        document.getElementById(
+            "ticketModal"
+        );
 
-    </footer>
 
+    if (modal) {
 
+        modal.remove();
 
-    <!-- ==========================================
-         JAVASCRIPT PRINCIPAL
-    =========================================== -->
+    }
 
-    <script
-        src="js/script.js"
-    ></script>
+}
 
 
+// ============================================================
+// INITIALISATION
+// ============================================================
 
-    <!-- ==========================================
-         AUTHENTIFICATION DISCORD
-    =========================================== -->
+document.addEventListener(
+    "DOMContentLoaded",
+    async function () {
 
-    <script
-        src="js/auth.js"
-    ></script>
+        initializeTicketForm();
 
+        await updateAuthInterface();
 
-</body>
+        await renderTicketsList();
 
-</html>
+        console.log(
+            "🎫 Génération Dorée - Système de tickets chargé."
+        );
+
+    }
+);
+
+
+// ============================================================
+// EXPORT
+// ============================================================
+
+window.viewTicket =
+    viewTicket;
+
+window.closeTicket =
+    closeTicket;
+
+window.replyToTicket =
+    replyToTicket;
+
+window.closeTicketModal =
+    closeTicketModal;
+
+window.renderTicketsList =
+    renderTicketsList;
+```
