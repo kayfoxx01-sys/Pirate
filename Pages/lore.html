@@ -20,35 +20,38 @@
     <style>
 
         /* =====================================================
-           FOND GLOBAL DE LA PAGE LORE
+           FOND GLOBAL
         ===================================================== */
 
         html,
         body {
 
-            min-height: 100%;
-
             margin: 0;
-
             padding: 0;
 
-            background: #050505;
+            min-height: 100%;
+
+            background: transparent;
+
         }
 
 
         body {
 
-            position: relative;
-
             min-height: 100vh;
 
+            position: relative;
+
             overflow-x: hidden;
+
+            color: #ffffff;
+
         }
 
 
         /* =====================================================
            FOND JJK FIXE
-           Couvre tout l'écran, même en descendant
+           TOUJOURS VISIBLE MÊME EN DESCENDANT
         ===================================================== */
 
         body::before {
@@ -57,17 +60,17 @@
 
             position: fixed;
 
-            inset: 0;
+            top: 0;
+            left: 0;
 
             width: 100vw;
-
             height: 100vh;
 
             background-image:
 
                 linear-gradient(
-                    rgba(0, 0, 0, 0.72),
-                    rgba(0, 0, 0, 0.82)
+                    rgba(0, 0, 0, 0.70),
+                    rgba(0, 0, 0, 0.80)
                 ),
 
                 url("../jjk.png");
@@ -78,14 +81,15 @@
 
             background-repeat: no-repeat;
 
-            z-index: -2;
+            z-index: -10;
 
             pointer-events: none;
+
         }
 
 
         /* =====================================================
-           COUCHE SOMBRE
+           COUCHE NOIRE LÉGÈRE
         ===================================================== */
 
         body::after {
@@ -94,18 +98,18 @@
 
             position: fixed;
 
-            inset: 0;
+            top: 0;
+            left: 0;
 
             width: 100vw;
-
             height: 100vh;
 
-            background:
-                rgba(0, 0, 0, 0.10);
+            background: rgba(0, 0, 0, 0.08);
 
-            z-index: -1;
+            z-index: -9;
 
             pointer-events: none;
+
         }
 
 
@@ -120,10 +124,11 @@
             width: 100%;
 
             padding:
-
                 130px
                 30px
                 80px;
+
+            box-sizing: border-box;
 
             position: relative;
 
@@ -133,11 +138,8 @@
 
             align-items: center;
 
-            box-sizing: border-box;
-
             background: transparent;
 
-            isolation: isolate;
         }
 
 
@@ -151,11 +153,12 @@
 
             max-width: 1100px;
 
+            margin: 0 auto;
+
             position: relative;
 
             z-index: 2;
 
-            margin: 0 auto;
         }
 
 
@@ -168,15 +171,6 @@
             width: 100%;
 
             min-height: 520px;
-
-            background:
-                rgba(16, 16, 16, 0.82);
-
-            border:
-                1px solid
-                rgba(212, 175, 55, 0.28);
-
-            border-radius: 18px;
 
             padding: 60px;
 
@@ -191,6 +185,15 @@
             align-items: center;
 
             text-align: center;
+
+            background:
+                rgba(16, 16, 16, 0.82);
+
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.28);
+
+            border-radius: 18px;
 
             box-shadow:
 
@@ -208,6 +211,7 @@
 
             transition:
                 0.3s ease;
+
         }
 
 
@@ -223,6 +227,7 @@
 
                 inset 0 0 40px
                 rgba(0, 0, 0, 0.25);
+
         }
 
 
@@ -232,33 +237,27 @@
 
         .lore-small-title {
 
-            color:
-                #d4af37;
+            color: #d4af37;
 
-            font-size:
-                14px;
+            font-size: 14px;
 
-            font-weight:
-                bold;
+            font-weight: bold;
 
-            text-transform:
-                uppercase;
+            text-transform: uppercase;
 
-            letter-spacing:
-                3px;
+            letter-spacing: 3px;
 
-            margin-bottom:
-                18px;
+            margin-bottom: 18px;
 
             text-shadow:
-
                 0 0 15px
                 rgba(212, 175, 55, 0.25);
+
         }
 
 
         /* =====================================================
-           TITRE LORE
+           TITRE
         ===================================================== */
 
         .lore-card h1 {
@@ -266,30 +265,26 @@
             margin:
                 0 0 20px;
 
-            color:
-                #ffffff;
+            color: #ffffff;
 
-            font-size:
-                46px;
+            font-size: 46px;
 
-            font-weight:
-                900;
+            font-weight: 900;
 
             text-shadow:
-
                 0 4px 20px
                 rgba(0, 0, 0, 0.80);
+
         }
 
 
         /* =====================================================
-           INTRODUCTION
+           INTRO
         ===================================================== */
 
         .lore-intro {
 
-            max-width:
-                700px;
+            max-width: 700px;
 
             margin:
                 0 auto 40px;
@@ -297,11 +292,10 @@
             color:
                 rgba(255, 255, 255, 0.68);
 
-            font-size:
-                17px;
+            font-size: 17px;
 
-            line-height:
-                1.8;
+            line-height: 1.8;
+
         }
 
 
@@ -311,49 +305,38 @@
 
         .lore-button {
 
-            display:
-                inline-flex;
+            display: inline-flex;
 
-            align-items:
-                center;
+            align-items: center;
 
-            justify-content:
-                center;
+            justify-content: center;
 
-            gap:
-                12px;
+            gap: 12px;
 
             padding:
                 13px 24px;
 
-            background:
-                #d4af37;
+            background: #d4af37;
 
-            color:
-                #080808;
+            color: #080808;
 
-            border:
-                none;
+            border: none;
 
-            border-radius:
-                8px;
+            border-radius: 8px;
 
-            font-size:
-                15px;
+            font-size: 15px;
 
-            font-weight:
-                bold;
+            font-weight: bold;
 
-            cursor:
-                pointer;
+            cursor: pointer;
 
             transition:
                 0.2s ease;
 
             box-shadow:
-
                 0 8px 25px
                 rgba(0, 0, 0, 0.40);
+
         }
 
 
@@ -366,19 +349,18 @@
                 brightness(1.10);
 
             box-shadow:
-
                 0 12px 30px
                 rgba(0, 0, 0, 0.55);
+
         }
 
 
         .lore-arrow {
 
-            font-size:
-                20px;
+            font-size: 20px;
 
-            line-height:
-                1;
+            line-height: 1;
+
         }
 
 
@@ -388,11 +370,13 @@
 
         .lore-content {
 
-            display:
-                none;
+            display: none;
 
-            width:
-                100%;
+            width: 100%;
+
+            padding: 55px;
+
+            box-sizing: border-box;
 
             background:
                 rgba(16, 16, 16, 0.88);
@@ -401,14 +385,7 @@
                 1px solid
                 rgba(212, 175, 55, 0.28);
 
-            border-radius:
-                18px;
-
-            padding:
-                55px;
-
-            box-sizing:
-                border-box;
+            border-radius: 18px;
 
             box-shadow:
 
@@ -427,13 +404,14 @@
             animation:
                 loreAppear
                 0.3s ease;
+
         }
 
 
         .lore-content.active {
 
-            display:
-                block;
+            display: block;
+
         }
 
 
@@ -445,70 +423,65 @@
 
             from {
 
-                opacity:
-                    0;
+                opacity: 0;
 
                 transform:
                     translateY(15px);
+
             }
 
             to {
 
-                opacity:
-                    1;
+                opacity: 1;
 
                 transform:
                     translateY(0);
+
             }
+
         }
 
 
         /* =====================================================
-           TITRE DU GRAND CADRE
+           TITRE DU LORE
         ===================================================== */
 
         .lore-content-header {
 
-            text-align:
-                center;
+            text-align: center;
 
-            margin-bottom:
-                45px;
+            margin-bottom: 45px;
+
         }
 
 
         .lore-content-header h2 {
 
-            margin:
-                0;
+            margin: 0;
 
-            color:
-                #ffffff;
+            color: #ffffff;
 
-            font-size:
-                42px;
+            font-size: 42px;
 
-            font-weight:
-                900;
+            font-weight: 900;
 
             text-shadow:
-
                 0 4px 20px
                 rgba(0, 0, 0, 0.80);
+
         }
 
 
         /* =====================================================
-           CONTENU DU LORE
+           CONTENU
         ===================================================== */
 
         .lore-content-body {
 
-            max-width:
-                900px;
+            max-width: 900px;
 
-            margin:
-                0 auto;
+            margin: 0 auto;
+
         }
 
 
@@ -517,19 +490,16 @@
             margin:
                 0 0 30px;
 
-            color:
-                #d4af37;
+            color: #d4af37;
 
-            font-size:
-                30px;
+            font-size: 30px;
 
-            font-weight:
-                800;
+            font-weight: 800;
 
             text-shadow:
-
                 0 0 15px
                 rgba(212, 175, 55, 0.20);
+
         }
 
 
@@ -541,11 +511,10 @@
             color:
                 rgba(255, 255, 255, 0.78);
 
-            font-size:
-                17px;
+            font-size: 17px;
 
-            line-height:
-                1.9;
+            line-height: 1.9;
+
         }
 
 
@@ -555,14 +524,12 @@
 
         .lore-back-container {
 
-            display:
-                flex;
+            display: flex;
 
-            justify-content:
-                center;
+            justify-content: center;
 
-            margin-top:
-                45px;
+            margin-top: 45px;
+
         }
 
 
@@ -578,25 +545,21 @@
                 1px solid
                 rgba(255, 255, 255, 0.15);
 
-            border-radius:
-                8px;
+            border-radius: 8px;
 
-            color:
-                #ffffff;
+            color: #ffffff;
 
-            cursor:
-                pointer;
+            cursor: pointer;
 
-            font-size:
-                14px;
+            font-size: 14px;
 
             transition:
                 0.2s ease;
 
             box-shadow:
-
                 0 6px 20px
                 rgba(0, 0, 0, 0.30);
+
         }
 
 
@@ -610,6 +573,7 @@
 
             transform:
                 translateY(-2px);
+
         }
 
 
@@ -621,8 +585,7 @@
 
             .lore-page {
 
-                min-height:
-                    100vh;
+                min-height: 100vh;
 
                 padding:
                     120px
@@ -631,33 +594,33 @@
 
                 align-items:
                     flex-start;
+
             }
 
 
             .lore-card {
 
-                min-height:
-                    450px;
+                min-height: 450px;
 
                 padding:
                     35px 25px;
 
-                border-radius:
-                    14px;
+                border-radius: 14px;
+
             }
 
 
             .lore-card h1 {
 
-                font-size:
-                    36px;
+                font-size: 36px;
+
             }
 
 
             .lore-intro {
 
-                font-size:
-                    15px;
+                font-size: 15px;
+
             }
 
 
@@ -666,40 +629,33 @@
                 padding:
                     35px 25px;
 
-                border-radius:
-                    14px;
+                border-radius: 14px;
+
             }
 
 
             .lore-content-header h2 {
 
-                font-size:
-                    34px;
+                font-size: 34px;
+
             }
 
 
             .lore-content-body h3 {
 
-                font-size:
-                    25px;
+                font-size: 25px;
+
             }
 
 
             .lore-content-body p {
 
-                font-size:
-                    15px;
+                font-size: 15px;
 
-                line-height:
-                    1.8;
+                line-height: 1.8;
+
             }
 
-
-            body::before {
-
-                background-position:
-                    center center;
-            }
         }
 
     </style>
@@ -767,7 +723,6 @@
     </header>
 
 
-
     <!-- =====================================================
          PAGE LORE
     ===================================================== -->
@@ -824,7 +779,6 @@
             </section>
 
 
-
             <!-- =================================================
                  GRAND CADRE DU LORE
             ================================================= -->
@@ -833,7 +787,6 @@
                 class="lore-content"
                 id="loreContent"
             >
-
 
                 <div class="lore-content-header">
 
@@ -844,14 +797,10 @@
                 </div>
 
 
-
                 <div class="lore-content-body">
 
-
                     <h3>
-
                         « Génération Dorée »
-
                     </h3>
 
 
@@ -892,14 +841,8 @@
 
                     </p>
 
-
                 </div>
 
-
-
-                <!-- =================================================
-                     RETOUR
-                ================================================= -->
 
                 <div class="lore-back-container">
 
@@ -914,14 +857,11 @@
 
                 </div>
 
-
             </section>
-
 
         </div>
 
     </main>
-
 
 
     <!-- =====================================================
@@ -943,8 +883,11 @@
 
 
             window.scrollTo({
+
                 top: 0,
+
                 behavior: "smooth"
+
             });
 
         }
@@ -963,8 +906,11 @@
 
 
             window.scrollTo({
+
                 top: 0,
+
                 behavior: "smooth"
+
             });
 
         }
