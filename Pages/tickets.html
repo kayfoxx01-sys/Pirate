@@ -33,13 +33,11 @@
                 70px;
 
             background:
-
                 radial-gradient(
                     circle at top center,
                     rgba(212,175,55,0.10),
                     transparent 45%
                 ),
-
                 #050505;
 
         }
@@ -48,9 +46,7 @@
         .tickets-container {
 
             width: 100%;
-
             max-width: 1200px;
-
             margin: 0 auto;
 
         }
@@ -63,7 +59,6 @@
         .tickets-header {
 
             text-align: center;
-
             margin-bottom: 45px;
 
         }
@@ -86,7 +81,6 @@
                 );
 
             font-weight: 900;
-
             margin-bottom: 15px;
 
         }
@@ -95,14 +89,12 @@
         .tickets-header p {
 
             max-width: 650px;
-
             margin: auto;
 
             color:
                 rgba(255,255,255,0.60);
 
             line-height: 1.7;
-
             font-size: 15px;
 
         }
@@ -112,30 +104,12 @@
            PANELS
         ===================================================== */
 
-        .ticket-panels {
-
-            width: 100%;
-
-        }
-
-
         .ticket-panel {
 
             width: 100%;
 
         }
 
-
-        .hidden {
-
-            display: none !important;
-
-        }
-
-
-        /* =====================================================
-           CARTE
-        ===================================================== */
 
         .ticket-card {
 
@@ -163,9 +137,7 @@
         .ticket-card h2 {
 
             font-size: 21px;
-
             margin-bottom: 8px;
-
             font-weight: 900;
 
         }
@@ -177,9 +149,7 @@
                 rgba(255,255,255,0.55);
 
             font-size: 14px;
-
             line-height: 1.6;
-
             margin-bottom: 25px;
 
         }
@@ -192,9 +162,7 @@
         .ticket-form {
 
             display: flex;
-
             flex-direction: column;
-
             gap: 18px;
 
         }
@@ -203,9 +171,7 @@
         .form-group {
 
             display: flex;
-
             flex-direction: column;
-
             gap: 8px;
 
         }
@@ -214,7 +180,6 @@
         .form-group label {
 
             font-size: 13px;
-
             font-weight: 700;
 
             color:
@@ -224,8 +189,7 @@
 
 
         .form-group input,
-        .form-group textarea,
-        #staffDiscordName {
+        .form-group textarea {
 
             width: 100%;
 
@@ -261,15 +225,13 @@
         .form-group textarea {
 
             min-height: 150px;
-
             resize: vertical;
 
         }
 
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        #staffDiscordName:focus {
+        .form-group textarea:focus {
 
             border-color:
                 rgba(212,175,55,0.65);
@@ -296,7 +258,6 @@
             border-radius: 8px;
 
             font-size: 13px;
-
             font-weight: 800;
 
             cursor: pointer;
@@ -310,9 +271,7 @@
         .main-button {
 
             background: white;
-
             color: #050505;
-
             border: none;
 
         }
@@ -379,7 +338,6 @@
         .staff-button.primary {
 
             background: white;
-
             color: #050505;
 
         }
@@ -393,10 +351,12 @@
 
 
         /* =====================================================
-           MESSAGE FORMULAIRE
+           MESSAGE
         ===================================================== */
 
         .ticket-message {
+
+            display: none;
 
             margin-top: 15px;
 
@@ -413,6 +373,8 @@
 
         .ticket-message.success {
 
+            display: block;
+
             background:
                 rgba(46,204,113,0.10);
 
@@ -427,6 +389,8 @@
 
 
         .ticket-message.error {
+
+            display: block;
 
             background:
                 rgba(231,76,60,0.10);
@@ -458,8 +422,7 @@
 
             align-items: center;
 
-            justify-content:
-                space-between;
+            justify-content: space-between;
 
             gap: 15px;
 
@@ -471,6 +434,13 @@
         .staff-header h2 {
 
             margin: 0;
+
+        }
+
+
+        .staff-header p {
+
+            margin-top: 8px;
 
         }
 
@@ -565,8 +535,7 @@
 
             align-items: center;
 
-            justify-content:
-                space-between;
+            justify-content: space-between;
 
             gap: 15px;
 
@@ -578,7 +547,6 @@
         .ticket-item-title {
 
             font-size: 16px;
-
             font-weight: 800;
 
         }
@@ -615,7 +583,6 @@
                 #7dffad;
 
             font-size: 10px;
-
             font-weight: 800;
 
         }
@@ -637,6 +604,210 @@
                 rgba(255,255,255,0.10);
 
             border-radius: 10px;
+
+        }
+
+
+        /* =====================================================
+           MODALE TICKET
+        ===================================================== */
+
+        .ticket-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 9999;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,0.80);
+
+            backdrop-filter:
+                blur(8px);
+
+        }
+
+
+        .ticket-modal-content {
+
+            width: 100%;
+
+            max-width: 700px;
+
+            max-height: 90vh;
+
+            overflow: auto;
+
+            padding: 25px;
+
+            border-radius: 14px;
+
+            background: #0c0c0c;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.5);
+
+            box-sizing: border-box;
+
+        }
+
+
+        .ticket-modal-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .ticket-modal-header h2 {
+
+            margin:
+                0
+                0
+                8px
+                0;
+
+        }
+
+
+        .ticket-modal-info {
+
+            opacity: 0.5;
+
+            margin: 0;
+
+            font-size: 13px;
+
+            line-height: 1.7;
+
+        }
+
+
+        .ticket-chat-message {
+
+            padding: 15px;
+
+            margin-bottom: 10px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+        }
+
+
+        .ticket-chat-message strong {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .ticket-chat-message p {
+
+            margin:
+                0
+                0
+                8px
+                0;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+
+            line-height: 1.6;
+
+        }
+
+
+        .ticket-chat-message small {
+
+            opacity: 0.45;
+
+        }
+
+
+        .ticket-reply {
+
+            width: 100%;
+
+            min-height: 120px;
+
+            padding: 12px;
+
+            margin-top: 15px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            color: white;
+
+            resize: vertical;
+
+            box-sizing: border-box;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        .ticket-reply:focus {
+
+            outline: none;
+
+            border-color:
+                rgba(212,175,55,0.65);
+
+        }
+
+
+        .ticket-modal-actions {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 10px;
 
         }
 
@@ -695,6 +866,13 @@
 
             }
 
+
+            .ticket-modal-content {
+
+                padding: 20px;
+
+            }
+
         }
 
     </style>
@@ -717,18 +895,14 @@
             href="../index.html"
             class="logo"
         >
-
             Génération Dorée
-
         </a>
 
 
         <nav class="navigation">
 
             <a href="../index.html">
-
                 Accueil
-
             </a>
 
 
@@ -736,16 +910,12 @@
                 href="tickets.html"
                 class="active"
             >
-
                 Tickets
-
             </a>
 
 
             <a href="discord.html">
-
                 Discord
-
             </a>
 
         </nav>
@@ -765,31 +935,25 @@
 
 
         <!-- =================================================
-             TITRE
+             HEADER
         ================================================== -->
 
         <div class="tickets-header">
 
             <div class="category">
-
                 SUPPORT
-
             </div>
 
 
             <h1>
-
                 Centre de tickets
-
             </h1>
 
 
             <p>
-
                 Besoin d'aide ou d'une intervention du staff ?
                 Crée ton ticket et notre équipe pourra traiter
                 ta demande.
-
             </p>
 
         </div>
@@ -804,17 +968,13 @@
             <div class="ticket-card">
 
                 <h2>
-
                     🎫 Créer un ticket
-
                 </h2>
 
 
                 <p>
-
                     Explique clairement ta demande afin que
                     l'équipe puisse t'aider rapidement.
-
                 </p>
 
 
@@ -829,9 +989,7 @@
                     <div class="form-group">
 
                         <label for="ticketName">
-
                             Nom Discord
-
                         </label>
 
 
@@ -852,9 +1010,7 @@
                     <div class="form-group">
 
                         <label for="ticketSubject">
-
                             Sujet
-
                         </label>
 
 
@@ -873,15 +1029,13 @@
 
                     <div class="form-group">
 
-                        <label for="ticketMessage">
-
+                        <label for="ticketMessageInput">
                             Message
-
                         </label>
 
 
                         <textarea
-                            id="ticketMessage"
+                            id="ticketMessageInput"
                             placeholder="Explique ta demande..."
                             maxlength="3000"
                             required
@@ -894,9 +1048,7 @@
                         type="submit"
                         class="main-button"
                     >
-
                         🎫 Créer le ticket
-
                     </button>
 
 
@@ -904,7 +1056,6 @@
                         id="ticketMessage"
                         class="ticket-message"
                     ></div>
-
 
                 </form>
 
@@ -930,17 +1081,13 @@
                     <div>
 
                         <h2>
-
                             🛡️ Espace Staff
-
                         </h2>
 
 
                         <p>
-
-                            Connexion réservée aux membres du staff
-                            de Génération Dorée.
-
+                            Connexion réservée aux membres du
+                            staff de Génération Dorée.
                         </p>
 
                     </div>
@@ -949,8 +1096,8 @@
 
 
                 <!-- =================================================
-                     STATUT STAFF
-                ================================================== -->
+                     STATUT
+                ================================================= -->
 
                 <div
                     id="staffStatus"
@@ -958,60 +1105,30 @@
                 >
 
                     <strong>
-
                         Non connecté
-
                     </strong>
 
 
                     <span>
-
-                        Connecte-toi pour accéder aux tickets.
-
+                        Connecte-toi avec Discord pour accéder
+                        aux tickets.
                     </span>
 
                 </div>
 
 
                 <!-- =================================================
-                     CONNEXION STAFF
-                ================================================== -->
-
-                <div
-                    class="form-group"
-                    style="margin-bottom:15px;"
-                >
-
-                    <label for="staffDiscordName">
-
-                        Nom Discord
-
-                    </label>
-
-
-                    <input
-                        id="staffDiscordName"
-                        type="text"
-                        placeholder="Ton nom Discord"
-                        maxlength="50"
-                        autocomplete="off"
-                    >
-
-                </div>
-
+                     CONNEXION DISCORD
+                ================================================= -->
 
                 <div class="staff-actions">
-
 
                     <button
                         id="staffLogin"
                         type="button"
                         class="main-button"
-                        onclick="loginStaff()"
                     >
-
-                        🔐 Se connecter
-
+                        🔐 Se connecter avec Discord
                     </button>
 
 
@@ -1019,21 +1136,17 @@
                         id="staffLogout"
                         type="button"
                         class="danger-button"
-                        onclick="logoutStaff()"
                         style="display:none;"
                     >
-
                         🚪 Déconnexion
-
                     </button>
-
 
                 </div>
 
 
                 <!-- =================================================
-                     TICKETS STAFF
-                ================================================== -->
+                     TICKETS
+                ================================================= -->
 
                 <div
                     style="
@@ -1052,11 +1165,8 @@
                     >
 
                         <h3 style="margin:0;">
-
                             🎫 Tickets ouverts
-
                         </h3>
-
 
                     </div>
 
@@ -1067,10 +1177,8 @@
                     >
 
                         <div class="empty-tickets">
-
-                            Connecte-toi en tant que Staff pour voir
-                            les tickets ouverts.
-
+                            🔒 Connecte-toi avec Discord
+                            pour voir les tickets.
                         </div>
 
                     </div>

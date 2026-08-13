@@ -1,241 +1,43 @@
 // ============================================================
 // GÉNÉRATION DORÉE
 // SYSTÈME DE TICKETS
+// API DISTANTE
 // ============================================================
 
-const TICKETS_KEY = "generation_doree_tickets";
-const STAFF_KEY = "generation_doree_staff";
-const CURRENT_STAFF_KEY = "generation_doree_current_staff";
+const TICKETS_API =
+    "http://147.135.213.131:20166";
 
 
 // ============================================================
 // OUTILS
 // ============================================================
 
-function generateId() {
-
-    return (
-        Date.now().toString(36) +
-        "-" +
-        Math.random().toString(36).substring(2, 10)
-    );
-
-}
-
-
 function escapeHTML(text) {
 
-    const div = document.createElement("div");
+    const div =
+        document.createElement("div");
 
-    div.textContent = text ?? "";
+    div.textContent =
+        text ?? "";
 
     return div.innerHTML;
 
 }
 
 
-function getTickets() {
+function formatDate(date) {
 
     try {
 
-        const data =
-            localStorage.getItem(TICKETS_KEY);
-
-        if (!data) {
-            return [];
-        }
-
-        const tickets =
-            JSON.parse(data);
-
-        return Array.isArray(tickets)
-            ? tickets
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Erreur récupération tickets :",
-            error
+        return new Date(
+            date
+        ).toLocaleString(
+            "fr-FR"
         );
 
-        return [];
+    } catch {
 
-    }
-
-}
-
-
-function saveTickets(tickets) {
-
-    try {
-
-        localStorage.setItem(
-            TICKETS_KEY,
-            JSON.stringify(tickets)
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Erreur sauvegarde tickets :",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-function getStaff() {
-
-    try {
-
-        const data =
-            localStorage.getItem(STAFF_KEY);
-
-        if (!data) {
-            return [];
-        }
-
-        const staff =
-            JSON.parse(data);
-
-        return Array.isArray(staff)
-            ? staff
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Erreur récupération staff :",
-            error
-        );
-
-        return [];
-
-    }
-
-}
-
-
-function saveStaff(staff) {
-
-    try {
-
-        localStorage.setItem(
-            STAFF_KEY,
-            JSON.stringify(staff)
-        );
-
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Erreur sauvegarde staff :",
-            error
-        );
-
-        return false;
-
-    }
-
-}
-
-
-function getCurrentStaff() {
-
-    try {
-
-        const data =
-            localStorage.getItem(
-                CURRENT_STAFF_KEY
-            );
-
-        if (!data) {
-            return null;
-        }
-
-        return JSON.parse(data);
-
-    } catch (error) {
-
-        console.error(
-            "Erreur récupération staff connecté :",
-            error
-        );
-
-        return null;
-
-    }
-
-}
-
-
-function setCurrentStaff(staff) {
-
-    localStorage.setItem(
-        CURRENT_STAFF_KEY,
-        JSON.stringify(staff)
-    );
-
-}
-
-
-function clearCurrentStaff() {
-
-    localStorage.removeItem(
-        CURRENT_STAFF_KEY
-    );
-
-}
-
-
-// ============================================================
-// RÔLES STAFF
-// ============================================================
-
-function getRoleName(role) {
-
-    switch (role) {
-
-        case "moderator":
-            return "🛡️ Modérateur";
-
-        case "admin":
-            return "🔧 Administrateur";
-
-        case "founder":
-            return "👑 Fondateur";
-
-        default:
-            return "👤 Membre Staff";
-
-    }
-
-}
-
-
-function roleLevel(role) {
-
-    switch (role) {
-
-        case "moderator":
-            return 1;
-
-        case "admin":
-            return 2;
-
-        case "founder":
-            return 3;
-
-        default:
-            return 0;
+        return "Date inconnue";
 
     }
 
@@ -243,44 +45,34 @@ function roleLevel(role) {
 
 
 // ============================================================
-// INITIALISATION STAFF
+// MESSAGE
 // ============================================================
 
-function initializeStaff() {
+function showTicketMessage(
+    message,
+    type
+) {
 
-    const staff =
-        getStaff();
+    const element =
+        document.getElementById(
+            "ticketMessage"
+        );
 
-    if (staff.length > 0) {
+    if (!element) {
         return;
     }
 
-    const founder = {
+    element.textContent =
+        message;
 
-        id: generateId(),
-
-        name: "FONDATEUR",
-
-        role: "founder",
-
-        createdAt:
-            new Date().toISOString()
-
-    };
-
-    staff.push(founder);
-
-    saveStaff(staff);
-
-    console.log(
-        "👑 Premier fondateur créé : FONDATEUR"
-    );
+    element.className =
+        `ticket-message ${type}`;
 
 }
 
 
 // ============================================================
-// CRÉATION D'UN TICKET
+// CRÉER UN TICKET
 // ============================================================
 
 function initializeTicketForm() {
@@ -294,16 +86,19 @@ function initializeTicketForm() {
         return;
     }
 
-    // Évite de créer plusieurs listeners
-    if (form.dataset.ticketInitialized === "true") {
+    if (
+        form.dataset.ticketInitialized ===
+        "true"
+    ) {
         return;
     }
 
-    form.dataset.ticketInitialized = "true";
+    form.dataset.ticketInitialized =
+        "true";
 
     form.addEventListener(
         "submit",
-        function(event) {
+        async function(event) {
 
             event.preventDefault();
 
@@ -328,10 +123,6 @@ function initializeTicketForm() {
                 !messageInput
             ) {
 
-                console.error(
-                    "❌ Champs du formulaire ticket introuvables."
-                );
-
                 return;
 
             }
@@ -344,10 +135,6 @@ function initializeTicketForm() {
 
             const message =
                 messageInput.value.trim();
-
-            // ------------------------------------------------
-            // VALIDATION
-            // ------------------------------------------------
 
             if (!name) {
 
@@ -382,168 +169,81 @@ function initializeTicketForm() {
 
             }
 
-            if (name.length > 100) {
+            try {
+
+                const response =
+                    await fetch(
+                        `${TICKETS_API}/api/tickets`,
+                        {
+
+                            method:
+                                "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    name:
+                                        name,
+
+                                    subject:
+                                        subject,
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (!response.ok) {
+
+                    showTicketMessage(
+                        `❌ ${data.message || "Impossible de créer le ticket."}`,
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+                form.reset();
 
                 showTicketMessage(
-                    "❌ Nom Discord trop long.",
+                    `✅ Ticket créé ! Numéro : ${data.ticket.id}`,
+                    "success"
+                );
+
+                console.log(
+                    "🎫 Ticket créé :",
+                    data.ticket
+                );
+
+                await renderTicketsList();
+
+            } catch (error) {
+
+                console.error(
+                    "❌ Création ticket :",
+                    error
+                );
+
+                showTicketMessage(
+                    "❌ Impossible de contacter le serveur.",
                     "error"
                 );
 
-                return;
-
             }
-
-            if (subject.length > 200) {
-
-                showTicketMessage(
-                    "❌ Sujet trop long.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            if (message.length > 3000) {
-
-                showTicketMessage(
-                    "❌ Message trop long.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            // ------------------------------------------------
-            // RÉCUPÉRATION TICKETS
-            // ------------------------------------------------
-
-            const tickets =
-                getTickets();
-
-            // ------------------------------------------------
-            // VÉRIFICATION TICKET DÉJÀ OUVERT
-            // ------------------------------------------------
-
-            const existingTicket =
-                tickets.find(
-                    ticket =>
-
-                        ticket.discordName &&
-                        ticket.discordName
-                            .toLowerCase() ===
-                            name.toLowerCase() &&
-
-                        ticket.status === "open"
-                );
-
-            if (existingTicket) {
-
-                showTicketMessage(
-                    "⚠️ Tu as déjà un ticket ouvert.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            // ------------------------------------------------
-            // CRÉATION
-            // ------------------------------------------------
-
-            const now =
-                new Date().toISOString();
-
-            const ticket = {
-
-                id:
-                    generateId(),
-
-                discordName:
-                    name,
-
-                subject:
-                    subject,
-
-                status:
-                    "open",
-
-                createdAt:
-                    now,
-
-                updatedAt:
-                    now,
-
-                closedAt:
-                    null,
-
-                closedBy:
-                    null,
-
-                messages: [
-
-                    {
-
-                        id:
-                            generateId(),
-
-                        author:
-                            name,
-
-                        message:
-                            message,
-
-                        staff:
-                            false,
-
-                        role:
-                            null,
-
-                        date:
-                            now
-
-                    }
-
-                ]
-
-            };
-
-            tickets.push(ticket);
-
-            const saved =
-                saveTickets(tickets);
-
-            if (!saved) {
-
-                showTicketMessage(
-                    "❌ Impossible d'enregistrer le ticket.",
-                    "error"
-                );
-
-                return;
-
-            }
-
-            // ------------------------------------------------
-            // RESET
-            // ------------------------------------------------
-
-            form.reset();
-
-            showTicketMessage(
-                `✅ Ticket créé avec succès ! Numéro : ${ticket.id}`,
-                "success"
-            );
-
-            console.log(
-                "🎫 Nouveau ticket :",
-                ticket
-            );
-
-            // Actualisation interface staff
-            renderTicketsList();
 
         }
     );
@@ -552,37 +252,61 @@ function initializeTicketForm() {
 
 
 // ============================================================
-// MESSAGE FORMULAIRE
+// RÉCUPÉRER LES TICKETS STAFF
 // ============================================================
 
-function showTicketMessage(
-    message,
-    type
-) {
+async function getStaffTickets() {
 
-    const element =
-        document.getElementById(
-            "ticketMessage"
+    try {
+
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets`,
+                {
+                    method:
+                        "GET",
+
+                    credentials:
+                        "include"
+                }
+            );
+
+        if (!response.ok) {
+
+            return null;
+
+        }
+
+        const data =
+            await response.json();
+
+        if (!data.success) {
+
+            return null;
+
+        }
+
+        return data.tickets || [];
+
+    } catch (error) {
+
+        console.error(
+            "❌ Récupération tickets :",
+            error
         );
 
-    if (!element) {
-        return;
+        return null;
+
     }
-
-    element.textContent =
-        message;
-
-    element.className =
-        `ticket-message ${type}`;
 
 }
 
 
 // ============================================================
-// AFFICHAGE DES TICKETS STAFF
+// AFFICHAGE DES TICKETS
 // ============================================================
 
-function renderTicketsList() {
+async function renderTicketsList() {
 
     const container =
         document.getElementById(
@@ -593,20 +317,16 @@ function renderTicketsList() {
         return;
     }
 
-    const currentStaff =
-        getCurrentStaff();
+    const currentUser =
+        await getCurrentUser();
 
-    // --------------------------------------------------------
-    // PAS CONNECTÉ
-    // --------------------------------------------------------
-
-    if (!currentStaff) {
+    if (!currentUser) {
 
         container.innerHTML = `
 
             <div class="empty-tickets">
 
-                🔒 Connecte-toi en tant que Staff
+                🔒 Connecte-toi avec Discord
                 pour voir les tickets.
 
             </div>
@@ -617,22 +337,47 @@ function renderTicketsList() {
 
     }
 
-    // --------------------------------------------------------
-    // RÉCUPÉRATION
-    // --------------------------------------------------------
+    if (!currentUser.isStaff) {
+
+        container.innerHTML = `
+
+            <div class="empty-tickets">
+
+                🚫 Ton compte Discord n'a pas
+                accès à l'espace Staff.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
     const tickets =
-        getTickets();
+        await getStaffTickets();
+
+    if (tickets === null) {
+
+        container.innerHTML = `
+
+            <div class="empty-tickets">
+
+                ❌ Impossible de récupérer les tickets.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
 
     const openTickets =
         tickets.filter(
             ticket =>
                 ticket.status === "open"
         );
-
-    // --------------------------------------------------------
-    // AUCUN TICKET
-    // --------------------------------------------------------
 
     if (!openTickets.length) {
 
@@ -650,22 +395,8 @@ function renderTicketsList() {
 
     }
 
-    // --------------------------------------------------------
-    // TRI : PLUS RÉCENT EN PREMIER
-    // --------------------------------------------------------
-
-    openTickets.sort(
-        (a, b) =>
-
-            new Date(b.updatedAt) -
-            new Date(a.updatedAt)
-    );
-
-    container.innerHTML = "";
-
-    // --------------------------------------------------------
-    // AFFICHAGE
-    // --------------------------------------------------------
+    container.innerHTML =
+        "";
 
     openTickets.forEach(
         ticket => {
@@ -703,7 +434,7 @@ function renderTicketsList() {
 
                     👤
                     ${escapeHTML(
-                        ticket.discordName
+                        ticket.userName
                     )}
 
                     <br>
@@ -712,6 +443,12 @@ function renderTicketsList() {
                     ${escapeHTML(
                         ticket.id
                     )}
+
+                    <br>
+
+                    💬
+                    ${ticket.messageCount}
+                    message(s)
 
                     <br>
 
@@ -746,22 +483,325 @@ function renderTicketsList() {
 
 
 // ============================================================
-// FORMAT DATE
+// VOIR UN TICKET
 // ============================================================
 
-function formatDate(date) {
+async function viewTicket(id) {
+
+    closeTicketModal();
 
     try {
 
-        return new Date(
-            date
-        ).toLocaleString(
-            "fr-FR"
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/tickets/${encodeURIComponent(id)}`,
+                {
+                    method:
+                        "GET",
+
+                    credentials:
+                        "include"
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                `❌ ${data.message || "Accès refusé."}`
+            );
+
+            return;
+
+        }
+
+        const ticket =
+            data.ticket;
+
+        let messages =
+            "";
+
+        if (
+            Array.isArray(
+                ticket.messages
+            )
+        ) {
+
+            ticket.messages.forEach(
+                message => {
+
+                    const label =
+                        message.staff
+                            ? "🛡️ Staff"
+                            : "👤 Membre";
+
+                    messages += `
+
+                        <div
+                            style="
+                                padding:15px;
+                                margin-bottom:10px;
+                                border-radius:10px;
+                                background:rgba(255,255,255,0.04);
+                                border:1px solid rgba(255,255,255,0.08);
+                            "
+                        >
+
+                            <strong>
+
+                                ${label}
+
+                                —
+
+                                ${escapeHTML(
+                                    message.author
+                                )}
+
+                            </strong>
+
+                            <p
+                                style="
+                                    margin:8px 0;
+                                    white-space:pre-wrap;
+                                    word-break:break-word;
+                                "
+                            >
+
+                                ${escapeHTML(
+                                    message.message
+                                )}
+
+                            </p>
+
+                            <small
+                                style="
+                                    opacity:0.45;
+                                "
+                            >
+
+                                ${formatDate(
+                                    message.date
+                                )}
+
+                            </small>
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+        }
+
+        let actions =
+            "";
+
+        if (
+            ticket.status ===
+            "open"
+        ) {
+
+            actions = `
+
+                <textarea
+                    id="ticketReply"
+                    placeholder="Écrire une réponse..."
+                    maxlength="3000"
+                    style="
+                        width:100%;
+                        min-height:120px;
+                        padding:12px;
+                        margin-top:15px;
+                        border-radius:8px;
+                        background:rgba(255,255,255,0.04);
+                        border:1px solid rgba(255,255,255,0.12);
+                        color:white;
+                        resize:vertical;
+                        box-sizing:border-box;
+                    "
+                ></textarea>
+
+                <button
+                    type="button"
+                    class="staff-button primary"
+                    style="margin-top:10px;"
+                    onclick="replyToTicket('${ticket.id}')"
+                >
+
+                    💬 Répondre
+
+                </button>
+
+                <button
+                    type="button"
+                    class="staff-button"
+                    style="margin-top:10px;"
+                    onclick="closeTicket('${ticket.id}')"
+                >
+
+                    🔒 Fermer le ticket
+
+                </button>
+
+            `;
+
+        } else {
+
+            actions = `
+
+                <div
+                    class="empty-tickets"
+                    style="margin-top:15px;"
+                >
+
+                    🔴 Ce ticket est fermé.
+
+                </div>
+
+            `;
+
+        }
+
+        const modal =
+            document.createElement(
+                "div"
+            );
+
+        modal.id =
+            "ticketModal";
+
+        modal.style.cssText = `
+
+            position:fixed;
+            inset:0;
+            z-index:9999;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            padding:20px;
+            background:rgba(0,0,0,0.80);
+            backdrop-filter:blur(8px);
+
+        `;
+
+        modal.innerHTML = `
+
+            <div
+                style="
+                    width:100%;
+                    max-width:700px;
+                    max-height:90vh;
+                    overflow:auto;
+                    padding:25px;
+                    border-radius:14px;
+                    background:#0c0c0c;
+                    border:1px solid rgba(255,255,255,0.12);
+                    box-shadow:0 25px 80px rgba(0,0,0,0.5);
+                    box-sizing:border-box;
+                "
+            >
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        gap:15px;
+                        align-items:center;
+                        margin-bottom:20px;
+                    "
+                >
+
+                    <div>
+
+                        <h2 style="margin:0 0 8px 0;">
+
+                            🎫
+                            ${escapeHTML(
+                                ticket.subject
+                            )}
+
+                        </h2>
+
+                        <p
+                            style="
+                                opacity:0.5;
+                                margin:0;
+                            "
+                        >
+
+                            👤
+                            ${escapeHTML(
+                                ticket.userName
+                            )}
+
+                            <br>
+
+                            🆔
+                            ${escapeHTML(
+                                ticket.id
+                            )}
+
+                        </p>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="staff-button"
+                        onclick="closeTicketModal()"
+                    >
+
+                        ✕
+
+                    </button>
+
+                </div>
+
+                <div>
+
+                    ${messages}
+
+                </div>
+
+                ${actions}
+
+            </div>
+
+        `;
+
+        modal.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    modal
+                ) {
+
+                    closeTicketModal();
+
+                }
+
+            }
         );
 
-    } catch {
+        document.body.appendChild(
+            modal
+        );
 
-        return "Date inconnue";
+    } catch (error) {
+
+        console.error(
+            "❌ Affichage ticket :",
+            error
+        );
+
+        alert(
+            "❌ Impossible de récupérer le ticket."
+        );
 
     }
 
@@ -769,378 +809,155 @@ function formatDate(date) {
 
 
 // ============================================================
-// AFFICHER UN TICKET
+// RÉPONDRE
 // ============================================================
 
-function viewTicket(id) {
+async function replyToTicket(id) {
 
-    // Ferme une éventuelle ancienne modale
-    closeTicketModal();
-
-    const tickets =
-        getTickets();
-
-    const ticket =
-        tickets.find(
-            ticket =>
-                ticket.id === id
+    const input =
+        document.getElementById(
+            "ticketReply"
         );
 
-    if (!ticket) {
+    if (!input) {
+        return;
+    }
+
+    const message =
+        input.value.trim();
+
+    if (!message) {
 
         alert(
-            "❌ Ticket introuvable."
+            "❌ Le message est vide."
         );
 
         return;
 
     }
 
-    const currentStaff =
-        getCurrentStaff();
+    try {
 
-    if (!currentStaff) {
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets/${encodeURIComponent(id)}/messages`,
+                {
 
-        alert(
-            "❌ Tu dois être connecté en tant que Staff."
+                    method:
+                        "POST",
+
+                    credentials:
+                        "include",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            message
+                        })
+
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if (!response.ok) {
+
+            alert(
+                `❌ ${data.message || "Impossible de répondre."}`
+            );
+
+            return;
+
+        }
+
+        closeTicketModal();
+
+        await viewTicket(id);
+
+        await renderTicketsList();
+
+    } catch (error) {
+
+        console.error(
+            error
         );
 
-        return;
+        alert(
+            "❌ Erreur de connexion au serveur."
+        );
 
     }
 
-    // --------------------------------------------------------
-    // MESSAGES
-    // --------------------------------------------------------
+}
 
-    let messages = "";
+
+// ============================================================
+// FERMER
+// ============================================================
+
+async function closeTicket(id) {
 
     if (
-        !Array.isArray(
-            ticket.messages
+        !confirm(
+            "Voulez-vous vraiment fermer ce ticket ?"
         )
     ) {
 
-        ticket.messages = [];
+        return;
 
     }
 
-    ticket.messages.forEach(
-        message => {
+    try {
 
-            const staffLabel =
-                message.staff
-                    ? `
-                        🛡️
-                        ${escapeHTML(
-                            message.role
-                                ? getRoleName(
-                                    message.role
-                                )
-                                : "Staff"
-                        )}
-                    `
-                    : "👤 Membre";
+        const response =
+            await fetch(
+                `${TICKETS_API}/api/staff/tickets/${encodeURIComponent(id)}/close`,
+                {
 
-            messages += `
+                    method:
+                        "POST",
 
-                <div
-                    style="
-                        padding:15px;
-                        margin-bottom:10px;
-                        border-radius:10px;
-                        background:rgba(255,255,255,0.04);
-                        border:1px solid rgba(255,255,255,0.08);
-                    "
-                >
+                    credentials:
+                        "include"
 
-                    <strong>
+                }
+            );
 
-                        ${staffLabel}
+        const data =
+            await response.json();
 
-                        —
-                        
-                        ${escapeHTML(
-                            message.author
-                        )}
+        if (!response.ok) {
 
-                    </strong>
+            alert(
+                `❌ ${data.message || "Impossible de fermer le ticket."}`
+            );
 
-                    <p
-                        style="
-                            margin:8px 0;
-                            white-space:pre-wrap;
-                            word-break:break-word;
-                        "
-                    >
-
-                        ${escapeHTML(
-                            message.message
-                        )}
-
-                    </p>
-
-                    <small
-                        style="
-                            opacity:0.45;
-                        "
-                    >
-
-                        ${formatDate(
-                            message.date
-                        )}
-
-                    </small>
-
-                </div>
-
-            `;
+            return;
 
         }
-    );
 
-    // --------------------------------------------------------
-    // ACTIONS
-    // --------------------------------------------------------
+        closeTicketModal();
 
-    let actions = "";
+        await renderTicketsList();
 
-    if (
-        ticket.status === "open"
-    ) {
+    } catch (error) {
 
-        actions = `
-
-            <textarea
-                id="ticketReply"
-                placeholder="Écrire une réponse..."
-                maxlength="3000"
-                style="
-                    width:100%;
-                    min-height:120px;
-                    padding:12px;
-                    margin-top:15px;
-                    border-radius:8px;
-                    background:rgba(255,255,255,0.04);
-                    border:1px solid rgba(255,255,255,0.12);
-                    color:white;
-                    resize:vertical;
-                    box-sizing:border-box;
-                "
-            ></textarea>
-
-            <button
-                type="button"
-                class="staff-button primary"
-                style="margin-top:10px;"
-                onclick="replyToTicket('${ticket.id}')"
-            >
-
-                💬 Répondre
-
-            </button>
-
-            <button
-                type="button"
-                class="staff-button"
-                style="margin-top:10px;"
-                onclick="closeTicket('${ticket.id}')"
-            >
-
-                🔒 Fermer le ticket
-
-            </button>
-
-        `;
-
-    } else {
-
-        actions = `
-
-            <div
-                class="empty-tickets"
-                style="margin-top:15px;"
-            >
-
-                🔴 Ce ticket est fermé.
-
-                ${
-                    ticket.closedBy
-                        ? `<br>
-                           Fermé par :
-                           ${escapeHTML(
-                               ticket.closedBy
-                           )}`
-                        : ""
-                }
-
-            </div>
-
-            <button
-                type="button"
-                class="staff-button primary"
-                style="margin-top:10px;"
-                onclick="reopenTicket('${ticket.id}')"
-            >
-
-                🔓 Réouvrir le ticket
-
-            </button>
-
-        `;
-
-    }
-
-    // --------------------------------------------------------
-    // MODALE
-    // --------------------------------------------------------
-
-    const modal =
-        document.createElement(
-            "div"
+        console.error(
+            error
         );
 
-    modal.id =
-        "ticketModal";
+        alert(
+            "❌ Erreur de connexion au serveur."
+        );
 
-    modal.style.cssText = `
-
-        position:fixed;
-        inset:0;
-        z-index:9999;
-
-        display:flex;
-        align-items:center;
-        justify-content:center;
-
-        padding:20px;
-
-        background:rgba(0,0,0,0.80);
-
-        backdrop-filter:blur(8px);
-
-    `;
-
-    modal.innerHTML = `
-
-        <div
-            style="
-                width:100%;
-                max-width:700px;
-                max-height:90vh;
-                overflow:auto;
-
-                padding:25px;
-
-                border-radius:14px;
-
-                background:#0c0c0c;
-
-                border:1px solid
-                    rgba(255,255,255,0.12);
-
-                box-shadow:
-                    0 25px 80px
-                    rgba(0,0,0,0.5);
-
-                box-sizing:border-box;
-            "
-        >
-
-            <div
-                style="
-                    display:flex;
-                    justify-content:space-between;
-                    gap:15px;
-                    align-items:center;
-                    margin-bottom:20px;
-                "
-            >
-
-                <div>
-
-                    <h2
-                        style="
-                            margin:0 0 8px 0;
-                        "
-                    >
-
-                        🎫
-                        ${escapeHTML(
-                            ticket.subject
-                        )}
-
-                    </h2>
-
-                    <p
-                        style="
-                            opacity:0.5;
-                            margin:0;
-                        "
-                    >
-
-                        👤
-                        ${escapeHTML(
-                            ticket.discordName
-                        )}
-
-                        <br>
-
-                        🆔
-                        ${escapeHTML(
-                            ticket.id
-                        )}
-
-                    </p>
-
-                </div>
-
-                <button
-                    type="button"
-                    class="staff-button"
-                    onclick="closeTicketModal()"
-                >
-
-                    ✕
-
-                </button>
-
-            </div>
-
-            <div>
-
-                ${messages}
-
-            </div>
-
-            ${actions}
-
-        </div>
-
-    `;
-
-    // --------------------------------------------------------
-    // FERMETURE EN CLIQUANT À L'EXTÉRIEUR
-    // --------------------------------------------------------
-
-    modal.addEventListener(
-        "click",
-        function(event) {
-
-            if (
-                event.target === modal
-            ) {
-
-                closeTicketModal();
-
-            }
-
-        }
-    );
-
-    document.body.appendChild(
-        modal
-    );
+    }
 
 }
 
@@ -1166,517 +983,18 @@ function closeTicketModal() {
 
 
 // ============================================================
-// RÉPONDRE À UN TICKET
-// ============================================================
-
-function replyToTicket(id) {
-
-    const currentStaff =
-        getCurrentStaff();
-
-    if (!currentStaff) {
-
-        alert(
-            "❌ Tu dois être connecté en tant que Staff."
-        );
-
-        return;
-
-    }
-
-    const input =
-        document.getElementById(
-            "ticketReply"
-        );
-
-    if (!input) {
-        return;
-    }
-
-    const message =
-        input.value.trim();
-
-    if (!message) {
-
-        alert(
-            "❌ Le message est vide."
-        );
-
-        return;
-
-    }
-
-    if (message.length > 3000) {
-
-        alert(
-            "❌ Message trop long."
-        );
-
-        return;
-
-    }
-
-    const tickets =
-        getTickets();
-
-    const ticket =
-        tickets.find(
-            ticket =>
-                ticket.id === id
-        );
-
-    if (!ticket) {
-
-        alert(
-            "❌ Ticket introuvable."
-        );
-
-        return;
-
-    }
-
-    if (
-        ticket.status === "closed"
-    ) {
-
-        alert(
-            "❌ Ce ticket est fermé."
-        );
-
-        return;
-
-    }
-
-    const now =
-        new Date().toISOString();
-
-    if (
-        !Array.isArray(
-            ticket.messages
-        )
-    ) {
-
-        ticket.messages = [];
-
-    }
-
-    ticket.messages.push({
-
-        id:
-            generateId(),
-
-        author:
-            currentStaff.name,
-
-        message:
-            message,
-
-        staff:
-            true,
-
-        role:
-            currentStaff.role,
-
-        date:
-            now
-
-    });
-
-    ticket.updatedAt =
-        now;
-
-    saveTickets(
-        tickets
-    );
-
-    closeTicketModal();
-
-    viewTicket(id);
-
-}
-
-
-// ============================================================
-// FERMER UN TICKET
-// ============================================================
-
-function closeTicket(id) {
-
-    const currentStaff =
-        getCurrentStaff();
-
-    if (!currentStaff) {
-
-        alert(
-            "❌ Tu dois être connecté en tant que Staff."
-        );
-
-        return;
-
-    }
-
-    const tickets =
-        getTickets();
-
-    const ticket =
-        tickets.find(
-            ticket =>
-                ticket.id === id
-        );
-
-    if (!ticket) {
-
-        alert(
-            "❌ Ticket introuvable."
-        );
-
-        return;
-
-    }
-
-    if (
-        ticket.status === "closed"
-    ) {
-
-        alert(
-            "❌ Ce ticket est déjà fermé."
-        );
-
-        return;
-
-    }
-
-    const confirmation =
-        confirm(
-            "Voulez-vous vraiment fermer ce ticket ?"
-        );
-
-    if (!confirmation) {
-        return;
-    }
-
-    const now =
-        new Date().toISOString();
-
-    ticket.status =
-        "closed";
-
-    ticket.updatedAt =
-        now;
-
-    ticket.closedAt =
-        now;
-
-    ticket.closedBy =
-        currentStaff.name;
-
-    saveTickets(
-        tickets
-    );
-
-    closeTicketModal();
-
-    renderTicketsList();
-
-}
-
-
-// ============================================================
-// RÉOUVRIR UN TICKET
-// ============================================================
-
-function reopenTicket(id) {
-
-    const currentStaff =
-        getCurrentStaff();
-
-    if (!currentStaff) {
-
-        alert(
-            "❌ Tu dois être connecté en tant que Staff."
-        );
-
-        return;
-
-    }
-
-    const tickets =
-        getTickets();
-
-    const ticket =
-        tickets.find(
-            ticket =>
-                ticket.id === id
-        );
-
-    if (!ticket) {
-
-        alert(
-            "❌ Ticket introuvable."
-        );
-
-        return;
-
-    }
-
-    if (
-        ticket.status === "open"
-    ) {
-
-        alert(
-            "❌ Ce ticket est déjà ouvert."
-        );
-
-        return;
-
-    }
-
-    ticket.status =
-        "open";
-
-    ticket.updatedAt =
-        new Date().toISOString();
-
-    ticket.closedAt =
-        null;
-
-    ticket.closedBy =
-        null;
-
-    saveTickets(
-        tickets
-    );
-
-    closeTicketModal();
-
-    renderTicketsList();
-
-}
-
-
-// ============================================================
-// CONNEXION STAFF
-// ============================================================
-
-function loginStaff() {
-
-    const input =
-        document.getElementById(
-            "staffDiscordName"
-        );
-
-    if (!input) {
-
-        console.error(
-            "❌ Champ staffDiscordName introuvable."
-        );
-
-        return;
-
-    }
-
-    const name =
-        input.value.trim();
-
-    if (!name) {
-
-        alert(
-            "❌ Entre ton nom Discord."
-        );
-
-        return;
-
-    }
-
-    const staff =
-        getStaff();
-
-    const member =
-        staff.find(
-            user =>
-
-                user.name &&
-                user.name.toLowerCase() ===
-                name.toLowerCase()
-        );
-
-    if (!member) {
-
-        alert(
-            "❌ Tu n'as aucun accès Staff."
-        );
-
-        return;
-
-    }
-
-    setCurrentStaff(
-        member
-    );
-
-    updateStaffInterface();
-
-    console.log(
-        `✅ Connexion Staff : ${member.name}`
-    );
-
-}
-
-
-// ============================================================
-// DÉCONNEXION STAFF
-// ============================================================
-
-function logoutStaff() {
-
-    clearCurrentStaff();
-
-    updateStaffInterface();
-
-    closeTicketModal();
-
-    console.log(
-        "👋 Staff déconnecté."
-    );
-
-}
-
-
-// ============================================================
-// INTERFACE STAFF
-// ============================================================
-
-function updateStaffInterface() {
-
-    const currentStaff =
-        getCurrentStaff();
-
-    const status =
-        document.getElementById(
-            "staffStatus"
-        );
-
-    const loginButton =
-        document.getElementById(
-            "staffLogin"
-        );
-
-    const logoutButton =
-        document.getElementById(
-            "staffLogout"
-        );
-
-    // --------------------------------------------------------
-    // PAS D'INTERFACE STAFF SUR LA PAGE
-    // --------------------------------------------------------
-
-    if (!status) {
-
-        renderTicketsList();
-
-        return;
-
-    }
-
-    // --------------------------------------------------------
-    // CONNECTÉ
-    // --------------------------------------------------------
-
-    if (currentStaff) {
-
-        status.innerHTML = `
-
-            <strong>
-
-                ${escapeHTML(
-                    currentStaff.name
-                )}
-
-            </strong>
-
-            <span>
-
-                ${getRoleName(
-                    currentStaff.role
-                )}
-
-            </span>
-
-        `;
-
-        if (loginButton) {
-
-            loginButton.style.display =
-                "none";
-
-        }
-
-        if (logoutButton) {
-
-            logoutButton.style.display =
-                "inline-flex";
-
-        }
-
-    }
-
-    // --------------------------------------------------------
-    // NON CONNECTÉ
-    // --------------------------------------------------------
-
-    else {
-
-        status.innerHTML = `
-
-            <strong>
-
-                Non connecté
-
-            </strong>
-
-            <span>
-
-                Connecte-toi pour accéder
-                aux tickets.
-
-            </span>
-
-        `;
-
-        if (loginButton) {
-
-            loginButton.style.display =
-                "inline-flex";
-
-        }
-
-        if (logoutButton) {
-
-            logoutButton.style.display =
-                "none";
-
-        }
-
-    }
-
-    renderTicketsList();
-
-}
-
-
-// ============================================================
 // INITIALISATION
 // ============================================================
 
 document.addEventListener(
     "DOMContentLoaded",
-    function() {
-
-        initializeStaff();
+    async () => {
 
         initializeTicketForm();
 
-        updateStaffInterface();
+        await updateAuthInterface();
+
+        await renderTicketsList();
 
         console.log(
             "🎫 Génération Dorée - Système de tickets chargé."
@@ -1687,23 +1005,20 @@ document.addEventListener(
 
 
 // ============================================================
-// EXPORT DES FONCTIONS
+// EXPORT
 // ============================================================
 
-window.loginStaff =
-    loginStaff;
+window.loginDiscord =
+    loginDiscord;
 
-window.logoutStaff =
-    logoutStaff;
+window.logoutDiscord =
+    logoutDiscord;
 
 window.viewTicket =
     viewTicket;
 
 window.closeTicket =
     closeTicket;
-
-window.reopenTicket =
-    reopenTicket;
 
 window.replyToTicket =
     replyToTicket;
@@ -1713,6 +1028,3 @@ window.closeTicketModal =
 
 window.renderTicketsList =
     renderTicketsList;
-
-window.updateStaffInterface =
-    updateStaffInterface;
