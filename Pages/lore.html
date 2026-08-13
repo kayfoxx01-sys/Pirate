@@ -20,14 +20,110 @@
     <style>
 
         /* =====================================================
+           FOND GLOBAL DE LA PAGE LORE
+        ===================================================== */
+
+        html,
+        body {
+
+            min-height: 100%;
+
+            margin: 0;
+
+            padding: 0;
+
+            background: #050505;
+        }
+
+
+        body {
+
+            position: relative;
+
+            min-height: 100vh;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           FOND JJK FIXE
+           Couvre tout l'écran, même en descendant
+        ===================================================== */
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100vw;
+
+            height: 100vh;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(0, 0, 0, 0.72),
+                    rgba(0, 0, 0, 0.82)
+                ),
+
+                url("../jjk.png");
+
+            background-size: cover;
+
+            background-position: center center;
+
+            background-repeat: no-repeat;
+
+            z-index: -2;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
+           COUCHE SOMBRE
+        ===================================================== */
+
+        body::after {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            width: 100vw;
+
+            height: 100vh;
+
+            background:
+                rgba(0, 0, 0, 0.10);
+
+            z-index: -1;
+
+            pointer-events: none;
+        }
+
+
+        /* =====================================================
            PAGE LORE
         ===================================================== */
 
         .lore-page {
 
-            min-height: calc(100vh - 80px);
+            min-height: 100vh;
 
-            padding: 90px 30px 60px;
+            width: 100%;
+
+            padding:
+
+                130px
+                30px
+                80px;
 
             position: relative;
 
@@ -39,22 +135,9 @@
 
             box-sizing: border-box;
 
-            overflow: hidden;
+            background: transparent;
 
-            background-image:
-                linear-gradient(
-                    rgba(0, 0, 0, 0.72),
-                    rgba(0, 0, 0, 0.82)
-                ),
-                url("../jjk.png");
-
-            background-size: cover;
-
-            background-position: center center;
-
-            background-repeat: no-repeat;
-
-            background-attachment: fixed;
+            isolation: isolate;
         }
 
 
@@ -71,6 +154,8 @@
             position: relative;
 
             z-index: 2;
+
+            margin: 0 auto;
         }
 
 
@@ -84,9 +169,12 @@
 
             min-height: 520px;
 
-            background: rgba(16, 16, 16, 0.88);
+            background:
+                rgba(16, 16, 16, 0.82);
 
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.28);
 
             border-radius: 18px;
 
@@ -105,55 +193,115 @@
             text-align: center;
 
             box-shadow:
-                0 15px 50px rgba(0, 0, 0, 0.65),
-                inset 0 0 40px rgba(0, 0, 0, 0.25);
 
-            backdrop-filter: blur(5px);
+                0 15px 50px
+                rgba(0, 0, 0, 0.70),
 
-            transition: 0.3s ease;
+                inset 0 0 40px
+                rgba(0, 0, 0, 0.25);
+
+            backdrop-filter:
+                blur(6px);
+
+            -webkit-backdrop-filter:
+                blur(6px);
+
+            transition:
+                0.3s ease;
         }
 
+
+        .lore-card:hover {
+
+            border-color:
+                rgba(212, 175, 55, 0.45);
+
+            box-shadow:
+
+                0 20px 60px
+                rgba(0, 0, 0, 0.80),
+
+                inset 0 0 40px
+                rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =====================================================
+           PETIT TITRE
+        ===================================================== */
 
         .lore-small-title {
 
-            color: #d4af37;
+            color:
+                #d4af37;
 
-            font-size: 14px;
+            font-size:
+                14px;
 
-            font-weight: bold;
+            font-weight:
+                bold;
 
-            text-transform: uppercase;
+            text-transform:
+                uppercase;
 
-            letter-spacing: 3px;
+            letter-spacing:
+                3px;
 
-            margin-bottom: 18px;
+            margin-bottom:
+                18px;
+
+            text-shadow:
+
+                0 0 15px
+                rgba(212, 175, 55, 0.25);
         }
 
+
+        /* =====================================================
+           TITRE LORE
+        ===================================================== */
 
         .lore-card h1 {
 
-            margin: 0 0 20px;
+            margin:
+                0 0 20px;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            font-size: 46px;
+            font-size:
+                46px;
+
+            font-weight:
+                900;
 
             text-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.7);
+
+                0 4px 20px
+                rgba(0, 0, 0, 0.80);
         }
 
 
+        /* =====================================================
+           INTRODUCTION
+        ===================================================== */
+
         .lore-intro {
 
-            max-width: 700px;
+            max-width:
+                700px;
 
-            margin: 0 auto 40px;
+            margin:
+                0 auto 40px;
 
-            color: #bdbdbd;
+            color:
+                rgba(255, 255, 255, 0.68);
 
-            font-size: 17px;
+            font-size:
+                17px;
 
-            line-height: 1.8;
+            line-height:
+                1.8;
         }
 
 
@@ -163,53 +311,74 @@
 
         .lore-button {
 
-            display: inline-flex;
+            display:
+                inline-flex;
 
-            align-items: center;
+            align-items:
+                center;
 
-            justify-content: center;
+            justify-content:
+                center;
 
-            gap: 12px;
+            gap:
+                12px;
 
-            padding: 13px 24px;
+            padding:
+                13px 24px;
 
-            background: #d4af37;
+            background:
+                #d4af37;
 
-            color: #080808;
+            color:
+                #080808;
 
-            border: none;
+            border:
+                none;
 
-            border-radius: 8px;
+            border-radius:
+                8px;
 
-            font-size: 15px;
+            font-size:
+                15px;
 
-            font-weight: bold;
+            font-weight:
+                bold;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
-            transition: 0.2s ease;
+            transition:
+                0.2s ease;
 
             box-shadow:
-                0 8px 25px rgba(0, 0, 0, 0.35);
+
+                0 8px 25px
+                rgba(0, 0, 0, 0.40);
         }
 
 
         .lore-button:hover {
 
-            transform: translateY(-2px);
+            transform:
+                translateY(-3px);
 
-            filter: brightness(1.1);
+            filter:
+                brightness(1.10);
 
             box-shadow:
-                0 12px 30px rgba(0, 0, 0, 0.45);
+
+                0 12px 30px
+                rgba(0, 0, 0, 0.55);
         }
 
 
         .lore-arrow {
 
-            font-size: 20px;
+            font-size:
+                20px;
 
-            line-height: 1;
+            line-height:
+                1;
         }
 
 
@@ -219,33 +388,52 @@
 
         .lore-content {
 
-            display: none;
+            display:
+                none;
 
-            width: 100%;
+            width:
+                100%;
 
-            background: rgba(16, 16, 16, 0.92);
+            background:
+                rgba(16, 16, 16, 0.88);
 
-            border: 1px solid rgba(212, 175, 55, 0.25);
+            border:
+                1px solid
+                rgba(212, 175, 55, 0.28);
 
-            border-radius: 18px;
+            border-radius:
+                18px;
 
-            padding: 55px;
+            padding:
+                55px;
 
-            box-sizing: border-box;
+            box-sizing:
+                border-box;
 
             box-shadow:
-                0 15px 50px rgba(0, 0, 0, 0.65),
-                inset 0 0 40px rgba(0, 0, 0, 0.25);
 
-            backdrop-filter: blur(6px);
+                0 15px 50px
+                rgba(0, 0, 0, 0.70),
 
-            animation: loreAppear 0.3s ease;
+                inset 0 0 40px
+                rgba(0, 0, 0, 0.25);
+
+            backdrop-filter:
+                blur(7px);
+
+            -webkit-backdrop-filter:
+                blur(7px);
+
+            animation:
+                loreAppear
+                0.3s ease;
         }
 
 
         .lore-content.active {
 
-            display: block;
+            display:
+                block;
         }
 
 
@@ -257,16 +445,20 @@
 
             from {
 
-                opacity: 0;
+                opacity:
+                    0;
 
-                transform: translateY(15px);
+                transform:
+                    translateY(15px);
             }
 
             to {
 
-                opacity: 1;
+                opacity:
+                    1;
 
-                transform: translateY(0);
+                transform:
+                    translateY(0);
             }
         }
 
@@ -277,59 +469,83 @@
 
         .lore-content-header {
 
-            text-align: center;
+            text-align:
+                center;
 
-            margin-bottom: 45px;
+            margin-bottom:
+                45px;
         }
 
 
         .lore-content-header h2 {
 
-            margin: 0;
+            margin:
+                0;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            font-size: 42px;
+            font-size:
+                42px;
+
+            font-weight:
+                900;
 
             text-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.7);
+
+                0 4px 20px
+                rgba(0, 0, 0, 0.80);
         }
 
 
         /* =====================================================
-           TEXTE DU LORE
+           CONTENU DU LORE
         ===================================================== */
 
         .lore-content-body {
 
-            max-width: 900px;
+            max-width:
+                900px;
 
-            margin: 0 auto;
+            margin:
+                0 auto;
         }
 
 
         .lore-content-body h3 {
 
-            margin: 0 0 30px;
+            margin:
+                0 0 30px;
 
-            color: #d4af37;
+            color:
+                #d4af37;
 
-            font-size: 30px;
+            font-size:
+                30px;
+
+            font-weight:
+                800;
 
             text-shadow:
-                0 0 15px rgba(212, 175, 55, 0.2);
+
+                0 0 15px
+                rgba(212, 175, 55, 0.20);
         }
 
 
         .lore-content-body p {
 
-            margin: 0 0 25px;
+            margin:
+                0 0 25px;
 
-            color: #d0d0d0;
+            color:
+                rgba(255, 255, 255, 0.78);
 
-            font-size: 17px;
+            font-size:
+                17px;
 
-            line-height: 1.9;
+            line-height:
+                1.9;
         }
 
 
@@ -339,41 +555,61 @@
 
         .lore-back-container {
 
-            display: flex;
+            display:
+                flex;
 
-            justify-content: center;
+            justify-content:
+                center;
 
-            margin-top: 45px;
+            margin-top:
+                45px;
         }
 
 
         .lore-back {
 
-            padding: 12px 24px;
+            padding:
+                12px 24px;
 
-            background: rgba(26, 26, 26, 0.9);
+            background:
+                rgba(26, 26, 26, 0.90);
 
-            border: 1px solid #333;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.15);
 
-            border-radius: 8px;
+            border-radius:
+                8px;
 
-            color: #ffffff;
+            color:
+                #ffffff;
 
-            cursor: pointer;
+            cursor:
+                pointer;
 
-            font-size: 14px;
+            font-size:
+                14px;
 
-            transition: 0.2s ease;
+            transition:
+                0.2s ease;
+
+            box-shadow:
+
+                0 6px 20px
+                rgba(0, 0, 0, 0.30);
         }
 
 
         .lore-back:hover {
 
-            background: #252525;
+            background:
+                rgba(37, 37, 37, 0.95);
 
-            border-color: #555;
+            border-color:
+                rgba(212, 175, 55, 0.35);
 
-            transform: translateY(-2px);
+            transform:
+                translateY(-2px);
         }
 
 
@@ -385,55 +621,84 @@
 
             .lore-page {
 
-                padding: 60px 15px 40px;
+                min-height:
+                    100vh;
 
-                background-attachment: scroll;
+                padding:
+                    120px
+                    15px
+                    50px;
+
+                align-items:
+                    flex-start;
             }
 
 
             .lore-card {
 
-                min-height: 450px;
+                min-height:
+                    450px;
 
-                padding: 35px 25px;
+                padding:
+                    35px 25px;
+
+                border-radius:
+                    14px;
             }
 
 
             .lore-card h1 {
 
-                font-size: 36px;
+                font-size:
+                    36px;
             }
 
 
             .lore-intro {
 
-                font-size: 15px;
+                font-size:
+                    15px;
             }
 
 
             .lore-content {
 
-                padding: 35px 25px;
+                padding:
+                    35px 25px;
+
+                border-radius:
+                    14px;
             }
 
 
             .lore-content-header h2 {
 
-                font-size: 34px;
+                font-size:
+                    34px;
             }
 
 
             .lore-content-body h3 {
 
-                font-size: 25px;
+                font-size:
+                    25px;
             }
 
 
             .lore-content-body p {
 
-                font-size: 15px;
+                font-size:
+                    15px;
 
-                line-height: 1.8;
+                line-height:
+                    1.8;
+            }
+
+
+            body::before {
+
+                background-position:
+                    center center;
             }
         }
 
@@ -508,7 +773,6 @@
     ===================================================== -->
 
     <main class="lore-page">
-
 
         <div class="lore-container">
 
@@ -633,6 +897,10 @@
 
 
 
+                <!-- =================================================
+                     RETOUR
+                ================================================= -->
+
                 <div class="lore-back-container">
 
                     <button
@@ -651,7 +919,6 @@
 
 
         </div>
-
 
     </main>
 
@@ -674,6 +941,12 @@
                 .getElementById("loreContent")
                 .classList.add("active");
 
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
         }
 
 
@@ -687,6 +960,12 @@
             document
                 .getElementById("loreIntro")
                 .style.display = "flex";
+
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
 
         }
 
