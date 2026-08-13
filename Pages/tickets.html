@@ -5,15 +5,3208 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Génération Dorée</title>
+    <title>Tickets - Génération Dorée</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           PAGE TICKETS
+        ===================================================== */
+
+        .tickets-page {
+
+            min-height: 100vh;
+
+            padding: 130px 30px 80px;
+
+            position: relative;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: flex-start;
+
+            box-sizing: border-box;
+
+            background:
+
+                radial-gradient(
+                    circle at top center,
+                    rgba(212, 175, 55, 0.08),
+                    transparent 45%
+                ),
+
+                #050505;
+        }
+
+
+        .tickets-container {
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* =====================================================
+           TITRE
+        ===================================================== */
+
+        .tickets-header {
+
+            text-align: center;
+
+            margin-bottom: 45px;
+        }
+
+
+        .tickets-small-title {
+
+            color: #d4af37;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            letter-spacing: 4px;
+
+            text-transform: uppercase;
+
+            margin-bottom: 15px;
+        }
+
+
+        .tickets-header h1 {
+
+            margin: 0 0 15px;
+
+            font-size: 46px;
+
+            color: white;
+
+            font-weight: 900;
+        }
+
+
+        .tickets-header p {
+
+            max-width: 650px;
+
+            margin: auto;
+
+            color: rgba(255,255,255,0.55);
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           CADRE PRINCIPAL
+        ===================================================== */
+
+        .ticket-panel {
+
+            background:
+                rgba(16,16,16,0.92);
+
+            border:
+                1px solid
+                rgba(212,175,55,0.25);
+
+            border-radius: 18px;
+
+            padding: 45px;
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.55);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* =====================================================
+           CRÉATION TICKET
+        ===================================================== */
+
+        .create-ticket {
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        .create-ticket h2 {
+
+            margin: 0 0 12px;
+
+            color: white;
+
+            font-size: 28px;
+        }
+
+
+        .create-ticket p {
+
+            max-width: 600px;
+
+            margin: 0 0 30px;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            line-height: 1.7;
+        }
+
+
+        .ticket-button {
+
+            border: none;
+
+            border-radius: 8px;
+
+            padding: 14px 28px;
+
+            background: #d4af37;
+
+            color: #080808;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: 0.25s ease;
+        }
+
+
+        .ticket-button:hover {
+
+            transform: translateY(-3px);
+
+            filter: brightness(1.1);
+
+            box-shadow:
+                0 10px 30px
+                rgba(212,175,55,0.20);
+        }
+
+
+        .ticket-button:disabled {
+
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
+        }
+
+
+        /* =====================================================
+           FORMULAIRE
+        ===================================================== */
+
+        .ticket-form {
+
+            display: none;
+
+            width: 100%;
+
+            margin-top: 35px;
+
+            padding-top: 35px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+
+        .ticket-form.active {
+
+            display: block;
+        }
+
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+            text-align: left;
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: white;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 14px 16px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 8px;
+
+            outline: none;
+
+            background:
+                rgba(0,0,0,0.35);
+
+            color: white;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            box-sizing: border-box;
+
+            transition: 0.2s ease;
+        }
+
+
+        .form-group textarea {
+
+            min-height: 140px;
+
+            resize: vertical;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color:
+                rgba(212,175,55,0.65);
+
+            box-shadow:
+                0 0 0 2px
+                rgba(212,175,55,0.08);
+        }
+
+
+        .form-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            margin-top: 25px;
+        }
+
+
+        .cancel-button {
+
+            padding: 14px 25px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.15);
+
+            background:
+                rgba(255,255,255,0.04);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+
+        .cancel-button:hover {
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+
+        /* =====================================================
+           MESSAGE INFO
+        ===================================================== */
+
+        .api-message {
+
+            display: none;
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            margin-top: 20px;
+
+            padding: 13px 16px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+
+        .api-message.active {
+
+            display: block;
+        }
+
+
+        .api-message.success {
+
+            color: #6ee7a0;
+
+            border:
+                1px solid
+                rgba(110,231,160,0.25);
+
+            background:
+                rgba(110,231,160,0.06);
+        }
+
+
+        .api-message.error {
+
+            color: #ff8585;
+
+            border:
+                1px solid
+                rgba(255,80,80,0.25);
+
+            background:
+                rgba(255,80,80,0.06);
+        }
+
+
+        /* =====================================================
+           ESPACE STAFF
+        ===================================================== */
+
+        .staff-menu {
+
+            display: none;
+
+            margin-top: 35px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            padding-top: 35px;
+        }
+
+
+        .staff-menu.active {
+
+            display: block;
+        }
+
+
+        .staff-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .staff-title h2 {
+
+            margin: 0;
+
+            color: #d4af37;
+
+            font-size: 24px;
+        }
+
+
+        .staff-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .staff-badge {
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(212,175,55,0.12);
+
+            border:
+                1px solid
+                rgba(212,175,55,0.25);
+
+            color: #d4af37;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .logout-button {
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            border:
+                1px solid
+                rgba(255,80,80,0.25);
+
+            background:
+                rgba(255,80,80,0.07);
+
+            color: #ff8585;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            font-weight: 800;
+        }
+
+
+        /* =====================================================
+           LISTE TICKETS
+        ===================================================== */
+
+        .tickets-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+
+        .ticket-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 18px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            transition: 0.2s ease;
+        }
+
+
+        .ticket-item:hover {
+
+            border-color:
+                rgba(212,175,55,0.35);
+
+            background:
+                rgba(212,175,55,0.04);
+        }
+
+
+        .ticket-info {
+
+            min-width: 0;
+        }
+
+
+        .ticket-info strong {
+
+            display: block;
+
+            color: white;
+
+            margin-bottom: 6px;
+
+            word-break: break-word;
+        }
+
+
+        .ticket-info span {
+
+            color:
+                rgba(255,255,255,0.45);
+
+            font-size: 12px;
+        }
+
+
+        .ticket-status {
+
+            color: #6ee7a0;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+        }
+
+
+        .ticket-status.closed {
+
+            color: #ff8585;
+        }
+
+
+        /* =====================================================
+           FENÊTRE DU TICKET
+        ===================================================== */
+
+        .ticket-view {
+
+            display: none;
+
+            margin-top: 35px;
+
+            padding-top: 35px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+
+        .ticket-view.active {
+
+            display: block;
+        }
+
+
+        .ticket-view-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+
+        .ticket-view-header h3 {
+
+            margin: 0;
+
+            color: white;
+
+            font-size: 22px;
+        }
+
+
+        .close-ticket {
+
+            padding: 9px 15px;
+
+            border-radius: 7px;
+
+            border:
+                1px solid
+                rgba(255,80,80,0.25);
+
+            background:
+                rgba(255,80,80,0.07);
+
+            color:
+                #ff8585;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           MESSAGES
+        ===================================================== */
+
+        .messages {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+            max-height: 500px;
+
+            overflow-y: auto;
+
+            padding-right: 5px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .message {
+
+            padding: 16px 18px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,0.04);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .message.staff {
+
+            border-color:
+                rgba(212,175,55,0.22);
+
+            background:
+                rgba(212,175,55,0.05);
+        }
+
+
+        .message-author {
+
+            color: #d4af37;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+
+        .message-text {
+
+            color:
+                rgba(255,255,255,0.78);
+
+            font-size: 14px;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+        }
+
+
+        .message-date {
+
+            margin-top: 8px;
+
+            color:
+                rgba(255,255,255,0.30);
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           RÉPONSE STAFF
+        ===================================================== */
+
+        .reply-box {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+        }
+
+
+        .reply-box textarea {
+
+            width: 100%;
+
+            min-height: 110px;
+
+            padding: 14px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            border-radius: 8px;
+
+            background:
+                rgba(0,0,0,0.35);
+
+            color: white;
+
+            outline: none;
+
+            resize: vertical;
+
+            box-sizing: border-box;
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        .reply-box textarea:focus {
+
+            border-color:
+                rgba(212,175,55,0.55);
+        }
+
+
+        /* =====================================================
+           MENU STAFF
+        ===================================================== */
+
+        .staff-access {
+
+            display: none;
+
+            position: fixed;
+
+            right: 25px;
+
+            bottom: 25px;
+
+            z-index: 2000;
+        }
+
+
+        .staff-access.visible {
+
+            display: block;
+        }
+
+
+        .staff-menu-button {
+
+            padding: 13px 20px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid
+                rgba(212,175,55,0.35);
+
+            background:
+                rgba(15,15,15,0.95);
+
+            color: #d4af37;
+
+            cursor: pointer;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0,0,0,0.45);
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* =====================================================
+           CONNEXION STAFF
+        ===================================================== */
+
+        .staff-login {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 3000;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,0.78);
+
+            backdrop-filter: blur(8px);
+        }
+
+
+        .staff-login.active {
+
+            display: flex;
+        }
+
+
+        .login-box {
+
+            width: 100%;
+
+            max-width: 420px;
+
+            padding: 35px;
+
+            border-radius: 15px;
+
+            background:
+                #111111;
+
+            border:
+                1px solid
+                rgba(212,175,55,0.30);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,0.75);
+
+            text-align: center;
+        }
+
+
+        .login-box h2 {
+
+            color: white;
+
+            margin: 0 0 10px;
+        }
+
+
+        .login-box p {
+
+            color:
+                rgba(255,255,255,0.50);
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .discord-login-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 100%;
+
+            padding: 14px 20px;
+
+            box-sizing: border-box;
+
+            border-radius: 8px;
+
+            border: none;
+
+            background: #5865F2;
+
+            color: white;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            transition: 0.2s ease;
+        }
+
+
+        .discord-login-button:hover {
+
+            filter: brightness(1.1);
+
+            transform: translateY(-2px);
+        }
+
+
+        .login-error {
+
+            display: none;
+
+            color:
+                #ff7777;
+
+            font-size: 12px;
+
+            margin-top: 15px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =====================================================
+           TICKET CRÉÉ
+        ===================================================== */
+
+        .ticket-created {
+
+            display: none;
+
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid
+                rgba(110,231,160,0.25);
+
+            background:
+                rgba(110,231,160,0.05);
+
+            text-align: center;
+        }
+
+
+        .ticket-created.active {
+
+            display: block;
+        }
+
+
+        .ticket-created h3 {
+
+            margin: 0 0 10px;
+
+            color: #6ee7a0;
+        }
+
+
+        .ticket-created p {
+
+            margin: 0 0 18px;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            line-height: 1.7;
+        }
+
+
+        .ticket-id-display {
+
+            display: block;
+
+            margin-bottom: 18px;
+
+            color: white;
+
+            font-size: 13px;
+
+            word-break: break-all;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .tickets-page {
+
+                padding:
+                    120px
+                    15px
+                    60px;
+            }
+
+
+            .ticket-panel {
+
+                padding:
+                    30px 20px;
+            }
+
+
+            .tickets-header h1 {
+
+                font-size: 36px;
+            }
+
+
+            .ticket-item {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .ticket-view-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .staff-title {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 15px;
+            }
+
+
+            .staff-actions {
+
+                width: 100%;
+
+                justify-content: space-between;
+            }
+
+
+            .staff-access {
+
+                right: 15px;
+
+                bottom: 15px;
+            }
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <h1>Page en construction</h1>
+
+    <!-- =====================================================
+         NAVIGATION
+    ===================================================== -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <a
+                href="../index.html"
+                class="logo"
+            >
+                Génération Dorée
+            </a>
+
+
+            <nav class="navigation">
+
+                <a href="../index.html">
+                    Accueil
+                </a>
+
+                <a href="lore.html">
+                    Lore
+                </a>
+
+                <a href="guide.html">
+                    Guide
+                </a>
+
+                <a
+                    href="tickets.html"
+                    class="active"
+                >
+                    Tickets
+                </a>
+
+                <a href="organigramme.html">
+                    Organigramme
+                </a>
+
+                <a href="discord.html">
+                    Discord
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE
+    ===================================================== -->
+
+    <main class="tickets-page">
+
+        <div class="tickets-container">
+
+
+            <!-- =================================================
+                 TITRE
+            ================================================= -->
+
+            <div class="tickets-header">
+
+                <div class="tickets-small-title">
+                    Génération Dorée
+                </div>
+
+                <h1>
+                    Tickets
+                </h1>
+
+                <p>
+                    Une question, un problème ou une demande ?
+                    Créez un ticket et notre équipe pourra vous répondre.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 PANEL
+            ================================================= -->
+
+            <section class="ticket-panel">
+
+
+                <!-- =================================================
+                     CRÉATION
+                ================================================= -->
+
+                <div class="create-ticket">
+
+                    <h2>
+                        Besoin d'aide ?
+                    </h2>
+
+                    <p>
+                        Expliquez-nous votre problème ou votre demande.
+                        Un membre de l'équipe pourra ensuite vous répondre.
+                    </p>
+
+                    <button
+                        class="ticket-button"
+                        onclick="showTicketForm()"
+                    >
+                        🎫 Créer un ticket
+                    </button>
+
+
+                    <!-- =================================================
+                         FORMULAIRE
+                    ================================================= -->
+
+                    <div
+                        class="ticket-form"
+                        id="ticketForm"
+                    >
+
+                        <div class="form-group">
+
+                            <label>
+                                Votre nom
+                            </label>
+
+                            <input
+                                type="text"
+                                id="userName"
+                                maxlength="50"
+                                placeholder="Exemple : latsko"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Sujet
+                            </label>
+
+                            <input
+                                type="text"
+                                id="ticketSubject"
+                                maxlength="120"
+                                placeholder="Exemple : Problème avec le site"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Votre demande
+                            </label>
+
+                            <textarea
+                                id="ticketMessage"
+                                maxlength="3000"
+                                placeholder="Expliquez votre problème..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <div class="form-buttons">
+
+                            <button
+                                class="cancel-button"
+                                onclick="hideTicketForm()"
+                            >
+                                Annuler
+                            </button>
+
+                            <button
+                                class="ticket-button"
+                                id="createTicketButton"
+                                onclick="createTicket()"
+                            >
+                                Créer le ticket
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="api-message"
+                            id="createMessage"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         TICKET CRÉÉ
+                    ================================================= -->
+
+                    <div
+                        class="ticket-created"
+                        id="ticketCreated"
+                    >
+
+                        <h3>
+                            ✅ Ticket créé avec succès
+                        </h3>
+
+                        <p>
+                            Conservez votre identifiant et votre token.
+                            Ils permettent de retrouver votre ticket.
+                        </p>
+
+                        <span
+                            class="ticket-id-display"
+                            id="createdTicketId"
+                        ></span>
+
+                        <button
+                            class="ticket-button"
+                            onclick="openCreatedTicket()"
+                        >
+                            Voir mon ticket
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ESPACE STAFF
+                ================================================= -->
+
+                <div
+                    class="staff-menu"
+                    id="staffMenu"
+                >
+
+                    <div class="staff-title">
+
+                        <h2>
+                            Menu Staff
+                        </h2>
+
+                        <div class="staff-actions">
+
+                            <span class="staff-badge">
+                                STAFF
+                            </span>
+
+                            <button
+                                class="logout-button"
+                                onclick="staffLogout()"
+                            >
+                                Déconnexion
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="tickets-list"
+                        id="ticketsList"
+                    >
+
+                        <p
+                            id="noTickets"
+                            style="
+                                color: rgba(255,255,255,0.40);
+                                text-align:center;
+                                padding:20px;
+                            "
+                        >
+                            Chargement des tickets...
+                        </p>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         VUE TICKET
+                    ================================================= -->
+
+                    <div
+                        class="ticket-view"
+                        id="ticketView"
+                    >
+
+                        <div class="ticket-view-header">
+
+                            <h3 id="ticketViewTitle">
+                                Ticket
+                            </h3>
+
+                            <button
+                                class="close-ticket"
+                                onclick="closeCurrentTicket()"
+                            >
+                                Fermer le ticket
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            class="messages"
+                            id="messages"
+                        ></div>
+
+
+                        <div class="reply-box">
+
+                            <textarea
+                                id="replyMessage"
+                                maxlength="3000"
+                                placeholder="Écrire une réponse..."
+                            ></textarea>
+
+
+                            <button
+                                class="ticket-button"
+                                id="replyButton"
+                                onclick="sendReply()"
+                            >
+                                Envoyer la réponse
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         BOUTON MENU STAFF
+    ===================================================== -->
+
+    <div
+        class="staff-access"
+        id="staffAccess"
+    >
+
+        <button
+            class="staff-menu-button"
+            onclick="openStaffLogin()"
+        >
+            ⚙ Menu Staff
+        </button>
+
+    </div>
+
+
+    <!-- =====================================================
+         CONNEXION STAFF
+    ===================================================== -->
+
+    <div
+        class="staff-login"
+        id="staffLogin"
+    >
+
+        <div class="login-box">
+
+            <h2>
+                Menu Staff
+            </h2>
+
+            <p>
+                La connexion Staff se fait avec votre compte Discord.
+            </p>
+
+
+            <a
+                class="discord-login-button"
+                id="discordLoginButton"
+                href="#"
+            >
+                🎮 Se connecter avec Discord
+            </a>
+
+
+            <button
+                class="cancel-button"
+                style="margin-top:10px;"
+                onclick="closeStaffLogin()"
+            >
+                Annuler
+            </button>
+
+
+            <div
+                class="login-error"
+                id="loginError"
+            >
+                Accès refusé.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+        /* =====================================================
+           CONFIGURATION API
+           
+           IMPORTANT :
+           Mets ici l'adresse de ton backend.
+
+           Exemple :
+           https://api.generation-doree.fr
+
+           ou :
+           http://localhost:20166
+        ===================================================== */
+
+        const API_URL =
+            "https://api.generation-doree.fr";
+
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
+
+        let currentStaff = null;
+
+        let currentTicketId = null;
+
+        let currentUserTicket = null;
+
+
+        /* =====================================================
+           UTILITAIRE API
+        ===================================================== */
+
+        async function apiFetch(
+            endpoint,
+            options = {}
+        ) {
+
+            const config = {
+
+                ...options,
+
+                credentials:
+                    "include",
+
+                headers: {
+
+                    ...(options.body
+                        ? {
+                            "Content-Type":
+                                "application/json"
+                        }
+                        : {}),
+
+                    ...(options.headers || {})
+                }
+
+            };
+
+
+            const response =
+                await fetch(
+                    API_URL + endpoint,
+                    config
+                );
+
+
+            let data = null;
+
+
+            try {
+
+                data =
+                    await response.json();
+
+            } catch {
+
+                data = {};
+
+            }
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Une erreur est survenue."
+                );
+
+            }
+
+
+            return data;
+
+        }
+
+
+        /* =====================================================
+           MESSAGE API
+        ===================================================== */
+
+        function showMessage(
+            elementId,
+            message,
+            type = "error"
+        ) {
+
+            const element =
+                document.getElementById(
+                    elementId
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            element.textContent =
+                message;
+
+
+            element.className =
+                "api-message active " +
+                type;
+
+        }
+
+
+        function hideMessage(
+            elementId
+        ) {
+
+            const element =
+                document.getElementById(
+                    elementId
+                );
+
+
+            if (!element) {
+                return;
+            }
+
+
+            element.className =
+                "api-message";
+
+        }
+
+
+        /* =====================================================
+           FORMULAIRE
+        ===================================================== */
+
+        function showTicketForm() {
+
+            document
+                .getElementById("ticketForm")
+                .classList.add("active");
+
+
+            document
+                .getElementById("ticketCreated")
+                .classList.remove("active");
+
+        }
+
+
+        function hideTicketForm() {
+
+            document
+                .getElementById("ticketForm")
+                .classList.remove("active");
+
+        }
+
+
+        /* =====================================================
+           CRÉATION TICKET
+        ===================================================== */
+
+        async function createTicket() {
+
+            const name =
+                document
+                    .getElementById("userName")
+                    .value
+                    .trim();
+
+
+            const subject =
+                document
+                    .getElementById("ticketSubject")
+                    .value
+                    .trim();
+
+
+            const message =
+                document
+                    .getElementById("ticketMessage")
+                    .value
+                    .trim();
+
+
+            if (
+                !name ||
+                !subject ||
+                !message
+            ) {
+
+                showMessage(
+                    "createMessage",
+                    "Merci de remplir tous les champs.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            const button =
+                document
+                    .getElementById(
+                        "createTicketButton"
+                    );
+
+
+            button.disabled =
+                true;
+
+
+            button.textContent =
+                "Création...";
+
+
+            hideMessage(
+                "createMessage"
+            );
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        "/api/tickets",
+                        {
+
+                            method:
+                                "POST",
+
+                            body:
+                                JSON.stringify({
+
+                                    name:
+                                        name,
+
+                                    subject:
+                                        subject,
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
+
+
+                if (
+                    !data.success ||
+                    !data.ticket
+                ) {
+
+                    throw new Error(
+                        "Impossible de créer le ticket."
+                    );
+
+                }
+
+
+                currentUserTicket = {
+
+                    id:
+                        data.ticket.id,
+
+                    token:
+                        data.ticket.token
+
+                };
+
+
+                document
+                    .getElementById(
+                        "createdTicketId"
+                    )
+                    .textContent =
+                        "Ticket : #" +
+                        data.ticket.id;
+
+
+                document
+                    .getElementById(
+                        "ticketCreated"
+                    )
+                    .classList.add("active");
+
+
+                document
+                    .getElementById(
+                        "ticketForm"
+                    )
+                    .classList.remove("active");
+
+
+                document
+                    .getElementById(
+                        "userName"
+                    )
+                    .value = "";
+
+
+                document
+                    .getElementById(
+                        "ticketSubject"
+                    )
+                    .value = "";
+
+
+                document
+                    .getElementById(
+                        "ticketMessage"
+                    )
+                    .value = "";
+
+
+                /*
+                 * On sauvegarde uniquement les informations
+                 * nécessaires pour permettre à l'utilisateur
+                 * de retrouver son ticket.
+                 */
+
+                sessionStorage.setItem(
+                    "generation_doree_ticket",
+                    JSON.stringify(
+                        currentUserTicket
+                    )
+                );
+
+
+                alert(
+                    "Votre ticket a bien été créé."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur création ticket :",
+                    error
+                );
+
+
+                showMessage(
+                    "createMessage",
+                    error.message,
+                    "error"
+                );
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "Créer le ticket";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OUVRIR TICKET UTILISATEUR
+        ===================================================== */
+
+        async function openCreatedTicket() {
+
+            if (
+                !currentUserTicket ||
+                !currentUserTicket.id ||
+                !currentUserTicket.token
+            ) {
+
+                alert(
+                    "Impossible de retrouver votre ticket."
+                );
+
+                return;
+
+            }
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        `/api/tickets/${encodeURIComponent(
+                            currentUserTicket.id
+                        )}`,
+                        {
+
+                            method:
+                                "GET",
+
+                            headers: {
+
+                                "X-Ticket-Token":
+                                    currentUserTicket.token
+
+                            }
+
+                        }
+                    );
+
+
+                if (
+                    !data.success ||
+                    !data.ticket
+                ) {
+
+                    throw new Error(
+                        "Ticket introuvable."
+                    );
+
+                }
+
+
+                showUserTicket(
+                    data.ticket
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur ouverture ticket :",
+                    error
+                );
+
+
+                alert(
+                    error.message
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           AFFICHER TICKET UTILISATEUR
+        ===================================================== */
+
+        function showUserTicket(
+            ticket
+        ) {
+
+            const messages =
+                ticket.messages || [];
+
+
+            let text =
+                `Ticket #${ticket.id}\n\n`;
+
+
+            text +=
+                `Sujet : ${ticket.subject}\n`;
+
+            text +=
+                `Statut : ${ticket.status}\n\n`;
+
+
+            messages.forEach(
+                message => {
+
+                    text +=
+                        `${message.staff ? "🛡️" : "👤"} ` +
+                        `${message.author}\n`;
+
+                    text +=
+                        `${message.message}\n`;
+
+                    text +=
+                        `${message.date}\n\n`;
+
+                }
+            );
+
+
+            alert(
+                text
+            );
+
+        }
+
+
+        /* =====================================================
+           LOGIN STAFF
+        ===================================================== */
+
+        function openStaffLogin() {
+
+            document
+                .getElementById("staffLogin")
+                .classList.add("active");
+
+
+            document
+                .getElementById("loginError")
+                .style.display =
+                    "none";
+
+        }
+
+
+        function closeStaffLogin() {
+
+            document
+                .getElementById("staffLogin")
+                .classList.remove("active");
+
+        }
+
+
+        /* =====================================================
+           CONNEXION DISCORD
+        ===================================================== */
+
+        function loginWithDiscord() {
+
+            window.location.href =
+                API_URL +
+                "/auth/discord";
+
+        }
+
+
+        /* =====================================================
+           VÉRIFICATION SESSION STAFF
+        ===================================================== */
+
+        async function checkStaffSession() {
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        "/api/staff/me"
+                    );
+
+
+                if (
+                    data.success &&
+                    data.loggedIn &&
+                    data.staff
+                ) {
+
+                    currentStaff =
+                        data.staff;
+
+
+                    document
+                        .getElementById(
+                            "staffAccess"
+                        )
+                        .classList.add(
+                            "visible"
+                        );
+
+
+                    document
+                        .getElementById(
+                            "staffMenu"
+                        )
+                        .classList.add(
+                            "active"
+                        );
+
+
+                    renderTickets();
+
+
+                    return;
+
+                }
+
+
+                currentStaff =
+                    null;
+
+            } catch (error) {
+
+                console.error(
+                    "Vérification Staff :",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CHARGER TICKETS STAFF
+        ===================================================== */
+
+        async function renderTickets() {
+
+            if (!currentStaff) {
+                return;
+            }
+
+
+            const list =
+                document
+                    .getElementById(
+                        "ticketsList"
+                    );
+
+
+            list.innerHTML = `
+
+                <p
+                    style="
+                        color: rgba(255,255,255,0.40);
+                        text-align:center;
+                        padding:20px;
+                    "
+                >
+                    Chargement des tickets...
+                </p>
+
+            `;
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        "/api/staff/tickets"
+                    );
+
+
+                if (
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        "Impossible de récupérer les tickets."
+                    );
+
+                }
+
+
+                list.innerHTML = "";
+
+
+                if (
+                    !data.tickets ||
+                    data.tickets.length === 0
+                ) {
+
+                    list.innerHTML = `
+
+                        <p
+                            style="
+                                color: rgba(255,255,255,0.40);
+                                text-align:center;
+                                padding:20px;
+                            "
+                        >
+                            Aucun ticket pour le moment.
+                        </p>
+
+                    `;
+
+                    return;
+
+                }
+
+
+                data.tickets.forEach(
+                    ticket => {
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "ticket-item";
+
+
+                        const status =
+                            ticket.status === "open"
+                                ? "Ouvert"
+                                : "Fermé";
+
+
+                        const statusClass =
+                            ticket.status === "closed"
+                                ? "closed"
+                                : "";
+
+
+                        item.innerHTML = `
+
+                            <div class="ticket-info">
+
+                                <strong>
+                                    #${escapeHtml(ticket.id)}
+                                    —
+                                    ${escapeHtml(ticket.subject)}
+                                </strong>
+
+                                <span>
+                                    👤
+                                    ${escapeHtml(ticket.userName)}
+                                    ·
+                                    ${formatDate(ticket.createdAt)}
+                                    ·
+                                    💬 ${ticket.messageCount}
+                                </span>
+
+                            </div>
+
+
+                            <div>
+
+                                <span
+                                    class="ticket-status ${statusClass}"
+                                >
+                                    ${status}
+                                </span>
+
+                                <br><br>
+
+                                <button
+                                    class="ticket-button"
+                                    onclick="openTicket('${escapeJs(ticket.id)}')"
+                                    style="padding:9px 15px;"
+                                >
+                                    Ouvrir
+                                </button>
+
+                            </div>
+
+                        `;
+
+
+                        list.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur tickets Staff :",
+                    error
+                );
+
+
+                list.innerHTML = `
+
+                    <p
+                        style="
+                            color:#ff7777;
+                            text-align:center;
+                            padding:20px;
+                        "
+                    >
+                        ${escapeHtml(error.message)}
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           OUVRIR TICKET STAFF
+        ===================================================== */
+
+        async function openTicket(
+            id
+        ) {
+
+            if (!currentStaff) {
+                return;
+            }
+
+
+            currentTicketId =
+                id;
+
+
+            document
+                .getElementById(
+                    "ticketView"
+                )
+                .classList.add(
+                    "active"
+                );
+
+
+            document
+                .getElementById(
+                    "ticketViewTitle"
+                )
+                .textContent =
+                    "Chargement...";
+
+
+            document
+                .getElementById(
+                    "messages"
+                )
+                .innerHTML = "";
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        `/api/tickets/${encodeURIComponent(id)}`
+                    );
+
+
+                if (
+                    !data.success ||
+                    !data.ticket
+                ) {
+
+                    throw new Error(
+                        "Ticket introuvable."
+                    );
+
+                }
+
+
+                const ticket =
+                    data.ticket;
+
+
+                document
+                    .getElementById(
+                        "ticketViewTitle"
+                    )
+                    .textContent =
+                        "#" +
+                        ticket.id +
+                        " — " +
+                        ticket.subject;
+
+
+                renderMessages(
+                    ticket
+                );
+
+
+                /*
+                 * Si le ticket est fermé,
+                 * on désactive la réponse.
+                 */
+
+                const reply =
+                    document
+                        .getElementById(
+                            "replyMessage"
+                        );
+
+
+                const replyButton =
+                    document
+                        .getElementById(
+                            "replyButton"
+                        );
+
+
+                if (
+                    ticket.status === "closed"
+                ) {
+
+                    reply.disabled =
+                        true;
+
+                    replyButton.disabled =
+                        true;
+
+                    reply.placeholder =
+                        "Ce ticket est fermé.";
+
+                } else {
+
+                    reply.disabled =
+                        false;
+
+                    replyButton.disabled =
+                        false;
+
+                    reply.placeholder =
+                        "Écrire une réponse...";
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur ouverture ticket :",
+                    error
+                );
+
+
+                alert(
+                    error.message
+                );
+
+
+                document
+                    .getElementById(
+                        "ticketView"
+                    )
+                    .classList.remove(
+                        "active"
+                    );
+
+
+                currentTicketId =
+                    null;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           AFFICHER MESSAGES
+        ===================================================== */
+
+        function renderMessages(
+            ticket
+        ) {
+
+            const messagesContainer =
+                document
+                    .getElementById(
+                        "messages"
+                    );
+
+
+            messagesContainer.innerHTML =
+                "";
+
+
+            if (
+                !ticket.messages ||
+                ticket.messages.length === 0
+            ) {
+
+                messagesContainer.innerHTML = `
+
+                    <p
+                        style="
+                            color:rgba(255,255,255,0.4);
+                            text-align:center;
+                        "
+                    >
+                        Aucun message.
+                    </p>
+
+                `;
+
+                return;
+
+            }
+
+
+            ticket.messages.forEach(
+                msg => {
+
+                    const element =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    element.className =
+                        "message" +
+                        (
+                            msg.staff
+                                ? " staff"
+                                : ""
+                        );
+
+
+                    const author =
+                        msg.staff
+                            ? "🛡️ " +
+                              escapeHtml(
+                                  msg.author
+                              )
+                            : "👤 " +
+                              escapeHtml(
+                                  msg.author
+                              );
+
+
+                    element.innerHTML = `
+
+                        <div class="message-author">
+
+                            ${author}
+
+                        </div>
+
+                        <div class="message-text">
+
+                            ${escapeHtml(
+                                msg.message
+                            )}
+
+                        </div>
+
+                        <div class="message-date">
+
+                            ${formatDate(
+                                msg.date
+                            )}
+
+                        </div>
+
+                    `;
+
+
+                    messagesContainer.appendChild(
+                        element
+                    );
+
+                }
+            );
+
+
+            messagesContainer.scrollTop =
+                messagesContainer.scrollHeight;
+
+        }
+
+
+        /* =====================================================
+           RÉPONDRE
+        ===================================================== */
+
+        async function sendReply() {
+
+            if (
+                !currentStaff ||
+                !currentTicketId
+            ) {
+
+                return;
+
+            }
+
+
+            const input =
+                document
+                    .getElementById(
+                        "replyMessage"
+                    );
+
+
+            const button =
+                document
+                    .getElementById(
+                        "replyButton"
+                    );
+
+
+            const message =
+                input.value.trim();
+
+
+            if (!message) {
+
+                alert(
+                    "Écrivez une réponse."
+                );
+
+                return;
+
+            }
+
+
+            button.disabled =
+                true;
+
+            button.textContent =
+                "Envoi...";
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        `/api/staff/tickets/${encodeURIComponent(
+                            currentTicketId
+                        )}/messages`,
+                        {
+
+                            method:
+                                "POST",
+
+                            body:
+                                JSON.stringify({
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
+
+
+                if (
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Impossible d'envoyer la réponse."
+                    );
+
+                }
+
+
+                input.value =
+                    "";
+
+
+                await openTicket(
+                    currentTicketId
+                );
+
+
+                await renderTickets();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur réponse :",
+                    error
+                );
+
+
+                alert(
+                    error.message
+                );
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    "Envoyer la réponse";
+
+            }
+
+        }
+
+
+        /* =====================================================
+           FERMER TICKET
+        ===================================================== */
+
+        async function closeCurrentTicket() {
+
+            if (
+                !currentTicketId
+            ) {
+
+                return;
+
+            }
+
+
+            const confirmation =
+                confirm(
+                    "Voulez-vous vraiment fermer ce ticket ?"
+                );
+
+
+            if (!confirmation) {
+                return;
+            }
+
+
+            try {
+
+                const data =
+                    await apiFetch(
+                        `/api/staff/tickets/${encodeURIComponent(
+                            currentTicketId
+                        )}/close`,
+                        {
+
+                            method:
+                                "POST"
+
+                        }
+                    );
+
+
+                if (
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Impossible de fermer le ticket."
+                    );
+
+                }
+
+
+                document
+                    .getElementById(
+                        "ticketView"
+                    )
+                    .classList.remove(
+                        "active"
+                    );
+
+
+                currentTicketId =
+                    null;
+
+
+                await renderTickets();
+
+
+                alert(
+                    "Ticket fermé."
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur fermeture ticket :",
+                    error
+                );
+
+
+                alert(
+                    error.message
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           LOGOUT STAFF
+        ===================================================== */
+
+        async function staffLogout() {
+
+            try {
+
+                await apiFetch(
+                    "/api/staff/logout",
+                    {
+                        method:
+                            "POST"
+                    }
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur déconnexion :",
+                    error
+                );
+
+            }
+
+
+            currentStaff =
+                null;
+
+
+            currentTicketId =
+                null;
+
+
+            document
+                .getElementById(
+                    "staffMenu"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+
+            document
+                .getElementById(
+                    "staffAccess"
+                )
+                .classList.remove(
+                    "visible"
+                );
+
+
+            document
+                .getElementById(
+                    "ticketView"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+
+            alert(
+                "Vous êtes déconnecté."
+            );
+
+        }
+
+
+        /* =====================================================
+           RESTAURER LE TICKET UTILISATEUR
+        ===================================================== */
+
+        function restoreUserTicket() {
+
+            try {
+
+                const stored =
+                    sessionStorage.getItem(
+                        "generation_doree_ticket"
+                    );
+
+
+                if (!stored) {
+                    return;
+                }
+
+
+                const ticket =
+                    JSON.parse(
+                        stored
+                    );
+
+
+                if (
+                    !ticket.id ||
+                    !ticket.token
+                ) {
+
+                    return;
+
+                }
+
+
+                currentUserTicket =
+                    ticket;
+
+
+            } catch (error) {
+
+                console.error(
+                    "Erreur restauration ticket :",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           PARAMÈTRES URL
+        ===================================================== */
+
+        function handleOAuthResult() {
+
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+
+            const staff =
+                params.get(
+                    "staff"
+                );
+
+
+            if (
+                staff === "success"
+            ) {
+
+                /*
+                 * Le cookie de session a été créé
+                 * par le backend.
+                 */
+
+                history.replaceState(
+                    {},
+                    document.title,
+                    window.location.pathname
+                );
+
+
+                checkStaffSession();
+
+
+                return;
+
+            }
+
+
+            if (
+                staff === "denied"
+            ) {
+
+                document
+                    .getElementById(
+                        "loginError"
+                    )
+                    .textContent =
+                        "❌ Votre compte Discord ne possède pas le rôle Staff requis.";
+
+
+                document
+                    .getElementById(
+                        "loginError"
+                    )
+                    .style.display =
+                        "block";
+
+
+                document
+                    .getElementById(
+                        "staffLogin"
+                    )
+                    .classList.add(
+                        "active"
+                    );
+
+
+                history.replaceState(
+                    {},
+                    document.title,
+                    window.location.pathname
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           DATE
+        ===================================================== */
+
+        function formatDate(
+            date
+        ) {
+
+            if (!date) {
+                return "";
+            }
+
+
+            try {
+
+                return new Date(
+                    date
+                ).toLocaleString(
+                    "fr-FR",
+                    {
+                        dateStyle:
+                            "short",
+
+                        timeStyle:
+                            "short"
+                    }
+                );
+
+            } catch {
+
+                return date;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           PROTECTION HTML
+        ===================================================== */
+
+        function escapeHtml(
+            text
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                String(
+                    text ?? ""
+                );
+
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================================
+           PROTECTION JAVASCRIPT
+        ===================================================== */
+
+        function escapeJs(
+            text
+        ) {
+
+            return String(
+                text ?? ""
+            )
+                .replace(
+                    /\\/g,
+                    "\\\\"
+                )
+                .replace(
+                    /'/g,
+                    "\\'"
+                )
+                .replace(
+                    /\n/g,
+                    "\\n"
+                )
+                .replace(
+                    /\r/g,
+                    "\\r"
+                );
+
+        }
+
+
+        /* =====================================================
+           INITIALISATION
+        ===================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            () => {
+
+                /*
+                 * Configure le bouton Discord.
+                 */
+
+                document
+                    .getElementById(
+                        "discordLoginButton"
+                    )
+                    .addEventListener(
+                        "click",
+                        event => {
+
+                            event.preventDefault();
+
+                            loginWithDiscord();
+
+                        }
+                    );
+
+
+                /*
+                 * Restaure le ticket utilisateur
+                 * depuis la session du navigateur.
+                 */
+
+                restoreUserTicket();
+
+
+                /*
+                 * Vérifie si Discord vient
+                 * de rediriger vers la page.
+                 */
+
+                handleOAuthResult();
+
+
+                /*
+                 * Vérifie également une session
+                 * Staff déjà existante.
+                 */
+
+                checkStaffSession();
+
+            }
+        );
+
+    </script>
+
 
 </body>
 
