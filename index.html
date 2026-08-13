@@ -2,102 +2,280 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Génération Dorée</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- ================================
+
+    <!-- ==========================================
          NAVIGATION
-    ================================= -->
+    =========================================== -->
 
     <header class="navbar">
 
         <div class="navbar-container">
 
-            <a href="index.html" class="logo">
+
+            <!-- ======================================
+                 LOGO
+            ======================================= -->
+
+            <a
+                href="index.html"
+                class="logo"
+            >
                 Génération Dorée
             </a>
 
+
+
+            <!-- ======================================
+                 NAVIGATION CENTRÉE
+            ======================================= -->
+
             <nav class="navigation">
 
-                <a href="index.html" class="active">
+                <a
+                    href="index.html"
+                    class="active"
+                >
                     Accueil
                 </a>
 
-                <!-- LORE -->
 
-                <a href="https://kayfoxx01-sys.github.io/generation-doree/Pages/lore.html">
+                <a
+                    href="Pages/lore.html"
+                >
                     Lore
                 </a>
 
-                <a href="Pages/guide.html">
+
+                <a
+                    href="Pages/guide.html"
+                >
                     Guide
                 </a>
 
-                <a href="Pages/tickets.html">
+
+                <a
+                    href="Pages/tickets.html"
+                >
                     Tickets
                 </a>
 
-                <a href="Pages/organigramme.html">
+
+                <a
+                    href="Pages/organigramme.html"
+                >
                     Organigramme
                 </a>
 
-                <a href="Pages/discord.html">
+
+                <a
+                    href="Pages/discord.html"
+                >
                     Discord
                 </a>
 
             </nav>
+
+
+
+            <!-- ======================================
+                 COMPTE DISCORD
+            ======================================= -->
+
+            <div
+                id="discordAccount"
+                class="discord-account"
+            >
+
+
+                <!-- ==================================
+                     NON CONNECTÉ
+                =================================== -->
+
+                <button
+                    id="discordLogin"
+                    class="discord-login-button"
+                    type="button"
+                >
+                    Connexion
+                </button>
+
+
+
+                <!-- ==================================
+                     CONNECTÉ
+                =================================== -->
+
+                <div
+                    id="discordProfile"
+                    class="discord-profile"
+                    style="display: none;"
+                >
+
+
+                    <!-- AVATAR DISCORD -->
+
+                    <img
+                        id="discordAvatar"
+                        class="discord-avatar"
+                        src=""
+                        alt="Avatar Discord"
+                    >
+
+
+
+                    <!-- INFORMATIONS UTILISATEUR -->
+
+                    <div
+                        class="discord-user-info"
+                    >
+
+                        <strong
+                            id="discordUsername"
+                        >
+                            Utilisateur
+                        </strong>
+
+                        <span>
+                            Connecté
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- DÉCONNEXION -->
+
+                    <button
+                        id="discordLogout"
+                        class="discord-logout"
+                        type="button"
+                    >
+                        Déconnexion
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
 
         </div>
 
     </header>
 
 
-    <!-- ================================
-         ACCUEIL
-    ================================= -->
+
+    <!-- ==========================================
+         CONTENU PRINCIPAL
+    =========================================== -->
 
     <main>
 
+
+        <!-- ======================================
+             ACCUEIL
+        ======================================= -->
+
         <section class="hero">
 
-            <div class="hero-background"></div>
 
-            <div class="hero-overlay"></div>
+            <!-- ==================================
+                 IMAGE DE FOND
+            =================================== -->
+
+            <div
+                class="hero-background"
+            ></div>
+
+
+
+            <!-- ==================================
+                 OVERLAY
+            =================================== -->
+
+            <div
+                class="hero-overlay"
+            ></div>
+
+
+
+            <!-- ==================================
+                 CONTENU HERO
+            =================================== -->
 
             <div class="hero-content">
 
+
+                <!-- PETIT TITRE -->
+
                 <div class="category">
+
                     SITE DE LA GÉNÉRATION DORÉE
+
                 </div>
 
+
+
+                <!-- TITRE PRINCIPAL -->
+
                 <h1>
+
                     Génération Dorée
+
                 </h1>
 
+
+
+                <!-- SOUS-TITRE -->
+
                 <p class="location">
+
                     Implantée dans le KB MHA
+
                 </p>
 
+
+
+                <!-- DESCRIPTION -->
+
                 <p class="description">
+
                     Bienvenue au sein de la Génération Dorée.
                     Une organisation fondée sur la loyauté,
                     la puissance et l'ambition, réunissant une
                     communauté soudée au cœur du RP.
+
                 </p>
 
 
-                <!-- ================================
+
+                <!-- ==================================
                      STATISTIQUES
-                ================================= -->
+                =================================== -->
 
                 <div class="statistics">
+
 
                     <div class="stat">
 
@@ -110,6 +288,7 @@
                         </span>
 
                     </div>
+
 
 
                     <div class="stat">
@@ -125,6 +304,7 @@
                     </div>
 
 
+
                     <div class="stat">
 
                         <strong>
@@ -137,14 +317,17 @@
 
                     </div>
 
+
                 </div>
 
 
-                <!-- ================================
+
+                <!-- ==================================
                      BOUTONS
-                ================================= -->
+                =================================== -->
 
                 <div class="hero-buttons">
+
 
                     <a
                         href="Pages/discord.html"
@@ -161,18 +344,23 @@
                         Guide du serveur
                     </a>
 
+
                 </div>
+
 
             </div>
 
+
         </section>
+
 
     </main>
 
 
-    <!-- ================================
+
+    <!-- ==========================================
          FOOTER
-    ================================= -->
+    =========================================== -->
 
     <footer>
 
@@ -183,11 +371,25 @@
     </footer>
 
 
-    <!-- ================================
-         JAVASCRIPT
-    ================================= -->
 
-    <script src="js/script.js"></script>
+    <!-- ==========================================
+         JAVASCRIPT PRINCIPAL
+    =========================================== -->
+
+    <script
+        src="js/script.js"
+    ></script>
+
+
+
+    <!-- ==========================================
+         AUTHENTIFICATION DISCORD
+    =========================================== -->
+
+    <script
+        src="js/auth.js"
+    ></script>
+
 
 </body>
 

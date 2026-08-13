@@ -2316,3 +2316,190 @@ footer {
         max-width: none;
     }
 }
+/* ==========================================================
+   PROFIL DISCORD — HAUT À DROITE
+========================================================== */
+
+.discord-profile {
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    position: relative;
+
+    z-index: 10;
+}
+
+
+/* ==========================================
+   PROFIL CONNECTÉ
+========================================== */
+
+.discord-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.04);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+
+    transition: 0.25s ease;
+}
+
+.discord-user:hover {
+    background:
+        rgba(255, 255, 255, 0.08);
+
+    border-color:
+        rgba(255, 255, 255, 0.15);
+}
+
+
+/* ==========================================
+   AVATAR DISCORD
+========================================== */
+
+.discord-avatar {
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+
+    background:
+        rgba(255, 255, 255, 0.10);
+}
+
+
+/* ==========================================
+   NOM DISCORD
+========================================== */
+
+.discord-username {
+    max-width: 150px;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+
+    color: white;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+/* ==========================================
+   BOUTON CONNEXION / DÉCONNEXION
+========================================== */
+
+.discord-login-button,
+.discord-logout-button {
+    padding:
+        9px 14px;
+
+    border-radius: 6px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.15);
+
+    background:
+        rgba(255, 255, 255, 0.06);
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.discord-login-button:hover {
+    background: white;
+
+    color: #050505;
+
+    transform:
+        translateY(-1px);
+}
+
+.discord-logout-button:hover {
+    background:
+        rgba(255, 70, 70, 0.12);
+
+    border-color:
+        rgba(255, 70, 70, 0.35);
+
+    color: #ff7777;
+}
+
+
+/* ==========================================================
+   RESPONSIVE PROFIL DISCORD
+========================================================== */
+
+@media (max-width: 900px) {
+
+    .discord-username {
+        max-width: 100px;
+    }
+
+    .discord-login-button,
+    .discord-logout-button {
+        padding:
+            8px 11px;
+
+        font-size: 11px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .discord-profile {
+        width: 100%;
+
+        justify-content: center;
+
+        margin-left: 0;
+    }
+
+    .discord-user {
+        padding: 5px 8px;
+    }
+
+    .discord-avatar {
+        width: 30px;
+
+        height: 30px;
+    }
+
+    .discord-username {
+        max-width: 120px;
+    }
+}

@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -19,78 +20,125 @@
     <style>
 
         /* =====================================================
-           PAGE TICKETS
+           PAGE
         ===================================================== */
 
         .tickets-page {
+
             min-height: 100vh;
-            padding: 120px 30px 70px;
+
+            padding:
+                120px
+                30px
+                70px;
 
             background:
+
                 radial-gradient(
                     circle at top center,
-                    rgba(212, 175, 55, 0.10),
+                    rgba(212,175,55,0.10),
                     transparent 45%
                 ),
+
                 #050505;
+
         }
+
 
         .tickets-container {
+
             width: 100%;
+
             max-width: 1200px;
+
             margin: 0 auto;
+
         }
 
+
         /* =====================================================
-           TITRE
+           HEADER
         ===================================================== */
 
         .tickets-header {
+
             text-align: center;
+
             margin-bottom: 45px;
+
         }
+
 
         .tickets-header .category {
+
             margin-bottom: 15px;
+
         }
+
 
         .tickets-header h1 {
-            font-size: clamp(34px, 5vw, 52px);
+
+            font-size:
+                clamp(
+                    34px,
+                    5vw,
+                    52px
+                );
+
             font-weight: 900;
+
             margin-bottom: 15px;
+
         }
 
+
         .tickets-header p {
+
             max-width: 650px;
+
             margin: auto;
 
             color:
                 rgba(255,255,255,0.60);
 
             line-height: 1.7;
+
             font-size: 15px;
+
         }
 
+
         /* =====================================================
-           GRILLE
+           PANELS
         ===================================================== */
 
-        .tickets-grid {
-            display: grid;
+        .ticket-panels {
 
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(0, 1fr);
+            width: 100%;
 
-            gap: 25px;
-            align-items: start;
         }
 
+
+        .ticket-panel {
+
+            width: 100%;
+
+        }
+
+
+        .hidden {
+
+            display: none !important;
+
+        }
+
+
         /* =====================================================
-           CADRE
+           CARTE
         ===================================================== */
 
         .ticket-card {
+
             background:
                 rgba(12,12,12,0.90);
 
@@ -99,6 +147,7 @@
                 rgba(255,255,255,0.10);
 
             border-radius: 14px;
+
             padding: 30px;
 
             box-shadow:
@@ -107,53 +156,82 @@
 
             backdrop-filter:
                 blur(15px);
+
         }
+
 
         .ticket-card h2 {
+
             font-size: 21px;
+
             margin-bottom: 8px;
+
             font-weight: 900;
+
         }
 
+
         .ticket-card > p {
+
             color:
                 rgba(255,255,255,0.55);
 
             font-size: 14px;
+
             line-height: 1.6;
+
             margin-bottom: 25px;
+
         }
+
 
         /* =====================================================
            FORMULAIRE
         ===================================================== */
 
         .ticket-form {
+
             display: flex;
+
             flex-direction: column;
+
             gap: 18px;
+
         }
+
 
         .form-group {
+
             display: flex;
+
             flex-direction: column;
+
             gap: 8px;
+
         }
 
+
         .form-group label {
+
             font-size: 13px;
+
             font-weight: 700;
 
             color:
                 rgba(255,255,255,0.80);
+
         }
 
+
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        #staffDiscordName {
+
             width: 100%;
 
             padding:
-                14px 15px;
+                14px
+                15px;
 
             border-radius: 8px;
 
@@ -175,136 +253,240 @@
 
             font-size: 14px;
 
-            transition: 0.25s;
+            box-sizing: border-box;
+
         }
+
 
         .form-group textarea {
+
             min-height: 150px;
+
             resize: vertical;
+
         }
 
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color:
-                rgba(255,255,255,0.30);
-        }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        #staffDiscordName:focus {
+
             border-color:
                 rgba(212,175,55,0.65);
-
-            background:
-                rgba(255,255,255,0.065);
 
             box-shadow:
                 0 0 0 3px
                 rgba(212,175,55,0.08);
+
         }
 
+
         /* =====================================================
-           BOUTON PRINCIPAL
+           BOUTONS
         ===================================================== */
 
-        .ticket-submit {
-            width: 100%;
+        .main-button,
+        .danger-button,
+        .staff-button {
 
             padding:
-                15px 20px;
+                13px
+                18px;
 
-            border: none;
             border-radius: 8px;
 
-            background: white;
-            color: #050505;
+            font-size: 13px;
 
-            font-size: 14px;
-            font-weight: 900;
+            font-weight: 800;
 
             cursor: pointer;
 
-            transition: 0.3s;
+            transition:
+                0.25s;
+
         }
 
-        .ticket-submit:hover {
+
+        .main-button {
+
+            background: white;
+
+            color: #050505;
+
+            border: none;
+
+        }
+
+
+        .main-button:hover {
+
             background: #d4af37;
 
             transform:
                 translateY(-2px);
 
-            box-shadow:
-                0 10px 25px
-                rgba(212,175,55,0.20);
         }
 
-        .ticket-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
+
+        .danger-button {
+
+            background:
+                rgba(231,76,60,0.12);
+
+            border:
+                1px solid
+                rgba(231,76,60,0.30);
+
+            color:
+                #ff9c91;
+
         }
+
+
+        .danger-button:hover {
+
+            background:
+                rgba(231,76,60,0.20);
+
+        }
+
+
+        .staff-button {
+
+            background:
+                rgba(255,255,255,0.06);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.12);
+
+            color: white;
+
+        }
+
+
+        .staff-button:hover {
+
+            background:
+                rgba(212,175,55,0.15);
+
+            border-color:
+                rgba(212,175,55,0.35);
+
+        }
+
+
+        .staff-button.primary {
+
+            background: white;
+
+            color: #050505;
+
+        }
+
+
+        .staff-button.primary:hover {
+
+            background: #d4af37;
+
+        }
+
 
         /* =====================================================
-           MESSAGE
+           MESSAGE FORMULAIRE
         ===================================================== */
 
         .ticket-message {
-            display: none;
 
             margin-top: 15px;
 
             padding:
-                12px 15px;
+                12px
+                15px;
 
-            border-radius: 7px;
+            border-radius: 8px;
 
             font-size: 13px;
-            line-height: 1.5;
+
         }
+
 
         .ticket-message.success {
-            display: block;
 
             background:
-                rgba(46, 204, 113, 0.10);
+                rgba(46,204,113,0.10);
 
             border:
                 1px solid
-                rgba(46, 204, 113, 0.25);
+                rgba(46,204,113,0.25);
 
             color:
-                #8ff0b5;
+                #7dffad;
+
         }
 
+
         .ticket-message.error {
-            display: block;
 
             background:
-                rgba(231, 76, 60, 0.10);
+                rgba(231,76,60,0.10);
 
             border:
                 1px solid
-                rgba(231, 76, 60, 0.25);
+                rgba(231,76,60,0.25);
 
             color:
                 #ff9c91;
+
         }
+
 
         /* =====================================================
            ESPACE STAFF
         ===================================================== */
 
-        .staff-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .staff-login-box {
+
+            margin-top: 40px;
+
         }
 
-        .staff-info {
+
+        .staff-header {
+
             display: flex;
+
             align-items: center;
+
+            justify-content:
+                space-between;
+
             gap: 15px;
 
-            padding: 15px;
+            margin-bottom: 25px;
+
+        }
+
+
+        .staff-header h2 {
+
+            margin: 0;
+
+        }
+
+
+        .staff-status {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+
+            padding:
+                15px;
+
+            margin-bottom: 20px;
 
             border-radius: 10px;
 
@@ -314,115 +496,58 @@
             border:
                 1px solid
                 rgba(255,255,255,0.08);
+
         }
 
-        .staff-avatar {
-            width: 48px;
-            height: 48px;
 
-            border-radius: 50%;
+        .staff-status strong {
 
-            object-fit: cover;
+            font-size: 15px;
 
-            background: #111;
         }
 
-        .staff-info-text {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
 
-        .staff-info-text strong {
-            font-size: 14px;
-        }
-
-        .staff-info-text span {
-            font-size: 12px;
+        .staff-status span {
 
             color:
                 rgba(255,255,255,0.45);
+
+            font-size: 12px;
+
         }
 
-        /* =====================================================
-           BOUTONS STAFF
-        ===================================================== */
 
-        .staff-buttons {
+        .staff-actions {
+
             display: flex;
+
             gap: 10px;
+
+            flex-wrap: wrap;
+
         }
 
-        .staff-button {
-            flex: 1;
-
-            padding:
-                13px 15px;
-
-            border-radius: 8px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.15);
-
-            background:
-                rgba(255,255,255,0.05);
-
-            color: white;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition: 0.3s;
-
-            text-decoration: none;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-        }
-
-        .staff-button:hover {
-            background:
-                rgba(255,255,255,0.10);
-
-            border-color:
-                rgba(212,175,55,0.45);
-        }
-
-        .staff-button.primary {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .staff-button.primary:hover {
-            background: #d4af37;
-            border-color: #d4af37;
-        }
 
         /* =====================================================
-           LISTE DES TICKETS
+           LISTE TICKETS
         ===================================================== */
 
-        .tickets-list {
-            margin-top: 20px;
+        #ticketsList {
 
             display: flex;
+
             flex-direction: column;
-            gap: 10px;
+
+            gap: 12px;
+
         }
+
 
         .ticket-item {
-            padding: 16px;
 
-            border-radius: 9px;
+            padding: 18px;
+
+            border-radius: 10px;
 
             background:
                 rgba(255,255,255,0.035);
@@ -431,112 +556,143 @@
                 1px solid
                 rgba(255,255,255,0.08);
 
-            transition: 0.25s;
         }
 
-        .ticket-item:hover {
-            border-color:
-                rgba(212,175,55,0.40);
-
-            background:
-                rgba(255,255,255,0.055);
-        }
 
         .ticket-item-top {
+
             display: flex;
 
             align-items: center;
 
-            justify-content: space-between;
+            justify-content:
+                space-between;
 
             gap: 15px;
 
-            margin-bottom: 7px;
+            margin-bottom: 10px;
+
         }
+
 
         .ticket-item-title {
-            font-size: 14px;
+
+            font-size: 16px;
+
             font-weight: 800;
+
         }
 
+
+        .ticket-item-info {
+
+            color:
+                rgba(255,255,255,0.45);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
         .ticket-status {
+
             padding:
-                5px 9px;
+                5px
+                9px;
 
             border-radius: 20px;
-
-            font-size: 10px;
-            font-weight: 800;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.5px;
 
             background:
                 rgba(46,204,113,0.10);
 
-            color:
-                #8ff0b5;
-
             border:
                 1px solid
                 rgba(46,204,113,0.20);
-        }
-
-        .ticket-item-info {
-            font-size: 12px;
 
             color:
-                rgba(255,255,255,0.45);
+                #7dffad;
+
+            font-size: 10px;
+
+            font-weight: 800;
+
         }
 
+
         .empty-tickets {
+
             padding:
-                35px 20px;
+                35px
+                20px;
 
             text-align: center;
 
             color:
                 rgba(255,255,255,0.35);
 
-            font-size: 13px;
-
             border:
                 1px dashed
                 rgba(255,255,255,0.10);
 
             border-radius: 10px;
+
         }
+
 
         /* =====================================================
            RESPONSIVE
         ===================================================== */
 
-        @media (max-width: 850px) {
-
-            .tickets-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 600px) {
+        @media (max-width: 700px) {
 
             .tickets-page {
+
                 padding:
-                    120px 15px 50px;
+                    120px
+                    15px
+                    50px;
+
             }
+
 
             .ticket-card {
+
                 padding: 22px;
+
             }
 
-            .tickets-header h1 {
-                font-size: 34px;
-            }
 
-            .staff-buttons {
+            .ticket-item-top {
+
                 flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .staff-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+            }
+
+
+            .staff-actions {
+
+                width: 100%;
+
+            }
+
+
+            .staff-actions button {
+
+                width: 100%;
+
             }
 
         }
@@ -561,25 +717,35 @@
             href="../index.html"
             class="logo"
         >
+
             Génération Dorée
+
         </a>
 
 
         <nav class="navigation">
 
             <a href="../index.html">
+
                 Accueil
+
             </a>
+
 
             <a
                 href="tickets.html"
                 class="active"
             >
+
                 Tickets
+
             </a>
 
+
             <a href="discord.html">
+
                 Discord
+
             </a>
 
         </nav>
@@ -599,48 +765,56 @@
 
 
         <!-- =================================================
-             HEADER
+             TITRE
         ================================================== -->
 
         <div class="tickets-header">
 
             <div class="category">
+
                 SUPPORT
+
             </div>
 
+
             <h1>
+
                 Centre de tickets
+
             </h1>
 
+
             <p>
+
                 Besoin d'aide ou d'une intervention du staff ?
                 Crée ton ticket et notre équipe pourra traiter
                 ta demande.
+
             </p>
 
         </div>
 
 
         <!-- =================================================
-             GRILLE
+             CRÉATION TICKET
         ================================================== -->
 
-        <div class="tickets-grid">
+        <section class="ticket-panel">
 
-
-            <!-- =================================================
-                 CRÉATION TICKET
-            ================================================== -->
-
-            <section class="ticket-card">
+            <div class="ticket-card">
 
                 <h2>
+
                     🎫 Créer un ticket
+
                 </h2>
 
+
                 <p>
+
                     Explique clairement ta demande afin que
                     l'équipe puisse t'aider rapidement.
+
                 </p>
 
 
@@ -650,33 +824,42 @@
                 >
 
 
+                    <!-- NOM DISCORD -->
+
                     <div class="form-group">
 
                         <label for="ticketName">
+
                             Nom Discord
+
                         </label>
+
 
                         <input
                             id="ticketName"
-                            name="name"
                             type="text"
                             placeholder="Exemple : Kayfo"
                             maxlength="50"
+                            autocomplete="off"
                             required
                         >
 
                     </div>
 
 
+                    <!-- SUJET -->
+
                     <div class="form-group">
 
                         <label for="ticketSubject">
+
                             Sujet
+
                         </label>
+
 
                         <input
                             id="ticketSubject"
-                            name="subject"
                             type="text"
                             placeholder="Exemple : Problème avec mon accès"
                             maxlength="120"
@@ -686,15 +869,19 @@
                     </div>
 
 
+                    <!-- MESSAGE -->
+
                     <div class="form-group">
 
                         <label for="ticketMessage">
+
                             Message
+
                         </label>
+
 
                         <textarea
                             id="ticketMessage"
-                            name="message"
                             placeholder="Explique ta demande..."
                             maxlength="3000"
                             required
@@ -705,9 +892,11 @@
 
                     <button
                         type="submit"
-                        class="ticket-submit"
+                        class="main-button"
                     >
-                        Créer le ticket
+
+                        🎫 Créer le ticket
+
                     </button>
 
 
@@ -716,938 +905,183 @@
                         class="ticket-message"
                     ></div>
 
+
                 </form>
 
-            </section>
+            </div>
 
+        </section>
 
-            <!-- =================================================
-                 ESPACE STAFF
-            ================================================== -->
 
-            <section class="ticket-card">
+        <!-- =================================================
+             ESPACE STAFF
+        ================================================== -->
 
-                <h2>
-                    🛡️ Espace Staff
-                </h2>
-
-                <p>
-                    Les membres autorisés peuvent accéder ici
-                    aux tickets actuellement ouverts.
-                </p>
-
-
-                <div class="staff-box">
-
-
-                    <div
-                        id="staffInfo"
-                        class="staff-info"
-                    >
-
-                        <div
-                            id="staffStatus"
-                            class="staff-info-text"
-                        >
-
-                            <strong>
-                                Non connecté
-                            </strong>
-
-                            <span>
-                                Connecte-toi pour accéder aux tickets.
-                            </span>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="staff-buttons">
-
-                        <!-- =================================================
-                             CONNEXION DISCORD
-                        ================================================== -->
-
-                        <a
-                            href="https://discord.com/oauth2/authorize?client_id=1458957433148936396&redirect_uri=https%3A%2F%2Fkayfoxx01-sys.github.io%2Fgeneration-doree%2F&response_type=code&scope=identify"
-                            id="staffLogin"
-                            class="staff-button primary"
-                        >
-                            🔵 Connexion avec Discord
-                        </a>
-
-
-                        <!-- =================================================
-                             DÉCONNEXION
-                        ================================================== -->
-
-                        <button
-                            type="button"
-                            id="staffLogout"
-                            class="staff-button"
-                        >
-                            Déconnexion
-                        </button>
-
-                    </div>
-
-
-                    <div
-                        id="ticketsList"
-                        class="tickets-list"
-                    >
-
-                        <div class="empty-tickets">
-                            Connecte-toi en tant que Staff pour voir
-                            les tickets ouverts.
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </div>
-
-    </div>
-
-</main>
-
-
-<!-- =========================================================
-     FOOTER
-========================================================= -->
-
-<footer>
-
-    © 2026 Génération Dorée — Tous droits réservés.
-
-</footer>
-
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
-<script src="../js/ticket.js"></script>
-
-
-</body>
-
-</html><!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Tickets • Génération Dorée</title>
-
-    <link
-        rel="stylesheet"
-        href="../css/style.css"
-    >
-
-    <style>
-
-        /* =====================================================
-           PAGE TICKETS
-        ===================================================== */
-
-        .tickets-page {
-            min-height: 100vh;
-            padding: 120px 30px 70px;
-
-            background:
-                radial-gradient(
-                    circle at top center,
-                    rgba(212, 175, 55, 0.10),
-                    transparent 45%
-                ),
-                #050505;
-        }
-
-        .tickets-container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        /* =====================================================
-           TITRE
-        ===================================================== */
-
-        .tickets-header {
-            text-align: center;
-            margin-bottom: 45px;
-        }
-
-        .tickets-header .category {
-            margin-bottom: 15px;
-        }
-
-        .tickets-header h1 {
-            font-size: clamp(34px, 5vw, 52px);
-            font-weight: 900;
-            margin-bottom: 15px;
-        }
-
-        .tickets-header p {
-            max-width: 650px;
-            margin: auto;
-
-            color:
-                rgba(255,255,255,0.60);
-
-            line-height: 1.7;
-            font-size: 15px;
-        }
-
-        /* =====================================================
-           GRILLE
-        ===================================================== */
-
-        .tickets-grid {
-            display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(0, 1fr);
-
-            gap: 25px;
-            align-items: start;
-        }
-
-        /* =====================================================
-           CADRE
-        ===================================================== */
-
-        .ticket-card {
-            background:
-                rgba(12,12,12,0.90);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.10);
-
-            border-radius: 14px;
-            padding: 30px;
-
-            box-shadow:
-                0 20px 60px
-                rgba(0,0,0,0.35);
-
-            backdrop-filter:
-                blur(15px);
-        }
-
-        .ticket-card h2 {
-            font-size: 21px;
-            margin-bottom: 8px;
-            font-weight: 900;
-        }
-
-        .ticket-card > p {
-            color:
-                rgba(255,255,255,0.55);
-
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        /* =====================================================
-           FORMULAIRE
-        ===================================================== */
-
-        .ticket-form {
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-size: 13px;
-            font-weight: 700;
-
-            color:
-                rgba(255,255,255,0.80);
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-
-            padding:
-                14px 15px;
-
-            border-radius: 8px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            outline: none;
-
-            background:
-                rgba(255,255,255,0.045);
-
-            color: white;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            font-size: 14px;
-
-            transition: 0.25s;
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color:
-                rgba(255,255,255,0.30);
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color:
-                rgba(212,175,55,0.65);
-
-            background:
-                rgba(255,255,255,0.065);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(212,175,55,0.08);
-        }
-
-        /* =====================================================
-           BOUTON PRINCIPAL
-        ===================================================== */
-
-        .ticket-submit {
-            width: 100%;
-
-            padding:
-                15px 20px;
-
-            border: none;
-            border-radius: 8px;
-
-            background: white;
-            color: #050505;
-
-            font-size: 14px;
-            font-weight: 900;
-
-            cursor: pointer;
-
-            transition: 0.3s;
-        }
-
-        .ticket-submit:hover {
-            background: #d4af37;
-
-            transform:
-                translateY(-2px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(212,175,55,0.20);
-        }
-
-        .ticket-submit:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* =====================================================
-           MESSAGE
-        ===================================================== */
-
-        .ticket-message {
-            display: none;
-
-            margin-top: 15px;
-
-            padding:
-                12px 15px;
-
-            border-radius: 7px;
-
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .ticket-message.success {
-            display: block;
-
-            background:
-                rgba(46, 204, 113, 0.10);
-
-            border:
-                1px solid
-                rgba(46, 204, 113, 0.25);
-
-            color:
-                #8ff0b5;
-        }
-
-        .ticket-message.error {
-            display: block;
-
-            background:
-                rgba(231, 76, 60, 0.10);
-
-            border:
-                1px solid
-                rgba(231, 76, 60, 0.25);
-
-            color:
-                #ff9c91;
-        }
-
-        /* =====================================================
-           ESPACE STAFF
-        ===================================================== */
-
-        .staff-box {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .staff-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-
-            padding: 15px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,255,255,0.035);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-        }
-
-        .staff-avatar {
-            width: 48px;
-            height: 48px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
-
-            background: #111;
-        }
-
-        .staff-info-text {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .staff-info-text strong {
-            font-size: 14px;
-        }
-
-        .staff-info-text span {
-            font-size: 12px;
-
-            color:
-                rgba(255,255,255,0.45);
-        }
-
-        /* =====================================================
-           BOUTONS STAFF
-        ===================================================== */
-
-        .staff-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .staff-button {
-            flex: 1;
-
-            padding:
-                13px 15px;
-
-            border-radius: 8px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.15);
-
-            background:
-                rgba(255,255,255,0.05);
-
-            color: white;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition: 0.3s;
-
-            text-decoration: none;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            text-align: center;
-        }
-
-        .staff-button:hover {
-            background:
-                rgba(255,255,255,0.10);
-
-            border-color:
-                rgba(212,175,55,0.45);
-        }
-
-        .staff-button.primary {
-            background: white;
-            color: black;
-            border-color: white;
-        }
-
-        .staff-button.primary:hover {
-            background: #d4af37;
-            border-color: #d4af37;
-        }
-
-        /* =====================================================
-           LISTE DES TICKETS
-        ===================================================== */
-
-        .tickets-list {
-            margin-top: 20px;
-
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .ticket-item {
-            padding: 16px;
-
-            border-radius: 9px;
-
-            background:
-                rgba(255,255,255,0.035);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-            transition: 0.25s;
-        }
-
-        .ticket-item:hover {
-            border-color:
-                rgba(212,175,55,0.40);
-
-            background:
-                rgba(255,255,255,0.055);
-        }
-
-        .ticket-item-top {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 7px;
-        }
-
-        .ticket-item-title {
-            font-size: 14px;
-            font-weight: 800;
-        }
-
-        .ticket-status {
-            padding:
-                5px 9px;
-
-            border-radius: 20px;
-
-            font-size: 10px;
-            font-weight: 800;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.5px;
-
-            background:
-                rgba(46,204,113,0.10);
-
-            color:
-                #8ff0b5;
-
-            border:
-                1px solid
-                rgba(46,204,113,0.20);
-        }
-
-        .ticket-item-info {
-            font-size: 12px;
-
-            color:
-                rgba(255,255,255,0.45);
-        }
-
-        .empty-tickets {
-            padding:
-                35px 20px;
-
-            text-align: center;
-
-            color:
-                rgba(255,255,255,0.35);
-
-            font-size: 13px;
-
-            border:
-                1px dashed
-                rgba(255,255,255,0.10);
-
-            border-radius: 10px;
-        }
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
-        @media (max-width: 850px) {
-
-            .tickets-grid {
-                grid-template-columns: 1fr;
-            }
-
-        }
-
-        @media (max-width: 600px) {
-
-            .tickets-page {
-                padding:
-                    120px 15px 50px;
-            }
-
-            .ticket-card {
-                padding: 22px;
-            }
-
-            .tickets-header h1 {
-                font-size: 34px;
-            }
-
-            .staff-buttons {
-                flex-direction: column;
-            }
-
-        }
-
-    </style>
-
-</head>
-
-
-<body>
-
-
-<!-- =========================================================
-     NAVBAR
-========================================================= -->
-
-<header class="navbar">
-
-    <div class="navbar-container">
-
-        <a
-            href="../index.html"
-            class="logo"
+        <section
+            class="ticket-panel"
+            style="margin-top:30px;"
         >
-            Génération Dorée
-        </a>
+
+            <div class="ticket-card">
 
 
-        <nav class="navigation">
+                <div class="staff-header">
 
-            <a href="../index.html">
-                Accueil
-            </a>
+                    <div>
 
-            <a
-                href="tickets.html"
-                class="active"
-            >
-                Tickets
-            </a>
+                        <h2>
 
-            <a href="discord.html">
-                Discord
-            </a>
+                            🛡️ Espace Staff
 
-        </nav>
-
-    </div>
-
-</header>
+                        </h2>
 
 
-<!-- =========================================================
-     PAGE
-========================================================= -->
+                        <p>
 
-<main class="tickets-page">
+                            Connexion réservée aux membres du staff
+                            de Génération Dorée.
 
-    <div class="tickets-container">
+                        </p>
 
+                    </div>
 
-        <!-- =================================================
-             HEADER
-        ================================================== -->
-
-        <div class="tickets-header">
-
-            <div class="category">
-                SUPPORT
-            </div>
-
-            <h1>
-                Centre de tickets
-            </h1>
-
-            <p>
-                Besoin d'aide ou d'une intervention du staff ?
-                Crée ton ticket et notre équipe pourra traiter
-                ta demande.
-            </p>
-
-        </div>
+                </div>
 
 
-        <!-- =================================================
-             GRILLE
-        ================================================== -->
+                <!-- =================================================
+                     STATUT STAFF
+                ================================================== -->
 
-        <div class="tickets-grid">
-
-
-            <!-- =================================================
-                 CRÉATION TICKET
-            ================================================== -->
-
-            <section class="ticket-card">
-
-                <h2>
-                    🎫 Créer un ticket
-                </h2>
-
-                <p>
-                    Explique clairement ta demande afin que
-                    l'équipe puisse t'aider rapidement.
-                </p>
-
-
-                <form
-                    id="ticketForm"
-                    class="ticket-form"
+                <div
+                    id="staffStatus"
+                    class="staff-status"
                 >
 
+                    <strong>
 
-                    <div class="form-group">
+                        Non connecté
 
-                        <label for="ticketName">
-                            Nom Discord
-                        </label>
-
-                        <input
-                            id="ticketName"
-                            name="name"
-                            type="text"
-                            placeholder="Exemple : Kayfo"
-                            maxlength="50"
-                            required
-                        >
-
-                    </div>
+                    </strong>
 
 
-                    <div class="form-group">
+                    <span>
 
-                        <label for="ticketSubject">
-                            Sujet
-                        </label>
+                        Connecte-toi pour accéder aux tickets.
 
-                        <input
-                            id="ticketSubject"
-                            name="subject"
-                            type="text"
-                            placeholder="Exemple : Problème avec mon accès"
-                            maxlength="120"
-                            required
-                        >
+                    </span>
 
-                    </div>
+                </div>
 
 
-                    <div class="form-group">
+                <!-- =================================================
+                     CONNEXION STAFF
+                ================================================== -->
 
-                        <label for="ticketMessage">
-                            Message
-                        </label>
+                <div
+                    class="form-group"
+                    style="margin-bottom:15px;"
+                >
 
-                        <textarea
-                            id="ticketMessage"
-                            name="message"
-                            placeholder="Explique ta demande..."
-                            maxlength="3000"
-                            required
-                        ></textarea>
+                    <label for="staffDiscordName">
 
-                    </div>
+                        Nom Discord
+
+                    </label>
+
+
+                    <input
+                        id="staffDiscordName"
+                        type="text"
+                        placeholder="Ton nom Discord"
+                        maxlength="50"
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="staff-actions">
 
 
                     <button
-                        type="submit"
-                        class="ticket-submit"
+                        id="staffLogin"
+                        type="button"
+                        class="main-button"
+                        onclick="loginStaff()"
                     >
-                        Créer le ticket
+
+                        🔐 Se connecter
+
                     </button>
 
 
-                    <div
-                        id="ticketMessage"
-                        class="ticket-message"
-                    ></div>
-
-                </form>
-
-            </section>
-
-
-            <!-- =================================================
-                 ESPACE STAFF
-            ================================================== -->
-
-            <section class="ticket-card">
-
-                <h2>
-                    🛡️ Espace Staff
-                </h2>
-
-                <p>
-                    Les membres autorisés peuvent accéder ici
-                    aux tickets actuellement ouverts.
-                </p>
-
-
-                <div class="staff-box">
-
-
-                    <div
-                        id="staffInfo"
-                        class="staff-info"
+                    <button
+                        id="staffLogout"
+                        type="button"
+                        class="danger-button"
+                        onclick="logoutStaff()"
+                        style="display:none;"
                     >
 
-                        <div
-                            id="staffStatus"
-                            class="staff-info-text"
-                        >
+                        🚪 Déconnexion
 
-                            <strong>
-                                Non connecté
-                            </strong>
-
-                            <span>
-                                Connecte-toi pour accéder aux tickets.
-                            </span>
-
-                        </div>
-
-                    </div>
+                    </button>
 
 
-                    <div class="staff-buttons">
-
-                        <!-- =================================================
-                             CONNEXION DISCORD
-                        ================================================== -->
-
-                        <a
-                            href="https://discord.com/oauth2/authorize?client_id=1458957433148936396&redirect_uri=https%3A%2F%2Fkayfoxx01-sys.github.io%2Fgeneration-doree%2F&response_type=code&scope=identify"
-                            id="staffLogin"
-                            class="staff-button primary"
-                        >
-                            🔵 Connexion avec Discord
-                        </a>
+                </div>
 
 
-                        <!-- =================================================
-                             DÉCONNEXION
-                        ================================================== -->
+                <!-- =================================================
+                     TICKETS STAFF
+                ================================================== -->
 
-                        <button
-                            type="button"
-                            id="staffLogout"
-                            class="staff-button"
-                        >
-                            Déconnexion
-                        </button>
+                <div
+                    style="
+                        margin-top:35px;
+                    "
+                >
+
+                    <div
+                        style="
+                            display:flex;
+                            justify-content:space-between;
+                            align-items:center;
+                            gap:15px;
+                            margin-bottom:15px;
+                        "
+                    >
+
+                        <h3 style="margin:0;">
+
+                            🎫 Tickets ouverts
+
+                        </h3>
+
 
                     </div>
 
 
                     <div
                         id="ticketsList"
-                        class="tickets-list"
+                        class="ticket-list"
                     >
 
                         <div class="empty-tickets">
+
                             Connecte-toi en tant que Staff pour voir
                             les tickets ouverts.
+
                         </div>
 
                     </div>
 
                 </div>
 
-            </section>
 
-        </div>
+            </div>
+
+        </section>
+
 
     </div>
 
@@ -1668,6 +1102,8 @@
 <!-- =========================================================
      JAVASCRIPT
 ========================================================= -->
+
+<script src="../js/auth.js"></script>
 
 <script src="../js/ticket.js"></script>
 
