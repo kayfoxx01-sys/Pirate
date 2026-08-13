@@ -2,18 +2,915 @@
 <html lang="fr">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Génération Dorée</title>
+    <title>Lore - Génération Dorée</title>
 
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        /* ================================
+           PAGE LORE
+        ================================= */
+
+        .lore-page {
+            min-height: calc(100vh - 80px);
+            padding: 90px 30px 60px;
+            background: #080808;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lore-container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* ================================
+           CADRE PRINCIPAL
+        ================================= */
+
+        .lore-card {
+            width: 100%;
+            min-height: 520px;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 18px;
+            padding: 60px;
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+
+            transition: 0.3s ease;
+        }
+
+        .lore-small-title {
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .lore-card h1 {
+            margin: 0 0 20px;
+            color: #ffffff;
+            font-size: 46px;
+        }
+
+        .lore-intro {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #999;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* ================================
+           BOUTON CONSULTER
+        ================================= */
+
+        .lore-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 13px 24px;
+
+            background: #d4af37;
+            color: #080808;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .lore-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .lore-arrow {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* ================================
+           GRAND CADRE DU LORE
+        ================================= */
+
+        .lore-content {
+            display: none;
+
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #292929;
+            border-radius: 18px;
+
+            padding: 55px;
+
+            box-sizing: border-box;
+
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+
+            animation: loreAppear 0.3s ease;
+        }
+
+        .lore-content.active {
+            display: block;
+        }
+
+        @keyframes loreAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .lore-content-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .lore-content-header h2 {
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: 42px;
+        }
+
+        .lore-content-body {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lore-content-body h3 {
+            margin: 0 0 30px;
+
+            color: #d4af37;
+
+            font-size: 30px;
+        }
+
+        .lore-content-body p {
+            margin: 0 0 25px;
+
+            color: #d0d0d0;
+
+            font-size: 17px;
+
+            line-height: 1.9;
+        }
+
+        /* ================================
+           BOUTON RETOUR
+        ================================= */
+
+        .lore-back-container {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 45px;
+        }
+
+        .lore-back {
+            padding: 12px 24px;
+
+            background: #1a1a1a;
+
+            border: 1px solid #333;
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .lore-back:hover {
+            background: #252525;
+            border-color: #555;
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            .lore-page {
+                padding: 60px 15px 40px;
+            }
+
+            .lore-card {
+                min-height: 450px;
+                padding: 35px 25px;
+            }
+
+            .lore-card h1 {
+                font-size: 36px;
+            }
+
+            .lore-intro {
+                font-size: 15px;
+            }
+
+            .lore-content {
+                padding: 35px 25px;
+            }
+
+            .lore-content-header h2 {
+                font-size: 34px;
+            }
+
+            .lore-content-body h3 {
+                font-size: 25px;
+            }
+
+            .lore-content-body p {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>Page en construction</h1>
+    <!-- ================================
+         NAVIGATION
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <a href="../index.html" class="logo">
+                Génération Dorée
+            </a>
+
+            <nav class="navigation">
+
+                <a href="../index.html">
+                    Accueil
+                </a>
+
+                <a href="lore.html" class="active">
+                    Lore
+                </a>
+
+                <a href="guide.html">
+                    Guide
+                </a>
+
+                <a href="tickets.html">
+                    Tickets
+                </a>
+
+                <a href="organigramme.html">
+                    Organigramme
+                </a>
+
+                <a href="discord.html">
+                    Discord
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         PAGE LORE
+    ================================= -->
+
+    <main class="lore-page">
+
+        <div class="lore-container">
+
+
+            <!-- ================================
+                 PREMIER CADRE
+            ================================= -->
+
+            <section class="lore-card" id="loreIntro">
+
+                <div class="lore-small-title">
+                    Génération Dorée
+                </div>
+
+                <h1>
+                    Lore
+                </h1>
+
+                <p class="lore-intro">
+                    Ici, vous allez pouvoir retrouver le lore de la
+                    Génération Dorée, qui peut être modifiable à tout moment.
+                </p>
+
+                <button class="lore-button" onclick="openLore()">
+
+                    Consulter
+
+                    <span class="lore-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </section>
+
+
+            <!-- ================================
+                 GRAND CADRE DU LORE
+            ================================= -->
+
+            <section class="lore-content" id="loreContent">
+
+                <div class="lore-content-header">
+
+                    <h2>
+                        Lore
+                    </h2>
+
+                </div>
+
+
+                <div class="lore-content-body">
+
+                    <h3>
+                        « Génération Dorée »
+                    </h3>
+
+                    <p>
+                        La Génération Dorée est née d'une conviction simple :
+                        les anciennes générations ont échoué. Héros, vilains
+                        et organisations ont tous tenté d'imposer leur vision
+                        du monde sans jamais réellement parvenir à le changer.
+                    </p>
+
+                    <p>
+                        Ceux qui composent cette alliance refusent de suivre
+                        leurs traces. Ils veulent dépasser tout ce qui existe
+                        actuellement et placer leurs propres idéaux au centre
+                        de la société.
+                    </p>
+
+                    <p>
+                        Ils ne cherchent pas à devenir une simple organisation
+                        de vilains. Ils veulent devenir la génération qui
+                        changera définitivement l'équilibre des forces.
+                    </p>
+
+                    <p>
+                        Leur objectif est clair : prendre leur place sur la
+                        scène mondiale, surpasser leurs prédécesseurs et faire
+                        de leurs idéaux la nouvelle norme.
+                    </p>
+
+                </div>
+
+
+                <div class="lore-back-container">
+
+                    <button class="lore-back" onclick="closeLore()">
+                        ← Retour
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function openLore() {
+
+            document
+                .getElementById("loreIntro")
+                .style.display = "none";
+
+            document
+                .getElementById("loreContent")
+                .classList.add("active");
+
+        }
+
+
+        function closeLore() {
+
+            document
+                .getElementById("loreContent")
+                .classList.remove("active");
+
+            document
+                .getElementById("loreIntro")
+                .style.display = "flex";
+
+        }
+
+    </script>
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lore - Génération Dorée</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+
+        /* ================================
+           PAGE LORE
+        ================================= */
+
+        .lore-page {
+            min-height: calc(100vh - 80px);
+            padding: 90px 30px 60px;
+            background: #080808;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lore-container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        /* ================================
+           CADRE PRINCIPAL
+        ================================= */
+
+        .lore-card {
+            width: 100%;
+            min-height: 520px;
+            background: #101010;
+            border: 1px solid #292929;
+            border-radius: 18px;
+            padding: 60px;
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+
+            transition: 0.3s ease;
+        }
+
+        .lore-small-title {
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 18px;
+        }
+
+        .lore-card h1 {
+            margin: 0 0 20px;
+            color: #ffffff;
+            font-size: 46px;
+        }
+
+        .lore-intro {
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: #999;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* ================================
+           BOUTON CONSULTER
+        ================================= */
+
+        .lore-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 13px 24px;
+
+            background: #d4af37;
+            color: #080808;
+
+            border: none;
+            border-radius: 8px;
+
+            font-size: 15px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .lore-button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
+
+        .lore-arrow {
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        /* ================================
+           GRAND CADRE DU LORE
+        ================================= */
+
+        .lore-content {
+            display: none;
+
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #292929;
+            border-radius: 18px;
+
+            padding: 55px;
+
+            box-sizing: border-box;
+
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.45);
+
+            animation: loreAppear 0.3s ease;
+        }
+
+        .lore-content.active {
+            display: block;
+        }
+
+        @keyframes loreAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .lore-content-header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .lore-content-header h2 {
+            margin: 0;
+
+            color: #ffffff;
+
+            font-size: 42px;
+        }
+
+        .lore-content-body {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .lore-content-body h3 {
+            margin: 0 0 30px;
+
+            color: #d4af37;
+
+            font-size: 30px;
+        }
+
+        .lore-content-body p {
+            margin: 0 0 25px;
+
+            color: #d0d0d0;
+
+            font-size: 17px;
+
+            line-height: 1.9;
+        }
+
+        /* ================================
+           BOUTON RETOUR
+        ================================= */
+
+        .lore-back-container {
+            display: flex;
+            justify-content: center;
+
+            margin-top: 45px;
+        }
+
+        .lore-back {
+            padding: 12px 24px;
+
+            background: #1a1a1a;
+
+            border: 1px solid #333;
+
+            border-radius: 8px;
+
+            color: #ffffff;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            transition: 0.2s ease;
+        }
+
+        .lore-back:hover {
+            background: #252525;
+            border-color: #555;
+        }
+
+        /* ================================
+           RESPONSIVE
+        ================================= */
+
+        @media (max-width: 700px) {
+
+            .lore-page {
+                padding: 60px 15px 40px;
+            }
+
+            .lore-card {
+                min-height: 450px;
+                padding: 35px 25px;
+            }
+
+            .lore-card h1 {
+                font-size: 36px;
+            }
+
+            .lore-intro {
+                font-size: 15px;
+            }
+
+            .lore-content {
+                padding: 35px 25px;
+            }
+
+            .lore-content-header h2 {
+                font-size: 34px;
+            }
+
+            .lore-content-body h3 {
+                font-size: 25px;
+            }
+
+            .lore-content-body p {
+                font-size: 15px;
+                line-height: 1.8;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVIGATION
+    ================================= -->
+
+    <header class="navbar">
+
+        <div class="navbar-container">
+
+            <a href="../index.html" class="logo">
+                Génération Dorée
+            </a>
+
+            <nav class="navigation">
+
+                <a href="../index.html">
+                    Accueil
+                </a>
+
+                <a href="lore.html" class="active">
+                    Lore
+                </a>
+
+                <a href="guide.html">
+                    Guide
+                </a>
+
+                <a href="tickets.html">
+                    Tickets
+                </a>
+
+                <a href="organigramme.html">
+                    Organigramme
+                </a>
+
+                <a href="discord.html">
+                    Discord
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         PAGE LORE
+    ================================= -->
+
+    <main class="lore-page">
+
+        <div class="lore-container">
+
+
+            <!-- ================================
+                 PREMIER CADRE
+            ================================= -->
+
+            <section class="lore-card" id="loreIntro">
+
+                <div class="lore-small-title">
+                    Génération Dorée
+                </div>
+
+                <h1>
+                    Lore
+                </h1>
+
+                <p class="lore-intro">
+                    Ici, vous allez pouvoir retrouver le lore de la
+                    Génération Dorée, qui peut être modifiable à tout moment.
+                </p>
+
+                <button class="lore-button" onclick="openLore()">
+
+                    Consulter
+
+                    <span class="lore-arrow">
+                        →
+                    </span>
+
+                </button>
+
+            </section>
+
+
+            <!-- ================================
+                 GRAND CADRE DU LORE
+            ================================= -->
+
+            <section class="lore-content" id="loreContent">
+
+                <div class="lore-content-header">
+
+                    <h2>
+                        Lore
+                    </h2>
+
+                </div>
+
+
+                <div class="lore-content-body">
+
+                    <h3>
+                        « Génération Dorée »
+                    </h3>
+
+                    <p>
+                        La Génération Dorée est née d'une conviction simple :
+                        les anciennes générations ont échoué. Héros, vilains
+                        et organisations ont tous tenté d'imposer leur vision
+                        du monde sans jamais réellement parvenir à le changer.
+                    </p>
+
+                    <p>
+                        Ceux qui composent cette alliance refusent de suivre
+                        leurs traces. Ils veulent dépasser tout ce qui existe
+                        actuellement et placer leurs propres idéaux au centre
+                        de la société.
+                    </p>
+
+                    <p>
+                        Ils ne cherchent pas à devenir une simple organisation
+                        de vilains. Ils veulent devenir la génération qui
+                        changera définitivement l'équilibre des forces.
+                    </p>
+
+                    <p>
+                        Leur objectif est clair : prendre leur place sur la
+                        scène mondiale, surpasser leurs prédécesseurs et faire
+                        de leurs idéaux la nouvelle norme.
+                    </p>
+
+                </div>
+
+
+                <div class="lore-back-container">
+
+                    <button class="lore-back" onclick="closeLore()">
+                        ← Retour
+                    </button>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script>
+
+        function openLore() {
+
+            document
+                .getElementById("loreIntro")
+                .style.display = "none";
+
+            document
+                .getElementById("loreContent")
+                .classList.add("active");
+
+        }
+
+
+        function closeLore() {
+
+            document
+                .getElementById("loreContent")
+                .classList.remove("active");
+
+            document
+                .getElementById("loreIntro")
+                .style.display = "flex";
+
+        }
+
+    </script>
 
 </body>
 
