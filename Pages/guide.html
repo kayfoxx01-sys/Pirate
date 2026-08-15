@@ -5,15 +5,956 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>Génération Dorée</title>
+    <title>Guide du serveur • Génération Dorée</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           PAGE GUIDE
+        ===================================================== */
+
+        .guide-page {
+
+            min-height: 100vh;
+
+            padding:
+                120px
+                30px
+                70px;
+
+            background:
+                radial-gradient(
+                    circle at top center,
+                    rgba(212,175,55,0.10),
+                    transparent 45%
+                ),
+                #050505;
+
+        }
+
+
+        .guide-container {
+
+            width: 100%;
+
+            max-width: 1050px;
+
+            margin: 0 auto;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .guide-header {
+
+            text-align: center;
+
+            margin-bottom: 50px;
+
+        }
+
+
+        .guide-header .category {
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .guide-header h1 {
+
+            margin:
+                0
+                0
+                15px;
+
+            font-size:
+                clamp(
+                    36px,
+                    5vw,
+                    54px
+                );
+
+            font-weight: 900;
+
+            color: #ffffff;
+
+        }
+
+
+        .guide-header p {
+
+            max-width: 700px;
+
+            margin: 0 auto;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            line-height: 1.7;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =====================================================
+           CARTES
+        ===================================================== */
+
+        .guide-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .guide-card {
+
+            background:
+                #101010;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            border-radius: 16px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 15px 50px
+                rgba(0,0,0,0.30);
+
+        }
+
+
+        .guide-card.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .guide-card h2 {
+
+            margin:
+                0
+                0
+                15px;
+
+            color:
+                #ffffff;
+
+            font-size: 24px;
+
+            font-weight: 900;
+
+        }
+
+
+        .guide-card p {
+
+            margin:
+                0;
+
+            color:
+                rgba(255,255,255,0.65);
+
+            line-height: 1.7;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           ÉTAPES
+        ===================================================== */
+
+        .steps {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .step {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 15px;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            background:
+                #0b0b0b;
+
+            border:
+                1px solid
+                #242424;
+
+        }
+
+
+        .step-number {
+
+            width: 35px;
+
+            height: 35px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                #d4af37;
+
+            color:
+                #080808;
+
+            font-weight: 900;
+
+        }
+
+
+        .step-content h3 {
+
+            margin:
+                0
+                0
+                5px;
+
+            color:
+                #ffffff;
+
+            font-size: 16px;
+
+        }
+
+
+        .step-content p {
+
+            margin: 0;
+
+            color:
+                rgba(255,255,255,0.60);
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           IMPORTANT
+        ===================================================== */
+
+        .important {
+
+            border:
+                1px solid
+                rgba(212,175,55,0.35);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(212,175,55,0.08),
+                    rgba(0,0,0,0.20)
+                );
+
+        }
+
+
+        .important-title {
+
+            color:
+                #d4af37;
+
+            font-weight: 900;
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                1px;
+
+        }
+
+
+        /* =====================================================
+           CONSEILS
+        ===================================================== */
+
+        .tips {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
+
+            gap: 12px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .tip {
+
+            padding: 16px;
+
+            border-radius: 10px;
+
+            background:
+                #0b0b0b;
+
+            border:
+                1px solid
+                #242424;
+
+            color:
+                rgba(255,255,255,0.65);
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .tip strong {
+
+            display: block;
+
+            color:
+                #ffffff;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        /* =====================================================
+           BOUTON DISCORD
+        ===================================================== */
+
+        .guide-action {
+
+            text-align: center;
+
+            margin-top: 35px;
+
+        }
+
+
+        .guide-discord-button {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding:
+                14px
+                28px;
+
+            border-radius: 9px;
+
+            background:
+                #5865F2;
+
+            color:
+                #ffffff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 900;
+
+            transition:
+                0.25s ease;
+
+        }
+
+
+        .guide-discord-button:hover {
+
+            transform:
+                translateY(-3px);
+
+            filter:
+                brightness(1.1);
+
+            box-shadow:
+                0 10px 30px
+                rgba(88,101,242,0.25);
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 750px) {
+
+            .guide-page {
+
+                padding:
+                    110px
+                    15px
+                    50px;
+
+            }
+
+
+            .guide-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .guide-card.full {
+
+                grid-column:
+                    auto;
+
+            }
+
+
+            .tips {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .guide-card {
+
+                padding:
+                    25px
+                    20px;
+
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <h1>Page en construction</h1>
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<header class="navbar">
+
+    <div class="navbar-container">
+
+
+        <a
+            href="../index.html"
+            class="logo"
+        >
+            Génération Dorée
+        </a>
+
+
+        <nav class="navigation">
+
+
+            <a
+                href="../index.html"
+            >
+                Accueil
+            </a>
+
+
+            <a
+                href="lore.html"
+            >
+                Lore
+            </a>
+
+
+            <a
+                href="guide.html"
+                class="active"
+            >
+                Guide
+            </a>
+
+
+            <a
+                href="tickets.html"
+            >
+                Réseaux
+            </a>
+
+
+            <a
+                href="organigramme.html"
+            >
+                Organigramme
+            </a>
+
+
+            <a
+                href="discord.html"
+            >
+                Discord
+            </a>
+
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================================
+     GUIDE
+========================================================= -->
+
+<main class="guide-page">
+
+    <div class="guide-container">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="guide-header">
+
+
+            <div class="category">
+
+                GUIDE DU SERVEUR
+
+            </div>
+
+
+            <h1>
+
+                Bienvenue dans la Génération Dorée
+
+            </h1>
+
+
+            <p>
+
+                Tu souhaites rejoindre la Génération Dorée,
+                comprendre son fonctionnement ou simplement
+                savoir comment nous rejoindre ?
+                Tu trouveras ici les principales informations
+                à connaître.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATIONS
+        ================================================== -->
+
+        <div class="guide-grid">
+
+
+            <!-- PRÉSENTATION -->
+
+            <section class="guide-card">
+
+                <h2>
+                    La Génération Dorée
+                </h2>
+
+
+                <p>
+
+                    La Génération Dorée est une organisation
+                    implantée dans le KB MHA.
+                    Notre objectif est de réunir une communauté
+                    active et soudée autour du RP, avec une
+                    organisation basée sur la loyauté,
+                    l'ambition et le respect.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- CANDIDATURE -->
+
+            <section class="guide-card important">
+
+                <div class="important-title">
+                    À savoir
+                </div>
+
+
+                <h2>
+                    Comment candidater ?
+                </h2>
+
+
+                <p>
+
+                    Pour rejoindre la Génération Dorée,
+                    les candidatures ne se font pas directement
+                    sur ce site.
+
+                    <br><br>
+
+                    Tu dois passer par notre serveur Discord
+                    afin d'ouvrir un ticket auprès du staff.
+
+                </p>
+
+            </section>
+
+
+
+            <!-- ÉTAPES -->
+
+            <section class="guide-card full">
+
+                <h2>
+                    Les étapes pour rejoindre la Génération Dorée
+                </h2>
+
+
+                <div class="steps">
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            1
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Rejoins notre Discord
+                            </h3>
+
+
+                            <p>
+
+                                Commence par rejoindre le serveur
+                                Discord officiel de la Génération Dorée.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            2
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Va dans la catégorie Réseaux
+                            </h3>
+
+
+                            <p>
+
+                                Depuis notre site, tu peux accéder
+                                à la page <strong>Réseaux</strong>.
+                                Tu y retrouveras notamment le lien
+                                vers notre Discord.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            3
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Ouvre un ticket
+                            </h3>
+
+
+                            <p>
+
+                                Une fois sur le serveur Discord,
+                                rends-toi dans le salon prévu à cet
+                                effet et ouvre un ticket pour ta
+                                candidature.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            4
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Présente ta candidature
+                            </h3>
+
+
+                            <p>
+
+                                Présente-toi correctement et indique
+                                les informations demandées par le
+                                staff. Prends le temps de faire une
+                                candidature sérieuse et lisible.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="step">
+
+                        <div class="step-number">
+                            5
+                        </div>
+
+
+                        <div class="step-content">
+
+                            <h3>
+                                Attends la réponse du staff
+                            </h3>
+
+
+                            <p>
+
+                                Une fois ta candidature envoyée,
+                                le staff l'étudiera et reviendra vers
+                                toi directement dans ton ticket.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+
+            <!-- CONSEILS -->
+
+            <section class="guide-card full">
+
+                <h2>
+                    Conseils pour ta candidature
+                </h2>
+
+
+                <p>
+
+                    Une bonne candidature permet au staff de mieux
+                    comprendre ta motivation et ton implication.
+
+                </p>
+
+
+                <div class="tips">
+
+
+                    <div class="tip">
+
+                        <strong>
+                            Sois sérieux
+                        </strong>
+
+                        Présente une candidature propre,
+                        lisible et compréhensible.
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <strong>
+                            Sois motivé
+                        </strong>
+
+                        Explique pourquoi tu souhaites
+                        rejoindre la Génération Dorée.
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <strong>
+                            Sois respectueux
+                        </strong>
+
+                        Le respect envers les membres et le
+                        staff est essentiel.
+
+                    </div>
+
+
+                    <div class="tip">
+
+                        <strong>
+                            Sois patient
+                        </strong>
+
+                        Le staff peut avoir besoin de temps
+                        pour examiner ta candidature.
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             ACTION
+        ================================================== -->
+
+        <div class="guide-action">
+
+
+            <a
+                href="https://discord.gg/TjNMVMMwdg"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="guide-discord-button"
+            >
+
+                Rejoindre le Discord
+
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <p>
+        © 2026 Génération Dorée
+    </p>
+
+</footer>
+
 
 </body>
 
