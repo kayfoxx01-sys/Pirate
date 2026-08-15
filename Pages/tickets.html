@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -10,7 +11,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Tickets • Génération Dorée</title>
+    <title>Réseaux sociaux • Génération Dorée</title>
 
     <link
         rel="stylesheet"
@@ -19,11 +20,7 @@
 
     <style>
 
-        /* =====================================================
-           PAGE
-        ===================================================== */
-
-        .tickets-page {
+        .social-page {
 
             min-height: 100vh;
 
@@ -43,35 +40,32 @@
         }
 
 
-        .tickets-container {
+        .social-container {
 
             width: 100%;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
 
         }
 
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
-
-        .tickets-header {
+        .social-header {
 
             text-align: center;
+
             margin-bottom: 45px;
 
         }
 
 
-        .tickets-header .category {
+        .social-header .category {
 
             margin-bottom: 15px;
 
         }
 
 
-        .tickets-header h1 {
+        .social-header h1 {
 
             font-size:
                 clamp(
@@ -81,544 +75,144 @@
                 );
 
             font-weight: 900;
+
             margin-bottom: 15px;
 
         }
 
 
-        .tickets-header p {
+        .social-header p {
 
             max-width: 650px;
+
             margin: auto;
 
             color:
                 rgba(255,255,255,0.60);
 
             line-height: 1.7;
-            font-size: 15px;
-
-        }
-
-
-        /* =====================================================
-           PANELS
-        ===================================================== */
-
-        .ticket-panel {
-
-            width: 100%;
-
-        }
-
-
-        .ticket-card {
-
-            background:
-                rgba(12,12,12,0.90);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.10);
-
-            border-radius: 14px;
-
-            padding: 30px;
-
-            box-shadow:
-                0 20px 60px
-                rgba(0,0,0,0.35);
-
-            backdrop-filter:
-                blur(15px);
-
-        }
-
-
-        .ticket-card h2 {
-
-            font-size: 21px;
-            margin-bottom: 8px;
-            font-weight: 900;
-
-        }
-
-
-        .ticket-card > p {
-
-            color:
-                rgba(255,255,255,0.55);
-
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-
-        }
-
-
-        /* =====================================================
-           FORMULAIRE
-        ===================================================== */
-
-        .ticket-form {
-
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-
-        }
-
-
-        .form-group {
-
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-        }
-
-
-        .form-group label {
-
-            font-size: 13px;
-            font-weight: 700;
-
-            color:
-                rgba(255,255,255,0.80);
-
-        }
-
-
-        .form-group input,
-        .form-group textarea {
-
-            width: 100%;
-
-            padding:
-                14px
-                15px;
-
-            border-radius: 8px;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            outline: none;
-
-            background:
-                rgba(255,255,255,0.045);
-
-            color: white;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            font-size: 14px;
-
-            box-sizing: border-box;
-
-        }
-
-
-        .form-group textarea {
-
-            min-height: 150px;
-            resize: vertical;
-
-        }
-
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-
-            border-color:
-                rgba(212,175,55,0.65);
-
-            box-shadow:
-                0 0 0 3px
-                rgba(212,175,55,0.08);
-
-        }
-
-
-        /* =====================================================
-           BOUTONS
-        ===================================================== */
-
-        .main-button,
-        .danger-button,
-        .staff-button {
-
-            padding:
-                13px
-                18px;
-
-            border-radius: 8px;
-
-            font-size: 13px;
-            font-weight: 800;
-
-            cursor: pointer;
-
-            transition:
-                0.25s;
-
-        }
-
-
-        .main-button {
-
-            background: white;
-            color: #050505;
-            border: none;
-
-        }
-
-
-        .main-button:hover {
-
-            background: #d4af37;
-
-            transform:
-                translateY(-2px);
-
-        }
-
-
-        .danger-button {
-
-            background:
-                rgba(231,76,60,0.12);
-
-            border:
-                1px solid
-                rgba(231,76,60,0.30);
-
-            color:
-                #ff9c91;
-
-        }
-
-
-        .danger-button:hover {
-
-            background:
-                rgba(231,76,60,0.20);
-
-        }
-
-
-        .staff-button {
-
-            background:
-                rgba(255,255,255,0.06);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            color: white;
-
-        }
-
-
-        .staff-button:hover {
-
-            background:
-                rgba(212,175,55,0.15);
-
-            border-color:
-                rgba(212,175,55,0.35);
-
-        }
-
-
-        .staff-button.primary {
-
-            background: white;
-            color: #050505;
-
-        }
-
-
-        .staff-button.primary:hover {
-
-            background: #d4af37;
-
-        }
-
-
-        /* =====================================================
-           MESSAGE
-        ===================================================== */
-
-        .ticket-message {
-
-            display: none;
-
-            margin-top: 15px;
-
-            padding:
-                12px
-                15px;
-
-            border-radius: 8px;
-
-            font-size: 13px;
-
-        }
-
-
-        .ticket-message.success {
-
-            display: block;
-
-            background:
-                rgba(46,204,113,0.10);
-
-            border:
-                1px solid
-                rgba(46,204,113,0.25);
-
-            color:
-                #7dffad;
-
-        }
-
-
-        .ticket-message.error {
-
-            display: block;
-
-            background:
-                rgba(231,76,60,0.10);
-
-            border:
-                1px solid
-                rgba(231,76,60,0.25);
-
-            color:
-                #ff9c91;
-
-        }
-
-
-        /* =====================================================
-           ESPACE STAFF
-        ===================================================== */
-
-        .staff-login-box {
-
-            margin-top: 40px;
-
-        }
-
-
-        .staff-header {
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 25px;
-
-        }
-
-
-        .staff-header h2 {
-
-            margin: 0;
-
-        }
-
-
-        .staff-header p {
-
-            margin-top: 8px;
-
-        }
-
-
-        .staff-status {
-
-            display: flex;
-
-            flex-direction: column;
-
-            gap: 5px;
-
-            padding:
-                15px;
-
-            margin-bottom: 20px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,255,255,0.035);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-        }
-
-
-        .staff-status strong {
 
             font-size: 15px;
 
         }
 
 
-        .staff-status span {
+        .social-grid {
 
-            color:
-                rgba(255,255,255,0.45);
+            display: grid;
 
-            font-size: 12px;
+            grid-template-columns:
+                repeat(
+                    2,
+                    minmax(0, 1fr)
+                );
 
-        }
-
-
-        .staff-actions {
-
-            display: flex;
-
-            gap: 10px;
-
-            flex-wrap: wrap;
+            gap: 25px;
 
         }
 
 
-        /* =====================================================
-           LISTE TICKETS
-        ===================================================== */
+        .social-card {
 
-        #ticketsList {
+            min-height: 260px;
+
+            padding: 35px;
+
+            border-radius: 16px;
 
             display: flex;
 
             flex-direction: column;
 
-            gap: 12px;
-
-        }
-
-
-        .ticket-item {
-
-            padding: 18px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(255,255,255,0.035);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
-
-        }
-
-
-        .ticket-item-top {
-
-            display: flex;
-
             align-items: center;
 
-            justify-content: space-between;
-
-            gap: 15px;
-
-            margin-bottom: 10px;
-
-        }
-
-
-        .ticket-item-title {
-
-            font-size: 16px;
-            font-weight: 800;
-
-        }
-
-
-        .ticket-item-info {
-
-            color:
-                rgba(255,255,255,0.45);
-
-            font-size: 12px;
-
-            line-height: 1.7;
-
-        }
-
-
-        .ticket-status {
-
-            padding:
-                5px
-                9px;
-
-            border-radius: 20px;
-
-            background:
-                rgba(46,204,113,0.10);
-
-            border:
-                1px solid
-                rgba(46,204,113,0.20);
-
-            color:
-                #7dffad;
-
-            font-size: 10px;
-            font-weight: 800;
-
-        }
-
-
-        .empty-tickets {
-
-            padding:
-                35px
-                20px;
+            justify-content: center;
 
             text-align: center;
 
-            color:
-                rgba(255,255,255,0.35);
+            box-sizing: border-box;
 
-            border:
-                1px dashed
-                rgba(255,255,255,0.10);
-
-            border-radius: 10px;
+            transition:
+                transform 0.25s,
+                border-color 0.25s,
+                box-shadow 0.25s;
 
         }
 
 
-        /* =====================================================
-           MODALE TICKET
-        ===================================================== */
+        .social-card:hover {
 
-        .ticket-modal {
+            transform:
+                translateY(-6px);
 
-            position: fixed;
+        }
 
-            inset: 0;
 
-            z-index: 9999;
+        /* =========================
+           TIKTOK
+        ========================= */
+
+        .tiktok-card {
+
+            background:
+                #000000;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.16);
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.40);
+
+        }
+
+
+        .tiktok-card:hover {
+
+            border-color:
+                rgba(255,255,255,0.40);
+
+        }
+
+
+        /* =========================
+           TWITCH
+        ========================= */
+
+        .twitch-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #12001f,
+                    #24103d
+                );
+
+            border:
+                1px solid
+                rgba(145,70,255,0.35);
+
+            box-shadow:
+                0 20px 60px
+                rgba(100,40,180,0.20);
+
+        }
+
+
+        .twitch-card:hover {
+
+            border-color:
+                rgba(145,70,255,0.70);
+
+        }
+
+
+        .social-icon {
+
+            width: 70px;
+
+            height: 70px;
 
             display: flex;
 
@@ -626,199 +220,139 @@
 
             justify-content: center;
 
-            padding: 20px;
-
-            background:
-                rgba(0,0,0,0.80);
-
-            backdrop-filter:
-                blur(8px);
-
-        }
-
-
-        .ticket-modal-content {
-
-            width: 100%;
-
-            max-width: 700px;
-
-            max-height: 90vh;
-
-            overflow: auto;
-
-            padding: 25px;
-
-            border-radius: 14px;
-
-            background: #0c0c0c;
-
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            box-shadow:
-                0 25px 80px
-                rgba(0,0,0,0.5);
-
-            box-sizing: border-box;
-
-        }
-
-
-        .ticket-modal-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            gap: 15px;
-
-            align-items: center;
+            border-radius: 50%;
 
             margin-bottom: 20px;
 
-        }
+            font-size: 32px;
 
-
-        .ticket-modal-header h2 {
-
-            margin:
-                0
-                0
-                8px
-                0;
+            font-weight: 900;
 
         }
 
 
-        .ticket-modal-info {
-
-            opacity: 0.5;
-
-            margin: 0;
-
-            font-size: 13px;
-
-            line-height: 1.7;
-
-        }
-
-
-        .ticket-chat-message {
-
-            padding: 15px;
-
-            margin-bottom: 10px;
-
-            border-radius: 10px;
+        .tiktok-icon {
 
             background:
-                rgba(255,255,255,0.04);
-
-            border:
-                1px solid
-                rgba(255,255,255,0.08);
+                rgba(255,255,255,0.10);
 
         }
 
 
-        .ticket-chat-message strong {
+        .twitch-icon {
 
-            display: block;
-
-            margin-bottom: 8px;
+            background:
+                rgba(145,70,255,0.18);
 
         }
 
 
-        .ticket-chat-message p {
+        .social-card h2 {
 
             margin:
                 0
                 0
-                8px
-                0;
+                12px;
 
-            white-space: pre-wrap;
+            font-size: 24px;
 
-            word-break: break-word;
+            font-weight: 900;
+
+        }
+
+
+        .social-card p {
+
+            margin:
+                0
+                0
+                25px;
+
+            max-width: 400px;
+
+            color:
+                rgba(255,255,255,0.60);
 
             line-height: 1.6;
 
-        }
-
-
-        .ticket-chat-message small {
-
-            opacity: 0.45;
+            font-size: 14px;
 
         }
 
 
-        .ticket-reply {
+        .social-button {
 
-            width: 100%;
+            display: inline-flex;
 
-            min-height: 120px;
+            align-items: center;
 
-            padding: 12px;
+            justify-content: center;
 
-            margin-top: 15px;
+            padding:
+                13px
+                24px;
 
             border-radius: 8px;
 
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 800;
+
+            transition:
+                0.25s;
+
+        }
+
+
+        .tiktok-button {
+
             background:
-                rgba(255,255,255,0.04);
+                white;
 
-            border:
-                1px solid
-                rgba(255,255,255,0.12);
-
-            color: white;
-
-            resize: vertical;
-
-            box-sizing: border-box;
-
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+            color:
+                #050505;
 
         }
 
 
-        .ticket-reply:focus {
+        .tiktok-button:hover {
 
-            outline: none;
+            background:
+                #d4af37;
 
-            border-color:
-                rgba(212,175,55,0.65);
-
-        }
-
-
-        .ticket-modal-actions {
-
-            display: flex;
-
-            flex-wrap: wrap;
-
-            gap: 10px;
-
-            margin-top: 10px;
+            transform:
+                translateY(-2px);
 
         }
 
 
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
+        .twitch-button {
+
+            background:
+                #9146ff;
+
+            color:
+                white;
+
+        }
+
+
+        .twitch-button:hover {
+
+            background:
+                #a970ff;
+
+            transform:
+                translateY(-2px);
+
+        }
+
 
         @media (max-width: 700px) {
 
-            .tickets-page {
+            .social-page {
 
                 padding:
                     120px
@@ -828,48 +362,22 @@
             }
 
 
-            .ticket-card {
+            .social-grid {
 
-                padding: 22px;
-
-            }
-
-
-            .ticket-item-top {
-
-                flex-direction: column;
-
-                align-items: flex-start;
+                grid-template-columns:
+                    1fr;
 
             }
 
 
-            .staff-header {
+            .social-card {
 
-                flex-direction: column;
+                min-height:
+                    240px;
 
-                align-items: flex-start;
-
-            }
-
-
-            .staff-actions {
-
-                width: 100%;
-
-            }
-
-
-            .staff-actions button {
-
-                width: 100%;
-
-            }
-
-
-            .ticket-modal-content {
-
-                padding: 20px;
+                padding:
+                    28px
+                    20px;
 
             }
 
@@ -910,7 +418,7 @@
                 href="tickets.html"
                 class="active"
             >
-                Tickets
+                Réseaux
             </a>
 
 
@@ -926,270 +434,107 @@
 
 
 <!-- =========================================================
-     PAGE
+     PAGE RÉSEAUX SOCIAUX
 ========================================================= -->
 
-<main class="tickets-page">
+<main class="social-page">
 
-    <div class="tickets-container">
+    <div class="social-container">
 
 
-        <!-- =================================================
-             HEADER
-        ================================================== -->
-
-        <div class="tickets-header">
+        <div class="social-header">
 
             <div class="category">
-                SUPPORT
+                RÉSEAUX SOCIAUX
             </div>
 
 
             <h1>
-                Centre de tickets
+                Nos réseaux sociaux
             </h1>
 
 
             <p>
-                Besoin d'aide ou d'une intervention du staff ?
-                Crée ton ticket et notre équipe pourra traiter
-                ta demande.
+                Retrouvez ici tous nos réseaux sociaux.
+                Il suffit de cliquer sur le réseau de votre
+                choix pour y accéder directement.
             </p>
 
         </div>
 
 
-        <!-- =================================================
-             CRÉATION TICKET
-        ================================================== -->
+        <div class="social-grid">
 
-        <section class="ticket-panel">
 
-            <div class="ticket-card">
+            <!-- =================================================
+                 TIKTOK
+            ================================================== -->
+
+            <div class="social-card tiktok-card">
+
+                <div class="social-icon tiktok-icon">
+                    ♪
+                </div>
+
 
                 <h2>
-                    🎫 Créer un ticket
+                    TikTok
                 </h2>
 
 
                 <p>
-                    Explique clairement ta demande afin que
-                    l'équipe puisse t'aider rapidement.
+                    Retrouvez nos contenus et nos dernières
+                    vidéos directement sur notre TikTok.
                 </p>
 
 
-                <form
-                    id="ticketForm"
-                    class="ticket-form"
+                <a
+                    href="https://www.tiktok.com/@pirate.p4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-button tiktok-button"
                 >
-
-
-                    <!-- NOM DISCORD -->
-
-                    <div class="form-group">
-
-                        <label for="ticketName">
-                            Nom Discord
-                        </label>
-
-
-                        <input
-                            id="ticketName"
-                            type="text"
-                            placeholder="Exemple : Kayfo"
-                            maxlength="50"
-                            autocomplete="off"
-                            required
-                        >
-
-                    </div>
-
-
-                    <!-- SUJET -->
-
-                    <div class="form-group">
-
-                        <label for="ticketSubject">
-                            Sujet
-                        </label>
-
-
-                        <input
-                            id="ticketSubject"
-                            type="text"
-                            placeholder="Exemple : Problème avec mon accès"
-                            maxlength="120"
-                            required
-                        >
-
-                    </div>
-
-
-                    <!-- MESSAGE -->
-
-                    <div class="form-group">
-
-                        <label for="ticketMessageInput">
-                            Message
-                        </label>
-
-
-                        <textarea
-                            id="ticketMessageInput"
-                            placeholder="Explique ta demande..."
-                            maxlength="3000"
-                            required
-                        ></textarea>
-
-                    </div>
-
-
-                    <button
-                        type="submit"
-                        class="main-button"
-                    >
-                        🎫 Créer le ticket
-                    </button>
-
-
-                    <div
-                        id="ticketMessage"
-                        class="ticket-message"
-                    ></div>
-
-                </form>
+                    🎵 Accéder à TikTok
+                </a>
 
             </div>
 
-        </section>
 
+            <!-- =================================================
+                 TWITCH
+            ================================================== -->
 
-        <!-- =================================================
-             ESPACE STAFF
-        ================================================== -->
+            <div class="social-card twitch-card">
 
-        <section
-            class="ticket-panel"
-            style="margin-top:30px;"
-        >
-
-            <div class="ticket-card">
-
-
-                <div class="staff-header">
-
-                    <div>
-
-                        <h2>
-                            🛡️ Espace Staff
-                        </h2>
-
-
-                        <p>
-                            Connexion réservée aux membres du
-                            staff de Génération Dorée.
-                        </p>
-
-                    </div>
-
+                <div class="social-icon twitch-icon">
+                    ▶
                 </div>
 
 
-                <!-- =================================================
-                     STATUT
-                ================================================= -->
+                <h2>
+                    Twitch
+                </h2>
 
-                <div
-                    id="staffStatus"
-                    class="staff-status"
+
+                <p>
+                    Retrouvez nos lives et nos streams
+                    directement sur notre chaîne Twitch.
+                </p>
+
+
+                <a
+                    href="https://www.twitch.tv/pirate_z4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="social-button twitch-button"
                 >
-
-                    <strong>
-                        Non connecté
-                    </strong>
-
-
-                    <span>
-                        Connecte-toi avec Discord pour accéder
-                        aux tickets.
-                    </span>
-
-                </div>
-
-
-                <!-- =================================================
-                     CONNEXION DISCORD
-                ================================================= -->
-
-                <div class="staff-actions">
-
-                    <button
-                        id="staffLogin"
-                        type="button"
-                        class="main-button"
-                    >
-                        🔐 Se connecter avec Discord
-                    </button>
-
-
-                    <button
-                        id="staffLogout"
-                        type="button"
-                        class="danger-button"
-                        style="display:none;"
-                    >
-                        🚪 Déconnexion
-                    </button>
-
-                </div>
-
-
-                <!-- =================================================
-                     TICKETS
-                ================================================= -->
-
-                <div
-                    style="
-                        margin-top:35px;
-                    "
-                >
-
-                    <div
-                        style="
-                            display:flex;
-                            justify-content:space-between;
-                            align-items:center;
-                            gap:15px;
-                            margin-bottom:15px;
-                        "
-                    >
-
-                        <h3 style="margin:0;">
-                            🎫 Tickets ouverts
-                        </h3>
-
-                    </div>
-
-
-                    <div
-                        id="ticketsList"
-                        class="ticket-list"
-                    >
-
-                        <div class="empty-tickets">
-                            🔒 Connecte-toi avec Discord
-                            pour voir les tickets.
-                        </div>
-
-                    </div>
-
-                </div>
-
+                    🟣 Accéder à Twitch
+                </a>
 
             </div>
 
-        </section>
 
+        </div>
 
     </div>
 
@@ -1207,15 +552,7 @@
 </footer>
 
 
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
-<script src="../js/auth.js"></script>
-
-<script src="../js/ticket.js"></script>
-
-
 </body>
 
 </html>
+```
